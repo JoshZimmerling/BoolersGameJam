@@ -9,8 +9,20 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1234629631541309008, guid: 079c133c50a929444983e74d164f18e6, type: 3}
+      propertyPath: thrust
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1234629631541309008, guid: 079c133c50a929444983e74d164f18e6, type: 3}
       propertyPath: m_Enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1234629631541309008, guid: 079c133c50a929444983e74d164f18e6, type: 3}
+      propertyPath: distToStop
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1234629631541309008, guid: 079c133c50a929444983e74d164f18e6, type: 3}
+      propertyPath: maxVelocity
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1245626939372121653, guid: 079c133c50a929444983e74d164f18e6, type: 3}
       propertyPath: m_Pivot.x
