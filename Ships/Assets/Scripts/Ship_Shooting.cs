@@ -144,68 +144,68 @@ public class Ship_Shooting : NetworkBehaviour
     private void shoot_hawk()
     {
         //Bullet going up
-        createBullet(0f, 0.5f, 0, 1);
+        createBullet(0f, 2.0f, 0, 1);
     }
     private void shoot_challenger()
     {
         //Bullets going right
-        createBullet(0.5f, 0.4f, 1, 0);
-        createBullet(0.5f, 0.2f, 1, 0);
-        createBullet(0.5f, 0f, 1, 0);
-        createBullet(0.5f, -0.2f, 1, 0);
-        createBullet(0.5f, -0.4f, 1, 0);
+        createBullet(1.0f, 1.0f, 1, 0);
+        createBullet(1.0f, 0.5f, 1, 0);
+        createBullet(1.0f, 0f, 1, 0);
+        createBullet(1.0f, -0.5f, 1, 0);
+        createBullet(1.0f, -1.0f, 1, 0);
     }
     private void shoot_goliath()
     {
         //Bullets going right
-        createBullet(0.5f, 0.3f, 1, 0);
-        createBullet(0.5f, 0.1f, 1, 0);
-        createBullet(0.5f, -0.1f, 1, 0);
-        createBullet(0.5f, -0.3f, 1, 0);
+        createBullet(1.5f, 2.25f, 1, 0);
+        createBullet(1.5f, 0.75f, 1, 0);
+        createBullet(1.5f, -0.75f, 1, 0);
+        createBullet(1.5f, -2.25f, 1, 0);
 
         //Bullets going left
-        createBullet(-0.5f, 0.3f, -1, 0);
-        createBullet(-0.5f, 0.1f, -1, 0);
-        createBullet(-0.5f, -0.1f, -1, 0);
-        createBullet(-0.5f, -0.3f, -1, 0);
+        createBullet(-1.5f, 2.25f, -1, 0);
+        createBullet(-1.5f, 0.75f, -1, 0);
+        createBullet(-1.5f, -0.75f, -1, 0);
+        createBullet(-1.5f, -2.25f, -1, 0);
     }
     private void shoot_lightning()
     {
         //Bullets going up
-        createBullet(0.25f, 0.5f, 0, 1);
-        createBullet(-0.25f, 0.5f, 0, 1);
+        createBullet(0.25f, 2.0f, 0, 1);
+        createBullet(-0.25f, 2.0f, 0, 1);
     }
     private void shoot_drone()
     {
         //Bullet going up
         if(bulletsShotCounter_Drone == 0)
-            createBullet(0f, 0.5f, 0, 1);
+            createBullet(0f, 1.5f, 0, 1);
 
         //Bullet going down
         if (bulletsShotCounter_Drone == 2)
-            createBullet(0f, -0.5f, 0, -1);
+            createBullet(0f, -1.5f, 0, -1);
 
         //Bullet going right
         if (bulletsShotCounter_Drone == 1)
-            createBullet(0.5f, 0f, 1, 0);
+            createBullet(1.5f, 0f, 1, 0);
 
         //Bullet going left
         if (bulletsShotCounter_Drone == 3)
-            createBullet(-0.5f, 0f, -1, 0);
+            createBullet(-1.5f, 0f, -1, 0);
     }
     private void shoot_scout()
     {
         //Bullet going up
-        createBullet(0f, 0.5f, 0, 1);
+        createBullet(0f, 1.5f, 0, 1);
 
         //Bullet going down
-        createBullet(0f, -0.5f, 0, -1);
+        createBullet(0f, -1.5f, 0, -1);
     }
 
     private void createBullet(float xOffset, float yOffset, int xVelo, int yVelo)
     {
-        GameObject bullet = Instantiate(BulletPrefab, new Vector2(this.transform.position.x + xOffset, this.transform.position.y + yOffset), new Quaternion());
-        bullet.GetComponent<Rigidbody2D>().velocity = (transform.rotation * new Vector2(xVelo, yVelo) * bulletSpeed);
+        GameObject bullet = Instantiate(BulletPrefab, new Vector3(this.transform.position.x + xOffset, this.transform.position.y + yOffset, -1), new Quaternion());
+        //bullet.GetComponent<Rigidbody2D>().velocity = (transform.rotation * new Vector2(xVelo, yVelo) * bulletSpeed);
         bullet.GetComponent<Bullet>().setDamage(bulletDamage);
         bullet.GetComponent<Bullet>().setParentPlayerNum(parentPlayerNum);
         if(parentPlayerNum == 1)
