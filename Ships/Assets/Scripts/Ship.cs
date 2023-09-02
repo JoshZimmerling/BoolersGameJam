@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Ship : MonoBehaviour
@@ -20,6 +21,7 @@ public class Ship : MonoBehaviour
     float shipHP;
     float shipSpeed;
     float shipCost;
+    int playerNum;
 
     ShipMovement moveController;
     Ship_Shooting shootController;
@@ -74,8 +76,22 @@ public class Ship : MonoBehaviour
         moveController.setTargetDestination(new Vector2(x, y));
     }
 
+    public void doDamage(float damage)
+    {
+        shipHP -= damage;
+        //TODO: Health bar updates here
+        if(shipHP <= 0)
+        {
+            Destroy(this.gameObject);
+        }
+    }
+
     public shipTypes getShipType()
     {
         return shipType;
+    }
+    public int getPlayerNum()
+    {
+        return playerNum;
     }
 }
