@@ -21,9 +21,10 @@ public class PlayerController : NetworkBehaviour
     void Update()
     {
         // Only can be controlled by owner
-        if (!IsOwner)
-            return;
+/*        if (!IsOwner)
+            return;*/
 
+        Debug.Log("guh2");
         // Test code, remove later
         /*Vector3 moveDir = new Vector3(0, 0, 0);
         if (Input.GetKey("w")) moveDir.y += 1f;
@@ -34,11 +35,13 @@ public class PlayerController : NetworkBehaviour
 
         if (Input.GetButtonDown("Fire2"))
         {
-            Debug.Log("guh"); 
+            Debug.Log("guh");
             Vector3 mousePos = Input.mousePosition;
-            foreach(Ship ship in ships)
+            mousePos.z = 0;
+            Vector3 worldPosition = Camera.main.ScreenToWorldPoint(mousePos);
+            foreach (Ship ship in ships)
             {
-                ship.setDestination(mousePos.x, mousePos.y);
+                ship.setDestination(worldPosition.x, worldPosition.y);
             }
         }
     }
