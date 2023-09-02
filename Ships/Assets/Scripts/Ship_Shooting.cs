@@ -122,7 +122,7 @@ public class Ship_Shooting : MonoBehaviour
     {
         //Bullet going up
         GameObject bullet1 = Instantiate(BulletPrefab, new Vector2(this.transform.position.x, this.transform.position.y + 0.5f), new Quaternion());
-        bullet1.GetComponent<Rigidbody2D>().velocity = (new Vector2(0, 1) * bulletSpeed);
+        bullet1.GetComponent<Rigidbody2D>().velocity = (transform.rotation * (new Vector2(0, 1)) * bulletSpeed );
         Destroy(bullet1, bulletLifetime);
 
         //Bullet going down

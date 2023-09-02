@@ -7,15 +7,18 @@ using UnityEngine;
 
 public class ShipMovement : MonoBehaviour
 {
+    //pub for tests
+    public Vector2 targetPos;
+    public float angle;
+    public float totalVelocity;
+    public Vector2 track;
+    public float distToStop;
 
-    Vector2 targetPos;
     Boolean alignedWithTarget;
-
-    float dotAngle;
+    Boolean noTarget;
 
     [SerializeField] float thrust;
-    [SerializeField] float currentSpeed;
-    [SerializeField] float maxSpeed;
+    [SerializeField] float maxVelocity;
 
     Rigidbody2D rb; 
 
@@ -23,19 +26,46 @@ public class ShipMovement : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        alignedWithTarget = true;
+        noTarget = true; 
     }
 
     private void FixedUpdate()
     {
-        Debug.Log(Vector2.Dot(transform.position, targetPos));
+      
+        track = targetPos - (Vector2) transform.position;
 
-        currentSpeed += thrust;
-        if (currentSpeed > maxSpeed) { currentSpeed = maxSpeed; }
-        rb.velocity = new Vector2(0, currentSpeed); 
+        angle = Vector2.SignedAngle(track, transform.up);
+
+        if (noTarget) { return; }
+
+        if (!alignedWithTarget && MathF.Abs(angle) > 0.2)
+        {
+            if (angle > 0)
+            {
+                rb.angularVelocity = -20;
+            }
+            else
+            {
+                rb.angularVelocity = 20;
+            }
+        }
+        else
+        {
+            rb.angularVelocity = 0;
+            totalVelocity = rb.velocity.x + rb.velocity.y;
+            if (totalVelocity < maxVelocity)
+            {
+                rb.AddForce(transform.up);
+            }
+        }
+
     }
 
     public void setTargetDestination(Vector2 target)
     {
+        alignedWithTarget = false;
+        noTarget = false;   
         targetPos = target;
     }
 }
