@@ -18,13 +18,13 @@ public class Ship : MonoBehaviour
     [SerializeField] shipTypes shipType;
 
     [SerializeField] ShipMovement moveController;
-    [SerializeField] Ship_ShootingTemp shootController;
+    [SerializeField] Ship_Shooting shootController;
 
 
     private void Start()
     {
         moveController = GetComponent<ShipMovement>();
-        shootController = GetComponent<Ship_ShootingTemp>();
+        shootController = GetComponent<Ship_Shooting>();
     }
 
     public void setDestination(float x, float y)
