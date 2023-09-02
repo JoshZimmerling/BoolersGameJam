@@ -542,7 +542,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 30
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -689,6 +689,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shipType: 0
+  playerNum: 0
 --- !u!1 &531640998
 GameObject:
   m_ObjectHideFlags: 0
@@ -1261,6 +1262,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shipType: 0
+  playerNum: 0
 --- !u!1 &1353884177
 GameObject:
   m_ObjectHideFlags: 0
@@ -1305,6 +1307,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 192496096624374653, guid: ad91bb49efcd11e4eb160a8cb16c60ea, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 198422471767995160, guid: ad91bb49efcd11e4eb160a8cb16c60ea, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -1807,6 +1813,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shipType: 0
+  playerNum: 0
 --- !u!1 &1470427218
 GameObject:
   m_ObjectHideFlags: 0
@@ -1998,6 +2005,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shipType: 0
+  playerNum: 0
 --- !u!1 &1619320639
 GameObject:
   m_ObjectHideFlags: 0
@@ -2115,6 +2123,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shipType: 0
+  playerNum: 0
 --- !u!61 &1619320644
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2276,6 +2285,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shipType: 0
+  playerNum: 0
 --- !u!1 &1715845326
 GameObject:
   m_ObjectHideFlags: 0

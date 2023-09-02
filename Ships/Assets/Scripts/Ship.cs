@@ -18,11 +18,11 @@ public class Ship : NetworkBehaviour
         Scout
     }
     [SerializeField] shipTypes shipType;
+    [SerializeField] int playerNum;
 
     float shipHP;
     float shipSpeed;
     float shipCost;
-    int playerNum;
 
     ShipMovement moveController;
     Ship_Shooting shootController;
