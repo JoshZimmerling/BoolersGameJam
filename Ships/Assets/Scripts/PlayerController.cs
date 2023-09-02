@@ -30,7 +30,7 @@ public class PlayerController : NetworkBehaviour
         if (Input.GetKey("a")) moveDir.x -= 1f;
         if (Input.GetKey("s")) moveDir.y -= 1f;
         if (Input.GetKey("d")) moveDir.x += 1f;
-        transform.position += moveDir * Time.deltaTime;
+        transform.position += moveDir * Time.deltaTime * 3f;
 
         if (Input.GetButtonDown("Fire2"))
         {

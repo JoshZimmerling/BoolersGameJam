@@ -39,6 +39,7 @@ public class Bullet : MonoBehaviour
     {
         dmg = damage;
     }
+
     public void setParentPlayerNum(int num)
     {
         parentPlayerNum = num;
