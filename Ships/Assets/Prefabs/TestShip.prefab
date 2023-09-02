@@ -213,8 +213,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shipType: 0
-  moveController: {fileID: 8844631469507984760}
-  shootController: {fileID: 3223551635667858894}
 --- !u!114 &3223551635667858894
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -227,8 +225,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d703f05bb07ae9148b2f1d19f4ca3ea0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shipType: 0
-  BulletObject: {fileID: 9135911124565628530, guid: a02ebc28117ec194c9dcdaecc201af8b, type: 3}
+  BulletPrefab: {fileID: 9135911124565628530, guid: a02ebc28117ec194c9dcdaecc201af8b, type: 3}
 --- !u!114 &8844631469507984760
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -241,4 +238,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ddcc5185b0555044b99e0ecb8647e29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  thrust: 1
+  thrust: 0.1
+  currentSpeed: 0
+  maxSpeed: 1

@@ -9,9 +9,9 @@ public class ShipMovement : MonoBehaviour
 {
 
     Vector2 targetPos;
-
-
     Boolean alignedWithTarget;
+
+    float dotAngle;
 
     [SerializeField] float thrust;
     [SerializeField] float currentSpeed;
@@ -25,14 +25,14 @@ public class ShipMovement : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
     }
 
-
     private void FixedUpdate()
     {
+        Debug.Log(Vector2.Dot(transform.position, targetPos));
+
         currentSpeed += thrust;
         if (currentSpeed > maxSpeed) { currentSpeed = maxSpeed; }
         rb.velocity = new Vector2(0, currentSpeed); 
     }
-
 
     public void setTargetDestination(Vector2 target)
     {
