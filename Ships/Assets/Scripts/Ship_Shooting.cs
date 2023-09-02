@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Ship : MonoBehaviour
+public class Ship_ShootingTemp : MonoBehaviour
 {
     public enum shipType
     {
