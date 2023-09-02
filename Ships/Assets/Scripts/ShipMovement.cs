@@ -15,22 +15,19 @@ public class ShipMovement : MonoBehaviour
 
     float angle;
     float totalVelocity;
-    float timeToStop;
     float distToTarget;
-    float secondsToSlow;
-    float force;
 
     Vector2 targetPos;
     Vector2 track;
-
-
+    Vector2 up;
+    Vector2 path; 
 
     Boolean noTarget;
-    public Boolean moving; 
+    public Boolean moving;
 
-    [SerializeField] float acceleration;
+    Ship ship;
+
     [SerializeField] float turnRate;
-    [SerializeField] float maxVelocity;
     [SerializeField] float distToStop;
 
 
@@ -38,6 +35,9 @@ public class ShipMovement : MonoBehaviour
     void Start()
     {
         noTarget = true;
+        turnRate = 40f;
+        distToStop = 3f; 
+        ship = transform.GetComponent<Ship>();
     }
 
     private void FixedUpdate()
@@ -102,10 +102,10 @@ public class ShipMovement : MonoBehaviour
         }
         else
         {
-            totalVelocity += acceleration;
-            if (totalVelocity > maxVelocity)
+            totalVelocity += ship.getShipAcceleration();
+            if (totalVelocity > ship.getShipMaxSpeed())
             {
-                totalVelocity = maxVelocity;
+                totalVelocity = ship.getShipMaxSpeed();
             }
             transform.Translate(Vector2.up * totalVelocity * Time.deltaTime);
         }

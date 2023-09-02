@@ -22,7 +22,8 @@ public class Ship : NetworkBehaviour
 
     float maxShipHP;
     float currentShipHP;
-    float shipSpeed;
+    [SerializeField] float shipAcceleration;
+    float shipMaxSpeed;
     float shipCost;
 
     ShipMovement moveController;
@@ -35,48 +36,50 @@ public class Ship : NetworkBehaviour
         shootController = GetComponent<Ship_Shooting>();
         healthBar = GetComponentInChildren<Healthbar>();
 
+        shipAcceleration = 3f;
+
         switch (shipType)
         {
             case (Ship.shipTypes.Destroyer):
                 maxShipHP = 50f;
                 currentShipHP = maxShipHP;
-                shipSpeed = 3f;
+                shipMaxSpeed = 3f;
                 shipCost = 20f;
                 break;
             case (Ship.shipTypes.Hawk):
                 maxShipHP = 20f;
                 currentShipHP = maxShipHP;
-                shipSpeed = 5f;
+                shipMaxSpeed = 5f;
                 shipCost = 20f;
                 break;
             case (Ship.shipTypes.Challenger):
                 maxShipHP = 60f;
                 currentShipHP = maxShipHP;
-                shipSpeed = 3f;
+                shipMaxSpeed = 3f;
                 shipCost = 20f;
                 break;
             case (Ship.shipTypes.Goliath):
                 maxShipHP = 150f;
                 currentShipHP = maxShipHP;
-                shipSpeed = 3f;
+                shipMaxSpeed = 3f;
                 shipCost = 35f;
                 break;
             case (Ship.shipTypes.Lightning):
-                maxShipHP = 20f;
+                maxShipHP = 30f;
                 currentShipHP = maxShipHP;
-                shipSpeed = 5f;
+                shipMaxSpeed = 5f;
                 shipCost = 35f;
                 break;
             case (Ship.shipTypes.Drone):
                 maxShipHP = 40f;
                 currentShipHP = maxShipHP;
-                shipSpeed = 5f;
+                shipMaxSpeed = 5f;
                 shipCost = 5f;
                 break;
             case (Ship.shipTypes.Scout):
                 maxShipHP = 10f;
                 currentShipHP = maxShipHP;
-                shipSpeed = 6f;
+                shipMaxSpeed = 6f;
                 shipCost = 10f;
                 break;
         }
@@ -105,9 +108,14 @@ public class Ship : NetworkBehaviour
     {
         return playerNum;
     }
-    public float getShipSpeed()
+    public float getShipMaxSpeed()
     {
-        return shipSpeed;
+        return shipMaxSpeed;
+    }
+
+    public float getShipAcceleration() 
+    {
+        return shipAcceleration;
     }
     public float getShipCost()
     {
