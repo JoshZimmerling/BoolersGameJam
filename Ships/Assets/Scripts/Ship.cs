@@ -1,9 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using Unity.Netcode;
 using UnityEngine;
 
-public class Ship : MonoBehaviour
+public class Ship : NetworkBehaviour
 {
     
     public enum shipTypes
