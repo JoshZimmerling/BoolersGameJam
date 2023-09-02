@@ -6,32 +6,21 @@ using UnityEngine;
 
 public class PlayerController : NetworkBehaviour
 {
-
     [SerializeField] List<Ship> ships;
+    [SerializeField] int playerID;
 
     private void Start()
     {
         ships = new List<Ship>();
-
-        /* TODO - Temp add ships */ 
-        ships.Add(FindObjectOfType<Ship>());
     }
 
     // Update is called once per frame
     void Update()
     {
-        // Only can be controlled by owner
-/*        if (!IsOwner)
-            return;*/
+        if (!IsOwner)
+            return;
 
-        // Test code, remove later
-        /*Vector3 moveDir = new Vector3(0, 0, 0);
-        if (Input.GetKey("w")) moveDir.y += 1f;
-        if (Input.GetKey("a")) moveDir.x -= 1f;
-        if (Input.GetKey("s")) moveDir.y -= 1f;
-        if (Input.GetKey("d")) moveDir.x += 1f;
-        transform.position += moveDir * Time.deltaTime * 3f;*/
-
+        // Setting the target destination for the ships
         if (Input.GetButtonDown("Fire2"))
         {
             Vector3 mousePos = Input.mousePosition;

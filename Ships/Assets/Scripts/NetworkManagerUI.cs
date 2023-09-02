@@ -13,10 +13,12 @@ public class NetworkManagerUI : MonoBehaviour
     {
         hostButton.onClick.AddListener(() => {
             NetworkManager.Singleton.StartHost();
+            this.gameObject.SetActive(false);
         });
 
         joinButton.onClick.AddListener(() => {
             NetworkManager.Singleton.StartClient();
+            this.gameObject.SetActive(false);
         });
     }
 }
