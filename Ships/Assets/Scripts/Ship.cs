@@ -105,4 +105,12 @@ public class Ship : NetworkBehaviour
     {
         return playerNum;
     }
+    public float getShipSpeed()
+    {
+        return shipSpeed;
+    }
+    public float getShipCost()
+    {
+        return shipCost;
+    }
 }
