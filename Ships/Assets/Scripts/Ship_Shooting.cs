@@ -4,18 +4,8 @@ using UnityEngine;
 
 public class Ship_Shooting : MonoBehaviour
 {
-    public enum shipTypes
-    {
-        Destroyer,
-        Hawk,
-        Challenger,
-        Goliath,
-        Lightning,
-        Drone,
-        Scout
-    }
 
-    [SerializeField] shipTypes shipType;
+    Ship.shipTypes typeOfShip;
 
     float bulletLifetime; 
     float bulletSpeed;
@@ -24,50 +14,51 @@ public class Ship_Shooting : MonoBehaviour
 
     int bulletsShotCounter_Drone = 0;
 
-    [SerializeField] GameObject BulletObject;
+    [SerializeField] GameObject BulletPrefab;
 
     // Start is called before the first frame update
     void Start()
     {
-        switch(shipType)
+        typeOfShip = this.gameObject.GetComponent<Ship>().getShipType();
+        switch(typeOfShip)
         {
-            case (shipTypes.Destroyer):
+            case (Ship.shipTypes.Destroyer):
                 bulletLifetime = 2f;
                 bulletSpeed = 8f;
                 bulletsPerSecond = 2f;
                 bulletDamage = 2f;
                 break;
-            case (shipTypes.Hawk):
+            case (Ship.shipTypes.Hawk):
                 bulletLifetime = 2f;
                 bulletSpeed = 8f;
                 bulletsPerSecond = 1f;
                 bulletDamage = 7f;
                 break;
-            case (shipTypes.Challenger):
-                bulletLifetime = 0.75f;
+            case (Ship.shipTypes.Challenger):
+                bulletLifetime = 0.75f; 
                 bulletSpeed = 12f;
                 bulletsPerSecond = 0.75f;
                 bulletDamage = 3f;
                 break;
-            case (shipTypes.Goliath):
+            case (Ship.shipTypes.Goliath):
                 bulletLifetime = 2f;
                 bulletSpeed = 8f;
                 bulletsPerSecond = 1f;
                 bulletDamage = 1f;
                 break;
-            case (shipTypes.Lightning):
+            case (Ship.shipTypes.Lightning):
                 bulletLifetime = 2f;
                 bulletSpeed = 8f;
                 bulletsPerSecond = 0.5f;
                 bulletDamage = 10f;
                 break;
-            case (shipTypes.Drone):
+            case (Ship.shipTypes.Drone):
                 bulletLifetime = 0.75f;
                 bulletSpeed = 12f;
                 bulletsPerSecond = 2f;
                 bulletDamage = 1f;
                 break;
-            case (shipTypes.Scout):
+            case (Ship.shipTypes.Scout):
                 bulletLifetime = 0.2f;
                 bulletSpeed = 16f;
                 bulletsPerSecond = 0.25f;
@@ -90,29 +81,29 @@ public class Ship_Shooting : MonoBehaviour
 
     private void shootBullet()
     {
-        switch (shipType)
+        switch (typeOfShip)
         {
-            case (shipTypes.Destroyer):
+            case (Ship.shipTypes.Destroyer):
                 shoot_destroyer();
                 break;
 
-            case (shipTypes.Hawk):
+            case (Ship.shipTypes.Hawk):
                 shoot_hawk();
                 break;
 
-            case (shipTypes.Challenger):
+            case (Ship.shipTypes.Challenger):
                 shoot_challenger();
                 break;
 
-            case (shipTypes.Goliath):
+            case (Ship.shipTypes.Goliath):
                 shoot_goliath();
                 break;
 
-            case (shipTypes.Lightning):
+            case (Ship.shipTypes.Lightning):
                 shoot_lightning();
                 break;
 
-            case (shipTypes.Drone):
+            case (Ship.shipTypes.Drone):
                 shoot_drone();
                 bulletsShotCounter_Drone++;
                 if(bulletsShotCounter_Drone == 4)
@@ -121,7 +112,7 @@ public class Ship_Shooting : MonoBehaviour
                 }
                 break;
 
-            case (shipTypes.Scout):
+            case (Ship.shipTypes.Scout):
                 shoot_scout();
                 break;
         }
@@ -130,94 +121,94 @@ public class Ship_Shooting : MonoBehaviour
     private void shoot_destroyer()
     {
         //Bullet going up
-        GameObject bullet1 = Instantiate(BulletObject, new Vector2(this.transform.position.x, this.transform.position.y + 0.5f), new Quaternion());
+        GameObject bullet1 = Instantiate(BulletPrefab, new Vector2(this.transform.position.x, this.transform.position.y + 0.5f), new Quaternion());
         bullet1.GetComponent<Rigidbody2D>().velocity = (new Vector2(0, 1) * bulletSpeed);
         Destroy(bullet1, bulletLifetime);
 
         //Bullet going down
-        GameObject bullet2 = Instantiate(BulletObject, new Vector2(this.transform.position.x, this.transform.position.y - 0.5f), new Quaternion());
+        GameObject bullet2 = Instantiate(BulletPrefab, new Vector2(this.transform.position.x, this.transform.position.y - 0.5f), new Quaternion());
         bullet2.GetComponent<Rigidbody2D>().velocity = (new Vector2(0, -1) * bulletSpeed);
         Destroy(bullet2, bulletLifetime);
 
         //Bullets going right
-        GameObject bullet3 = Instantiate(BulletObject, new Vector2(this.transform.position.x + 0.5f, this.transform.position.y + 0.25f), new Quaternion());
+        GameObject bullet3 = Instantiate(BulletPrefab, new Vector2(this.transform.position.x + 0.5f, this.transform.position.y + 0.25f), new Quaternion());
         bullet3.GetComponent<Rigidbody2D>().velocity = (new Vector2(1, 0) * bulletSpeed);
         Destroy(bullet3, bulletLifetime);
-        GameObject bullet4 = Instantiate(BulletObject, new Vector2(this.transform.position.x + 0.5f, this.transform.position.y - 0.25f), new Quaternion());
+        GameObject bullet4 = Instantiate(BulletPrefab, new Vector2(this.transform.position.x + 0.5f, this.transform.position.y - 0.25f), new Quaternion());
         bullet4.GetComponent<Rigidbody2D>().velocity = (new Vector2(1, 0) * bulletSpeed);
         Destroy(bullet4, bulletLifetime);
 
         //Bullets going left
-        GameObject bullet5 = Instantiate(BulletObject, new Vector2(this.transform.position.x - 0.5f, this.transform.position.y + 0.25f), new Quaternion());
+        GameObject bullet5 = Instantiate(BulletPrefab, new Vector2(this.transform.position.x - 0.5f, this.transform.position.y + 0.25f), new Quaternion());
         bullet5.GetComponent<Rigidbody2D>().velocity = (new Vector2(-1, 0) * bulletSpeed);
         Destroy(bullet5, bulletLifetime);
-        GameObject bullet6 = Instantiate(BulletObject, new Vector2(this.transform.position.x - 0.5f, this.transform.position.y - 0.25f), new Quaternion());
+        GameObject bullet6 = Instantiate(BulletPrefab, new Vector2(this.transform.position.x - 0.5f, this.transform.position.y - 0.25f), new Quaternion());
         bullet6.GetComponent<Rigidbody2D>().velocity = (new Vector2(-1, 0) * bulletSpeed);
         Destroy(bullet6, bulletLifetime);
     }
     private void shoot_hawk()
     {
         //Bullet going up
-        GameObject bullet1 = Instantiate(BulletObject, new Vector2(this.transform.position.x, this.transform.position.y + 0.5f), new Quaternion());
+        GameObject bullet1 = Instantiate(BulletPrefab, new Vector2(this.transform.position.x, this.transform.position.y + 0.5f), new Quaternion());
         bullet1.GetComponent<Rigidbody2D>().velocity = (new Vector2(0, 1) * bulletSpeed);
         Destroy(bullet1, bulletLifetime);
     }
     private void shoot_challenger()
     {
         //Bullets going right
-        GameObject bullet1 = Instantiate(BulletObject, new Vector2(this.transform.position.x + 0.5f, this.transform.position.y + 0.4f), new Quaternion());
+        GameObject bullet1 = Instantiate(BulletPrefab, new Vector2(this.transform.position.x + 0.5f, this.transform.position.y + 0.4f), new Quaternion());
         bullet1.GetComponent<Rigidbody2D>().velocity = (new Vector2(1, 0) * bulletSpeed);
         Destroy(bullet1, bulletLifetime);
-        GameObject bullet2 = Instantiate(BulletObject, new Vector2(this.transform.position.x + 0.5f, this.transform.position.y + 0.2f), new Quaternion());
+        GameObject bullet2 = Instantiate(BulletPrefab, new Vector2(this.transform.position.x + 0.5f, this.transform.position.y + 0.2f), new Quaternion());
         bullet2.GetComponent<Rigidbody2D>().velocity = (new Vector2(1, 0) * bulletSpeed);
         Destroy(bullet2, bulletLifetime);
-        GameObject bullet3 = Instantiate(BulletObject, new Vector2(this.transform.position.x + 0.5f, this.transform.position.y), new Quaternion());
+        GameObject bullet3 = Instantiate(BulletPrefab, new Vector2(this.transform.position.x + 0.5f, this.transform.position.y), new Quaternion());
         bullet3.GetComponent<Rigidbody2D>().velocity = (new Vector2(1, 0) * bulletSpeed);
         Destroy(bullet3, bulletLifetime);
-        GameObject bullet4 = Instantiate(BulletObject, new Vector2(this.transform.position.x + 0.5f, this.transform.position.y - 0.2f), new Quaternion());
+        GameObject bullet4 = Instantiate(BulletPrefab, new Vector2(this.transform.position.x + 0.5f, this.transform.position.y - 0.2f), new Quaternion());
         bullet4.GetComponent<Rigidbody2D>().velocity = (new Vector2(1, 0) * bulletSpeed);
         Destroy(bullet4, bulletLifetime);
-        GameObject bullet5 = Instantiate(BulletObject, new Vector2(this.transform.position.x + 0.5f, this.transform.position.y - 0.4f), new Quaternion());
+        GameObject bullet5 = Instantiate(BulletPrefab, new Vector2(this.transform.position.x + 0.5f, this.transform.position.y - 0.4f), new Quaternion());
         bullet5.GetComponent<Rigidbody2D>().velocity = (new Vector2(1, 0) * bulletSpeed);
         Destroy(bullet5, bulletLifetime);
     }
     private void shoot_goliath()
     {
         //Bullets going right
-        GameObject bullet1 = Instantiate(BulletObject, new Vector2(this.transform.position.x + 0.5f, this.transform.position.y + 0.3f), new Quaternion());
+        GameObject bullet1 = Instantiate(BulletPrefab, new Vector2(this.transform.position.x + 0.5f, this.transform.position.y + 0.3f), new Quaternion());
         bullet1.GetComponent<Rigidbody2D>().velocity = (new Vector2(1, 0) * bulletSpeed);
         Destroy(bullet1, bulletLifetime);
-        GameObject bullet2 = Instantiate(BulletObject, new Vector2(this.transform.position.x + 0.5f, this.transform.position.y + 0.1f), new Quaternion());
+        GameObject bullet2 = Instantiate(BulletPrefab, new Vector2(this.transform.position.x + 0.5f, this.transform.position.y + 0.1f), new Quaternion());
         bullet2.GetComponent<Rigidbody2D>().velocity = (new Vector2(1, 0) * bulletSpeed);
         Destroy(bullet2, bulletLifetime);
-        GameObject bullet3 = Instantiate(BulletObject, new Vector2(this.transform.position.x + 0.5f, this.transform.position.y - 0.1f), new Quaternion());
+        GameObject bullet3 = Instantiate(BulletPrefab, new Vector2(this.transform.position.x + 0.5f, this.transform.position.y - 0.1f), new Quaternion());
         bullet3.GetComponent<Rigidbody2D>().velocity = (new Vector2(1, 0) * bulletSpeed);
         Destroy(bullet3, bulletLifetime);
-        GameObject bullet4 = Instantiate(BulletObject, new Vector2(this.transform.position.x + 0.5f, this.transform.position.y - 0.3f), new Quaternion());
+        GameObject bullet4 = Instantiate(BulletPrefab, new Vector2(this.transform.position.x + 0.5f, this.transform.position.y - 0.3f), new Quaternion());
         bullet4.GetComponent<Rigidbody2D>().velocity = (new Vector2(1, 0) * bulletSpeed);
         Destroy(bullet4, bulletLifetime);
 
         //Bullets going left
-        GameObject bullet5 = Instantiate(BulletObject, new Vector2(this.transform.position.x - 0.5f, this.transform.position.y + 0.3f), new Quaternion());
+        GameObject bullet5 = Instantiate(BulletPrefab, new Vector2(this.transform.position.x - 0.5f, this.transform.position.y + 0.3f), new Quaternion());
         bullet5.GetComponent<Rigidbody2D>().velocity = (new Vector2(-1, 0) * bulletSpeed);
         Destroy(bullet5, bulletLifetime);
-        GameObject bullet6 = Instantiate(BulletObject, new Vector2(this.transform.position.x - 0.5f, this.transform.position.y + 0.1f), new Quaternion());
+        GameObject bullet6 = Instantiate(BulletPrefab, new Vector2(this.transform.position.x - 0.5f, this.transform.position.y + 0.1f), new Quaternion());
         bullet6.GetComponent<Rigidbody2D>().velocity = (new Vector2(-1, 0) * bulletSpeed);
         Destroy(bullet6, bulletLifetime);
-        GameObject bullet7 = Instantiate(BulletObject, new Vector2(this.transform.position.x - 0.5f, this.transform.position.y - 0.1f), new Quaternion());
+        GameObject bullet7 = Instantiate(BulletPrefab, new Vector2(this.transform.position.x - 0.5f, this.transform.position.y - 0.1f), new Quaternion());
         bullet7.GetComponent<Rigidbody2D>().velocity = (new Vector2(-1, 0) * bulletSpeed);
         Destroy(bullet7, bulletLifetime);
-        GameObject bullet8 = Instantiate(BulletObject, new Vector2(this.transform.position.x - 0.5f, this.transform.position.y - 0.3f), new Quaternion());
+        GameObject bullet8 = Instantiate(BulletPrefab, new Vector2(this.transform.position.x - 0.5f, this.transform.position.y - 0.3f), new Quaternion());
         bullet8.GetComponent<Rigidbody2D>().velocity = (new Vector2(-1, 0) * bulletSpeed);
         Destroy(bullet8, bulletLifetime);
     }
     private void shoot_lightning()
     {
         //Bullets going up
-        GameObject bullet1 = Instantiate(BulletObject, new Vector2(this.transform.position.x + 0.25f, this.transform.position.y + 0.5f), new Quaternion());
+        GameObject bullet1 = Instantiate(BulletPrefab, new Vector2(this.transform.position.x + 0.25f, this.transform.position.y + 0.5f), new Quaternion());
         bullet1.GetComponent<Rigidbody2D>().velocity = (new Vector2(0, 1) * bulletSpeed);
         Destroy(bullet1, bulletLifetime);
-        GameObject bullet2 = Instantiate(BulletObject, new Vector2(this.transform.position.x - 0.25f, this.transform.position.y + 0.5f), new Quaternion());
+        GameObject bullet2 = Instantiate(BulletPrefab, new Vector2(this.transform.position.x - 0.25f, this.transform.position.y + 0.5f), new Quaternion());
         bullet2.GetComponent<Rigidbody2D>().velocity = (new Vector2(0, 1) * bulletSpeed);
         Destroy(bullet2, bulletLifetime);
     }
@@ -226,7 +217,7 @@ public class Ship_Shooting : MonoBehaviour
         //Bullet going up
         if(bulletsShotCounter_Drone == 0)
         {
-            GameObject bullet1 = Instantiate(BulletObject, new Vector2(this.transform.position.x, this.transform.position.y + 0.5f), new Quaternion());
+            GameObject bullet1 = Instantiate(BulletPrefab, new Vector2(this.transform.position.x, this.transform.position.y + 0.5f), new Quaternion());
             bullet1.GetComponent<Rigidbody2D>().velocity = (new Vector2(0, 1) * bulletSpeed);
             Destroy(bullet1, bulletLifetime);
         }
@@ -234,7 +225,7 @@ public class Ship_Shooting : MonoBehaviour
         //Bullet going down
         if (bulletsShotCounter_Drone == 2)
         {
-            GameObject bullet2 = Instantiate(BulletObject, new Vector2(this.transform.position.x, this.transform.position.y - 0.5f), new Quaternion());
+            GameObject bullet2 = Instantiate(BulletPrefab, new Vector2(this.transform.position.x, this.transform.position.y - 0.5f), new Quaternion());
             bullet2.GetComponent<Rigidbody2D>().velocity = (new Vector2(0, -1) * bulletSpeed);
             Destroy(bullet2, bulletLifetime);
         }
@@ -242,7 +233,7 @@ public class Ship_Shooting : MonoBehaviour
         //Bullet going right
         if (bulletsShotCounter_Drone == 1)
         {
-            GameObject bullet3 = Instantiate(BulletObject, new Vector2(this.transform.position.x + 0.5f, this.transform.position.y), new Quaternion());
+            GameObject bullet3 = Instantiate(BulletPrefab, new Vector2(this.transform.position.x + 0.5f, this.transform.position.y), new Quaternion());
             bullet3.GetComponent<Rigidbody2D>().velocity = (new Vector2(1, 0) * bulletSpeed);
             Destroy(bullet3, bulletLifetime);
         }
@@ -250,7 +241,7 @@ public class Ship_Shooting : MonoBehaviour
         //Bullet going left
         if (bulletsShotCounter_Drone == 3)
         {
-            GameObject bullet4 = Instantiate(BulletObject, new Vector2(this.transform.position.x - 0.5f, this.transform.position.y), new Quaternion());
+            GameObject bullet4 = Instantiate(BulletPrefab, new Vector2(this.transform.position.x - 0.5f, this.transform.position.y), new Quaternion());
             bullet4.GetComponent<Rigidbody2D>().velocity = (new Vector2(-1, 0) * bulletSpeed);
             Destroy(bullet4, bulletLifetime);
         }
@@ -258,12 +249,12 @@ public class Ship_Shooting : MonoBehaviour
     private void shoot_scout()
     {
         //Bullet going up
-        GameObject bullet1 = Instantiate(BulletObject, new Vector2(this.transform.position.x, this.transform.position.y + 0.5f), new Quaternion());
+        GameObject bullet1 = Instantiate(BulletPrefab, new Vector2(this.transform.position.x, this.transform.position.y + 0.5f), new Quaternion());
         bullet1.GetComponent<Rigidbody2D>().velocity = (new Vector2(0, 1) * bulletSpeed);
         Destroy(bullet1, bulletLifetime);
 
         //Bullet going down
-        GameObject bullet2 = Instantiate(BulletObject, new Vector2(this.transform.position.x, this.transform.position.y - 0.5f), new Quaternion());
+        GameObject bullet2 = Instantiate(BulletPrefab, new Vector2(this.transform.position.x, this.transform.position.y - 0.5f), new Quaternion());
         bullet2.GetComponent<Rigidbody2D>().velocity = (new Vector2(0, -1) * bulletSpeed);
         Destroy(bullet2, bulletLifetime);
     }
