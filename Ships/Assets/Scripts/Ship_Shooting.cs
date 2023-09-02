@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 
-public class Ship_Shooting : MonoBehaviour
+public class Ship_Shooting : NetworkBehaviour
 {
 
     Ship.shipTypes typeOfShip;
@@ -74,6 +75,9 @@ public class Ship_Shooting : MonoBehaviour
     int counter = 0;
     void FixedUpdate()
     {
+        if (!IsHost)
+           return;
+
         counter++;
         if (counter >= 50f / bulletsPerSecond)
         {
@@ -124,18 +128,18 @@ public class Ship_Shooting : MonoBehaviour
     private void shoot_destroyer()
     {
         //Bullet going up
-        createBullet(0f, 0.5f, 0, 1);
+        createBullet(0f, 2.5f, 0, 1);
 
         //Bullet going down
-        createBullet(0f, -0.5f, 0, -1);
+        createBullet(0f, -2.5f, 0, -1);
 
         //Bullets going right
-        createBullet(0.5f, 0.25f, 1, 0);
-        createBullet(0.5f, -0.25f, 1, 0);
+        createBullet(1.0f, 0.75f, 1, 0);
+        createBullet(1.0f, -0.75f, 1, 0);
 
         //Bullets going left
-        createBullet(-0.5f, 0.25f, -1, 0);
-        createBullet(-0.5f, -0.25f, -1, 0);
+        createBullet(-1.0f, 0.75f, -1, 0);
+        createBullet(-1.0f, -0.75f, -1, 0);
     }
     private void shoot_hawk()
     {
@@ -210,6 +214,7 @@ public class Ship_Shooting : MonoBehaviour
             bullet.GetComponent<SpriteRenderer>().color = Color.blue;
         else
             bullet.GetComponent<SpriteRenderer>().color = Color.black;
+        bullet.GetComponent<NetworkObject>().Spawn(true);
         Destroy(bullet, bulletLifetime);
     }
 }
