@@ -27,7 +27,6 @@ public class ShipMovement : MonoBehaviour
 
     Ship ship;
 
-    [SerializeField] float turnRate;
     [SerializeField] float distToStop;
 
 
@@ -35,7 +34,6 @@ public class ShipMovement : MonoBehaviour
     void Start()
     {
         noTarget = true;
-        turnRate = 40f;
         distToStop = 3f; 
         ship = transform.GetComponent<Ship>();
     }
@@ -66,11 +64,11 @@ public class ShipMovement : MonoBehaviour
         {
             if (angle > 0)
             {
-                transform.Rotate(0, 0, -turnRate * Time.deltaTime);
+                transform.Rotate(0, 0, -ship.getShipTurnRate() * Time.deltaTime);
             }
             else
             {
-                transform.Rotate(0, 0, turnRate * Time.deltaTime);
+                transform.Rotate(0, 0, ship.getShipTurnRate() * Time.deltaTime);
             }
         }
         else if (MathF.Abs(angle) > 1)
