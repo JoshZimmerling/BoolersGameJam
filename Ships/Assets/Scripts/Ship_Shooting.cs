@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 
-public class Ship_Shooting : MonoBehaviour
+public class Ship_Shooting : NetworkBehaviour
 {
 
     Ship.shipTypes typeOfShip;
@@ -74,6 +75,9 @@ public class Ship_Shooting : MonoBehaviour
     int counter = 0;
     void FixedUpdate()
     {
+        if (!IsHost)
+            return;
+
         counter++;
         if (counter >= 50f / bulletsPerSecond)
         {
@@ -210,6 +214,7 @@ public class Ship_Shooting : MonoBehaviour
             bullet.GetComponent<SpriteRenderer>().color = Color.blue;
         else
             bullet.GetComponent<SpriteRenderer>().color = Color.black;
+        bullet.GetComponent<NetworkObject>().Spawn(true);
         Destroy(bullet, bulletLifetime);
     }
 }
