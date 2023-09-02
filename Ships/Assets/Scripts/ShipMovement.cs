@@ -20,7 +20,6 @@ public class ShipMovement : MonoBehaviour
     public Vector2 path;
     public Vector2 up;
 
-    Boolean alignedWithTarget;
     Boolean noTarget;
 
     [SerializeField] float thrust;
@@ -32,10 +31,7 @@ public class ShipMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
-        alignedWithTarget = true;
         noTarget = true;
-        distToStop = maxVelocity / (50 * thrust);
     }
 
     private void FixedUpdate()
@@ -45,37 +41,53 @@ public class ShipMovement : MonoBehaviour
         angle = Vector2.SignedAngle(track, transform.up);
 
         path = (Vector2)transform.position - targetPos;
+        distToTarget = Vector2.Distance(transform.position, targetPos); 
+        
         up = transform.up; 
 
         if (noTarget) { return; }
 
-        if (distToTarget > distToStop) { return; }
 
-        if (!alignedWithTarget && MathF.Abs(angle) > 10)
+        if (distToTarget < 0.1) 
+        {
+            noTarget = true;
+            totalVelocity = 0;
+            return; 
+        }
+
+        if (MathF.Abs(angle) > 1)
         {
             if (angle > 0)
             {
-                transform.Rotate(0, 0, -20 * Time.deltaTime);
+                transform.Rotate(0, 0, -40 * Time.deltaTime);
             }
             else
             {
-                transform.Rotate(0, 0, 20 * Time.deltaTime);
+                transform.Rotate(0, 0, 40 * Time.deltaTime);
             }
-            totalVelocity = 0; 
         }
         else
         {
-            transform.rotation = Quaternion.LookRotation(Vector3.forward, targetPos - (Vector2) transform.position);
+            transform.rotation = Quaternion.LookRotation(Vector3.forward, targetPos - (Vector2)transform.position);
+        }
 
+        if (Mathf.Abs(angle) > 45)
+        {
+            return;
+        }
+        
+        if (distToTarget < distToStop)
+        {
+            transform.Translate(Vector2.up * distToTarget * Time.deltaTime);
+        }
+        else
+        {
             totalVelocity += thrust;
             if (totalVelocity > maxVelocity)
             {
                 totalVelocity = maxVelocity;
             }
-
-            Debug.Log(transform.up * totalVelocity * Time.deltaTime);
             transform.Translate(Vector2.up * totalVelocity * Time.deltaTime);
-            
         }
 
 
@@ -113,7 +125,6 @@ public class ShipMovement : MonoBehaviour
 
     public void setTargetDestination(Vector2 target)
     {
-        alignedWithTarget = false;
         noTarget = false;   
         targetPos = target;
     }
