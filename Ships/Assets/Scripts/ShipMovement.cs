@@ -2,12 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bullet : MonoBehaviour
+public class ShipMovement : MonoBehaviour
 {
-    float dmg;
 
-    [SerializeField] GameObject BulletObject;
+    Vector2 targetPos;
+    
+    float currentSpeed;
+    float acceleration;
 
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -18,10 +21,5 @@ public class Bullet : MonoBehaviour
     void Update()
     {
         
-    }
-
-    public void createBullet(float spd, float time, float damage, Vector2 velo)
-    {
-
     }
 }
