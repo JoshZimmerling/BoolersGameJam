@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Netcode;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Ship_Shooting : NetworkBehaviour
@@ -17,6 +18,15 @@ public class Ship_Shooting : NetworkBehaviour
     int bulletsShotCounter_Drone = 0;
 
     [SerializeField] GameObject BulletPrefab;
+    [SerializeField] List<GameObject> spawnPointList;
+
+    public enum shotDirection
+    {
+        Right,
+        Left,
+        Up,
+        Down
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -88,124 +98,60 @@ public class Ship_Shooting : NetworkBehaviour
 
     private void shootBullet()
     {
-        switch (typeOfShip)
+        if (spawnPointList.Count != 0)
         {
-            case (Ship.shipTypes.Destroyer):
-                shoot_destroyer();
-                break;
-
-            case (Ship.shipTypes.Hawk):
-                shoot_hawk();
-                break;
-
-            case (Ship.shipTypes.Challenger):
-                shoot_challenger();
-                break;
-
-            case (Ship.shipTypes.Goliath):
-                shoot_goliath();
-                break;
-
-            case (Ship.shipTypes.Lightning):
-                shoot_lightning();
-                break;
-
-            case (Ship.shipTypes.Drone):
-                shoot_drone();
+            if (typeOfShip == Ship.shipTypes.Drone)
+            {
                 bulletsShotCounter_Drone++;
-                if(bulletsShotCounter_Drone == 4)
+                if (bulletsShotCounter_Drone == 4)
                 {
                     bulletsShotCounter_Drone = 0;
                 }
-                break;
 
-            case (Ship.shipTypes.Scout):
-                shoot_scout();
-                break;
+                //Bullet going up
+                if (bulletsShotCounter_Drone == 0)
+                    createBullet(shotDirection.Up, spawnPointList[0]);
+
+                //Bullet going right
+                if (bulletsShotCounter_Drone == 1)
+                    createBullet(shotDirection.Right, spawnPointList[1]);
+
+                //Bullet going down
+                if (bulletsShotCounter_Drone == 2)
+                    createBullet(shotDirection.Down, spawnPointList[2]);
+
+                //Bullet going left
+                if (bulletsShotCounter_Drone == 3)
+                    createBullet(shotDirection.Left, spawnPointList[3]);
+            }
+            else
+            {
+                for (int i = 0; i < spawnPointList.Count; i++)
+                {
+                    createBullet(spawnPointList[i].GetComponent<Bullet_Spawn_Points>().GetDirection(), spawnPointList[i]);
+                }
+            }
         }
     }
 
-    private void shoot_destroyer()
+    private void createBullet(shotDirection dir, GameObject spawnPoint)
     {
-        //Bullet going up
-        createBullet(0f, 2.5f, 0, 1);
-
-        //Bullet going down
-        createBullet(0f, -2.5f, 0, -1);
-
-        //Bullets going right
-        createBullet(1.0f, 0.75f, 1, 0);
-        createBullet(1.0f, -0.75f, 1, 0);
-
-        //Bullets going left
-        createBullet(-1.0f, 0.75f, -1, 0);
-        createBullet(-1.0f, -0.75f, -1, 0);
-    }
-    private void shoot_hawk()
-    {
-        //Bullet going up
-        createBullet(0f, 2.0f, 0, 1);
-    }
-    private void shoot_challenger()
-    {
-        //Bullets going right
-        createBullet(1.0f, 1.0f, 1, 0);
-        createBullet(1.0f, 0.5f, 1, 0);
-        createBullet(1.0f, 0f, 1, 0);
-        createBullet(1.0f, -0.5f, 1, 0);
-        createBullet(1.0f, -1.0f, 1, 0);
-    }
-    private void shoot_goliath()
-    {
-        //Bullets going right
-        createBullet(1.5f, 2.25f, 1, 0);
-        createBullet(1.5f, 0.75f, 1, 0);
-        createBullet(1.5f, -0.75f, 1, 0);
-        createBullet(1.5f, -2.25f, 1, 0);
-
-        //Bullets going left
-        createBullet(-1.5f, 2.25f, -1, 0);
-        createBullet(-1.5f, 0.75f, -1, 0);
-        createBullet(-1.5f, -0.75f, -1, 0);
-        createBullet(-1.5f, -2.25f, -1, 0);
-    }
-    private void shoot_lightning()
-    {
-        //Bullets going up
-        createBullet(0.25f, 2.0f, 0, 1);
-        createBullet(-0.25f, 2.0f, 0, 1);
-    }
-    private void shoot_drone()
-    {
-        //Bullet going up
-        if(bulletsShotCounter_Drone == 0)
-            createBullet(0f, 1.5f, 0, 1);
-
-        //Bullet going down
-        if (bulletsShotCounter_Drone == 2)
-            createBullet(0f, -1.5f, 0, -1);
-
-        //Bullet going right
-        if (bulletsShotCounter_Drone == 1)
-            createBullet(1.5f, 0f, 1, 0);
-
-        //Bullet going left
-        if (bulletsShotCounter_Drone == 3)
-            createBullet(-1.5f, 0f, -1, 0);
-    }
-    private void shoot_scout()
-    {
-        //Bullet going up
-        createBullet(0f, 1.5f, 0, 1);
-
-        //Bullet going down
-        createBullet(0f, -1.5f, 0, -1);
-    }
-
-    private void createBullet(float xOffset, float yOffset, int xVelo, int yVelo)
-    {
-        GameObject bullet = Instantiate(BulletPrefab, new Vector3(this.transform.position.x + xOffset, this.transform.position.y + yOffset, -1), new Quaternion());
-        bullet.GetComponent<Rigidbody2D>().velocity = (transform.rotation * new Vector2(xVelo, yVelo) * bulletSpeed);
+        GameObject bullet = Instantiate(BulletPrefab, spawnPoint.transform.position + new Vector3(0, 0, -1), new Quaternion());
+        switch (dir)
+        {
+            case shotDirection.Right:
+                bullet.GetComponent<Rigidbody2D>().velocity = (transform.rotation * new Vector2(1, 0) * bulletSpeed);
+                break;
+            case shotDirection.Left:
+                bullet.GetComponent<Rigidbody2D>().velocity = (transform.rotation * new Vector2(-1, 0) * bulletSpeed);
+                break;
+            case shotDirection.Up:
+                bullet.GetComponent<Rigidbody2D>().velocity = (transform.rotation * new Vector2(0, 1) * bulletSpeed);
+                break;
+            case shotDirection.Down:
+                bullet.GetComponent<Rigidbody2D>().velocity = (transform.rotation * new Vector2(0, -1) * bulletSpeed);
+                break;
+        }
         bullet.GetComponent<Bullet>().setDamage(bulletDamage);
         bullet.GetComponent<Bullet>().setParentPlayerNum(parentPlayerNum);
         if(parentPlayerNum == 1)
