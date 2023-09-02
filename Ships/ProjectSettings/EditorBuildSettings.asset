@@ -8,4 +8,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MultiplayerSetup.unity
     guid: 6c7f3cbfe33638a44b492d342d2e2711
+  - enabled: 1
+    path: Assets/Scenes/settyBrokeScene.unity
+    guid: aed22d1ceca4b854e84af47fc4c2ff80
   m_configObjects: {}

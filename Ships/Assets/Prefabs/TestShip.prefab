@@ -94,7 +94,6 @@ GameObject:
   m_Component:
   - component: {fileID: 252862705856115429}
   - component: {fileID: 8665867869774885364}
-  - component: {fileID: 7043188617046577203}
   - component: {fileID: 8630100227411751411}
   - component: {fileID: 3223551635667858894}
   - component: {fileID: 8844631469507984760}
@@ -173,33 +172,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!50 &7043188617046577203
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3209773591742264031}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
 --- !u!114 &8630100227411751411
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -238,6 +210,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ddcc5185b0555044b99e0ecb8647e29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetPos: {x: 0, y: 0}
+  angle: 0
+  totalVelocity: 0
+  track: {x: 0, y: 0}
+  timeToStop: 1
+  distToTarget: 0
+  secondsToSlow: 0
+  force: 0
+  path: {x: 0, y: 0}
+  up: {x: 0, y: 0}
   thrust: 0.1
-  currentSpeed: 0
-  maxSpeed: 1
+  maxVelocity: 3
+  distToStop: 0.02

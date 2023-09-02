@@ -21,9 +21,10 @@ public class PlayerController : NetworkBehaviour
     void Update()
     {
         // Only can be controlled by owner
-        if (!IsOwner)
-            return;
+/*        if (!IsOwner)
+            return;*/
 
+        Debug.Log("guh2");
         // Test code, remove later
         Vector3 moveDir = new Vector3(0, 0, 0);
         if (Input.GetKey("w")) moveDir.y += 1f;
