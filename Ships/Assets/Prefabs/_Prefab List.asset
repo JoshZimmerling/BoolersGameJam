@@ -10,17 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e651dbb3fbac04af2b8f5abf007ddc23, type: 3}
-  m_Name: Prefab List
+  m_Name: _Prefab List
   m_EditorClassIdentifier: 
   IsDefault: 0
   List:
   - Override: 0
     Prefab: {fileID: 7904982975839777911, guid: f83b78019fcd31c409231487925b71db, type: 3}
-    SourcePrefabToOverride: {fileID: 0}
-    SourceHashToOverride: 0
-    OverridingTargetPrefab: {fileID: 0}
-  - Override: 0
-    Prefab: {fileID: 3209773591742264031, guid: 911b5376bdf6edd4b8c198ab72d6a8ff, type: 3}
     SourcePrefabToOverride: {fileID: 0}
     SourceHashToOverride: 0
     OverridingTargetPrefab: {fileID: 0}
