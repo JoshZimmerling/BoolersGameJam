@@ -6,6 +6,7 @@ public class Ship_Shooting : MonoBehaviour
 {
 
     Ship.shipTypes typeOfShip;
+    int parentPlayerNum;
 
     float bulletLifetime; 
     float bulletSpeed;
@@ -20,7 +21,9 @@ public class Ship_Shooting : MonoBehaviour
     void Start()
     {
         typeOfShip = this.gameObject.GetComponent<Ship>().getShipType();
-        switch(typeOfShip)
+        parentPlayerNum = this.gameObject.GetComponent<Ship>().getPlayerNum();
+
+        switch (typeOfShip)
         {
             case (Ship.shipTypes.Destroyer):
                 bulletLifetime = 2f;
@@ -122,94 +125,138 @@ public class Ship_Shooting : MonoBehaviour
     {
         //Bullet going up
         GameObject bullet1 = Instantiate(BulletPrefab, new Vector2(this.transform.position.x, this.transform.position.y + 0.5f), new Quaternion());
-        bullet1.GetComponent<Rigidbody2D>().velocity = (new Vector2(0, 1) * bulletSpeed);
+        bullet1.GetComponent<Rigidbody2D>().velocity = (transform.rotation * new Vector2(0, 1) * bulletSpeed);
+        bullet1.GetComponent<Bullet>().setDamage(bulletDamage);
+        bullet1.GetComponent<Bullet>().setParentPlayerNum(parentPlayerNum);
         Destroy(bullet1, bulletLifetime);
 
         //Bullet going down
         GameObject bullet2 = Instantiate(BulletPrefab, new Vector2(this.transform.position.x, this.transform.position.y - 0.5f), new Quaternion());
-        bullet2.GetComponent<Rigidbody2D>().velocity = (new Vector2(0, -1) * bulletSpeed);
+        bullet2.GetComponent<Rigidbody2D>().velocity = (transform.rotation * new Vector2(0, -1) * bulletSpeed);
+        bullet2.GetComponent<Bullet>().setDamage(bulletDamage);
+        bullet2.GetComponent<Bullet>().setParentPlayerNum(parentPlayerNum);
         Destroy(bullet2, bulletLifetime);
 
         //Bullets going right
         GameObject bullet3 = Instantiate(BulletPrefab, new Vector2(this.transform.position.x + 0.5f, this.transform.position.y + 0.25f), new Quaternion());
-        bullet3.GetComponent<Rigidbody2D>().velocity = (new Vector2(1, 0) * bulletSpeed);
+        bullet3.GetComponent<Rigidbody2D>().velocity = (transform.rotation * new Vector2(1, 0) * bulletSpeed);
+        bullet3.GetComponent<Bullet>().setDamage(bulletDamage);
+        bullet3.GetComponent<Bullet>().setParentPlayerNum(parentPlayerNum);
         Destroy(bullet3, bulletLifetime);
         GameObject bullet4 = Instantiate(BulletPrefab, new Vector2(this.transform.position.x + 0.5f, this.transform.position.y - 0.25f), new Quaternion());
-        bullet4.GetComponent<Rigidbody2D>().velocity = (new Vector2(1, 0) * bulletSpeed);
+        bullet4.GetComponent<Rigidbody2D>().velocity = (transform.rotation * new Vector2(1, 0) * bulletSpeed);
+        bullet4.GetComponent<Bullet>().setDamage(bulletDamage);
+        bullet4.GetComponent<Bullet>().setParentPlayerNum(parentPlayerNum);
         Destroy(bullet4, bulletLifetime);
 
         //Bullets going left
         GameObject bullet5 = Instantiate(BulletPrefab, new Vector2(this.transform.position.x - 0.5f, this.transform.position.y + 0.25f), new Quaternion());
-        bullet5.GetComponent<Rigidbody2D>().velocity = (new Vector2(-1, 0) * bulletSpeed);
+        bullet5.GetComponent<Rigidbody2D>().velocity = (transform.rotation * new Vector2(-1, 0) * bulletSpeed);
+        bullet5.GetComponent<Bullet>().setDamage(bulletDamage);
+        bullet5.GetComponent<Bullet>().setParentPlayerNum(parentPlayerNum);
         Destroy(bullet5, bulletLifetime);
         GameObject bullet6 = Instantiate(BulletPrefab, new Vector2(this.transform.position.x - 0.5f, this.transform.position.y - 0.25f), new Quaternion());
-        bullet6.GetComponent<Rigidbody2D>().velocity = (new Vector2(-1, 0) * bulletSpeed);
+        bullet6.GetComponent<Rigidbody2D>().velocity = (transform.rotation * new Vector2(-1, 0) * bulletSpeed);
+        bullet6.GetComponent<Bullet>().setDamage(bulletDamage);
+        bullet6.GetComponent<Bullet>().setParentPlayerNum(parentPlayerNum);
         Destroy(bullet6, bulletLifetime);
     }
     private void shoot_hawk()
     {
         //Bullet going up
         GameObject bullet1 = Instantiate(BulletPrefab, new Vector2(this.transform.position.x, this.transform.position.y + 0.5f), new Quaternion());
-        bullet1.GetComponent<Rigidbody2D>().velocity = (new Vector2(0, 1) * bulletSpeed);
+        bullet1.GetComponent<Rigidbody2D>().velocity = (transform.rotation * new Vector2(0, 1) * bulletSpeed);
+        bullet1.GetComponent<Bullet>().setDamage(bulletDamage);
+        bullet1.GetComponent<Bullet>().setParentPlayerNum(parentPlayerNum);
         Destroy(bullet1, bulletLifetime);
     }
     private void shoot_challenger()
     {
         //Bullets going right
         GameObject bullet1 = Instantiate(BulletPrefab, new Vector2(this.transform.position.x + 0.5f, this.transform.position.y + 0.4f), new Quaternion());
-        bullet1.GetComponent<Rigidbody2D>().velocity = (new Vector2(1, 0) * bulletSpeed);
+        bullet1.GetComponent<Rigidbody2D>().velocity = (transform.rotation * new Vector2(1, 0) * bulletSpeed);
+        bullet1.GetComponent<Bullet>().setDamage(bulletDamage);
+        bullet1.GetComponent<Bullet>().setParentPlayerNum(parentPlayerNum);
         Destroy(bullet1, bulletLifetime);
         GameObject bullet2 = Instantiate(BulletPrefab, new Vector2(this.transform.position.x + 0.5f, this.transform.position.y + 0.2f), new Quaternion());
-        bullet2.GetComponent<Rigidbody2D>().velocity = (new Vector2(1, 0) * bulletSpeed);
+        bullet2.GetComponent<Rigidbody2D>().velocity = (transform.rotation * new Vector2(1, 0) * bulletSpeed);
+        bullet2.GetComponent<Bullet>().setDamage(bulletDamage);
+        bullet2.GetComponent<Bullet>().setParentPlayerNum(parentPlayerNum);
         Destroy(bullet2, bulletLifetime);
         GameObject bullet3 = Instantiate(BulletPrefab, new Vector2(this.transform.position.x + 0.5f, this.transform.position.y), new Quaternion());
-        bullet3.GetComponent<Rigidbody2D>().velocity = (new Vector2(1, 0) * bulletSpeed);
+        bullet3.GetComponent<Rigidbody2D>().velocity = (transform.rotation * new Vector2(1, 0) * bulletSpeed);
+        bullet3.GetComponent<Bullet>().setDamage(bulletDamage);
+        bullet3.GetComponent<Bullet>().setParentPlayerNum(parentPlayerNum);
         Destroy(bullet3, bulletLifetime);
         GameObject bullet4 = Instantiate(BulletPrefab, new Vector2(this.transform.position.x + 0.5f, this.transform.position.y - 0.2f), new Quaternion());
-        bullet4.GetComponent<Rigidbody2D>().velocity = (new Vector2(1, 0) * bulletSpeed);
+        bullet4.GetComponent<Rigidbody2D>().velocity = (transform.rotation * new Vector2(1, 0) * bulletSpeed);
+        bullet4.GetComponent<Bullet>().setDamage(bulletDamage);
+        bullet4.GetComponent<Bullet>().setParentPlayerNum(parentPlayerNum);
         Destroy(bullet4, bulletLifetime);
         GameObject bullet5 = Instantiate(BulletPrefab, new Vector2(this.transform.position.x + 0.5f, this.transform.position.y - 0.4f), new Quaternion());
-        bullet5.GetComponent<Rigidbody2D>().velocity = (new Vector2(1, 0) * bulletSpeed);
+        bullet5.GetComponent<Rigidbody2D>().velocity = (transform.rotation * new Vector2(1, 0) * bulletSpeed);
+        bullet5.GetComponent<Bullet>().setDamage(bulletDamage);
+        bullet5.GetComponent<Bullet>().setParentPlayerNum(parentPlayerNum);
         Destroy(bullet5, bulletLifetime);
     }
     private void shoot_goliath()
     {
         //Bullets going right
         GameObject bullet1 = Instantiate(BulletPrefab, new Vector2(this.transform.position.x + 0.5f, this.transform.position.y + 0.3f), new Quaternion());
-        bullet1.GetComponent<Rigidbody2D>().velocity = (new Vector2(1, 0) * bulletSpeed);
+        bullet1.GetComponent<Rigidbody2D>().velocity = (transform.rotation * new Vector2(1, 0) * bulletSpeed);
+        bullet1.GetComponent<Bullet>().setDamage(bulletDamage);
+        bullet1.GetComponent<Bullet>().setParentPlayerNum(parentPlayerNum);
         Destroy(bullet1, bulletLifetime);
         GameObject bullet2 = Instantiate(BulletPrefab, new Vector2(this.transform.position.x + 0.5f, this.transform.position.y + 0.1f), new Quaternion());
-        bullet2.GetComponent<Rigidbody2D>().velocity = (new Vector2(1, 0) * bulletSpeed);
+        bullet2.GetComponent<Rigidbody2D>().velocity = (transform.rotation * new Vector2(1, 0) * bulletSpeed);
+        bullet2.GetComponent<Bullet>().setDamage(bulletDamage);
+        bullet2.GetComponent<Bullet>().setParentPlayerNum(parentPlayerNum);
         Destroy(bullet2, bulletLifetime);
         GameObject bullet3 = Instantiate(BulletPrefab, new Vector2(this.transform.position.x + 0.5f, this.transform.position.y - 0.1f), new Quaternion());
-        bullet3.GetComponent<Rigidbody2D>().velocity = (new Vector2(1, 0) * bulletSpeed);
+        bullet3.GetComponent<Rigidbody2D>().velocity = (transform.rotation * new Vector2(1, 0) * bulletSpeed);
+        bullet3.GetComponent<Bullet>().setDamage(bulletDamage);
+        bullet3.GetComponent<Bullet>().setParentPlayerNum(parentPlayerNum);
         Destroy(bullet3, bulletLifetime);
         GameObject bullet4 = Instantiate(BulletPrefab, new Vector2(this.transform.position.x + 0.5f, this.transform.position.y - 0.3f), new Quaternion());
-        bullet4.GetComponent<Rigidbody2D>().velocity = (new Vector2(1, 0) * bulletSpeed);
+        bullet4.GetComponent<Rigidbody2D>().velocity = (transform.rotation * new Vector2(1, 0) * bulletSpeed);
+        bullet4.GetComponent<Bullet>().setDamage(bulletDamage);
+        bullet4.GetComponent<Bullet>().setParentPlayerNum(parentPlayerNum);
         Destroy(bullet4, bulletLifetime);
 
         //Bullets going left
         GameObject bullet5 = Instantiate(BulletPrefab, new Vector2(this.transform.position.x - 0.5f, this.transform.position.y + 0.3f), new Quaternion());
-        bullet5.GetComponent<Rigidbody2D>().velocity = (new Vector2(-1, 0) * bulletSpeed);
+        bullet5.GetComponent<Rigidbody2D>().velocity = (transform.rotation * new Vector2(-1, 0) * bulletSpeed);
+        bullet5.GetComponent<Bullet>().setDamage(bulletDamage);
+        bullet5.GetComponent<Bullet>().setParentPlayerNum(parentPlayerNum);
         Destroy(bullet5, bulletLifetime);
         GameObject bullet6 = Instantiate(BulletPrefab, new Vector2(this.transform.position.x - 0.5f, this.transform.position.y + 0.1f), new Quaternion());
-        bullet6.GetComponent<Rigidbody2D>().velocity = (new Vector2(-1, 0) * bulletSpeed);
+        bullet6.GetComponent<Rigidbody2D>().velocity = (transform.rotation * new Vector2(-1, 0) * bulletSpeed);
+        bullet6.GetComponent<Bullet>().setDamage(bulletDamage);
+        bullet6.GetComponent<Bullet>().setParentPlayerNum(parentPlayerNum);
         Destroy(bullet6, bulletLifetime);
         GameObject bullet7 = Instantiate(BulletPrefab, new Vector2(this.transform.position.x - 0.5f, this.transform.position.y - 0.1f), new Quaternion());
-        bullet7.GetComponent<Rigidbody2D>().velocity = (new Vector2(-1, 0) * bulletSpeed);
+        bullet7.GetComponent<Rigidbody2D>().velocity = (transform.rotation * new Vector2(-1, 0) * bulletSpeed);
+        bullet7.GetComponent<Bullet>().setDamage(bulletDamage);
+        bullet7.GetComponent<Bullet>().setParentPlayerNum(parentPlayerNum);
         Destroy(bullet7, bulletLifetime);
         GameObject bullet8 = Instantiate(BulletPrefab, new Vector2(this.transform.position.x - 0.5f, this.transform.position.y - 0.3f), new Quaternion());
-        bullet8.GetComponent<Rigidbody2D>().velocity = (new Vector2(-1, 0) * bulletSpeed);
+        bullet8.GetComponent<Rigidbody2D>().velocity = (transform.rotation * new Vector2(-1, 0) * bulletSpeed);
+        bullet8.GetComponent<Bullet>().setDamage(bulletDamage);
+        bullet8.GetComponent<Bullet>().setParentPlayerNum(parentPlayerNum);
         Destroy(bullet8, bulletLifetime);
     }
     private void shoot_lightning()
     {
         //Bullets going up
         GameObject bullet1 = Instantiate(BulletPrefab, new Vector2(this.transform.position.x + 0.25f, this.transform.position.y + 0.5f), new Quaternion());
-        bullet1.GetComponent<Rigidbody2D>().velocity = (new Vector2(0, 1) * bulletSpeed);
+        bullet1.GetComponent<Rigidbody2D>().velocity = (transform.rotation * new Vector2(0, 1) * bulletSpeed);
+        bullet1.GetComponent<Bullet>().setDamage(bulletDamage);
+        bullet1.GetComponent<Bullet>().setParentPlayerNum(parentPlayerNum);
         Destroy(bullet1, bulletLifetime);
         GameObject bullet2 = Instantiate(BulletPrefab, new Vector2(this.transform.position.x - 0.25f, this.transform.position.y + 0.5f), new Quaternion());
-        bullet2.GetComponent<Rigidbody2D>().velocity = (new Vector2(0, 1) * bulletSpeed);
+        bullet2.GetComponent<Rigidbody2D>().velocity = (transform.rotation * new Vector2(0, 1) * bulletSpeed);
+        bullet2.GetComponent<Bullet>().setDamage(bulletDamage);
+        bullet2.GetComponent<Bullet>().setParentPlayerNum(parentPlayerNum);
         Destroy(bullet2, bulletLifetime);
     }
     private void shoot_drone()
@@ -218,44 +265,56 @@ public class Ship_Shooting : MonoBehaviour
         if(bulletsShotCounter_Drone == 0)
         {
             GameObject bullet1 = Instantiate(BulletPrefab, new Vector2(this.transform.position.x, this.transform.position.y + 0.5f), new Quaternion());
-            bullet1.GetComponent<Rigidbody2D>().velocity = (new Vector2(0, 1) * bulletSpeed);
+            bullet1.GetComponent<Rigidbody2D>().velocity = (transform.rotation * new Vector2(0, 1) * bulletSpeed);
+            bullet1.GetComponent<Bullet>().setDamage(bulletDamage);
+            bullet1.GetComponent<Bullet>().setParentPlayerNum(parentPlayerNum);
             Destroy(bullet1, bulletLifetime);
         }
 
         //Bullet going down
         if (bulletsShotCounter_Drone == 2)
         {
-            GameObject bullet2 = Instantiate(BulletPrefab, new Vector2(this.transform.position.x, this.transform.position.y - 0.5f), new Quaternion());
-            bullet2.GetComponent<Rigidbody2D>().velocity = (new Vector2(0, -1) * bulletSpeed);
-            Destroy(bullet2, bulletLifetime);
+            GameObject bullet1 = Instantiate(BulletPrefab, new Vector2(this.transform.position.x, this.transform.position.y - 0.5f), new Quaternion());
+            bullet1.GetComponent<Rigidbody2D>().velocity = (transform.rotation * new Vector2(0, -1) * bulletSpeed);
+            bullet1.GetComponent<Bullet>().setDamage(bulletDamage);
+            bullet1.GetComponent<Bullet>().setParentPlayerNum(parentPlayerNum);
+            Destroy(bullet1, bulletLifetime);
         }
 
         //Bullet going right
         if (bulletsShotCounter_Drone == 1)
         {
-            GameObject bullet3 = Instantiate(BulletPrefab, new Vector2(this.transform.position.x + 0.5f, this.transform.position.y), new Quaternion());
-            bullet3.GetComponent<Rigidbody2D>().velocity = (new Vector2(1, 0) * bulletSpeed);
-            Destroy(bullet3, bulletLifetime);
+            GameObject bullet1 = Instantiate(BulletPrefab, new Vector2(this.transform.position.x + 0.5f, this.transform.position.y), new Quaternion());
+            bullet1.GetComponent<Rigidbody2D>().velocity = (transform.rotation * new Vector2(1, 0) * bulletSpeed);
+            bullet1.GetComponent<Bullet>().setDamage(bulletDamage);
+            bullet1.GetComponent<Bullet>().setParentPlayerNum(parentPlayerNum);
+            Destroy(bullet1, bulletLifetime);
         }
 
         //Bullet going left
         if (bulletsShotCounter_Drone == 3)
         {
-            GameObject bullet4 = Instantiate(BulletPrefab, new Vector2(this.transform.position.x - 0.5f, this.transform.position.y), new Quaternion());
-            bullet4.GetComponent<Rigidbody2D>().velocity = (new Vector2(-1, 0) * bulletSpeed);
-            Destroy(bullet4, bulletLifetime);
+            GameObject bullet1 = Instantiate(BulletPrefab, new Vector2(this.transform.position.x - 0.5f, this.transform.position.y), new Quaternion());
+            bullet1.GetComponent<Rigidbody2D>().velocity = (transform.rotation * new Vector2(-1, 0) * bulletSpeed);
+            bullet1.GetComponent<Bullet>().setDamage(bulletDamage);
+            bullet1.GetComponent<Bullet>().setParentPlayerNum(parentPlayerNum);
+            Destroy(bullet1, bulletLifetime);
         }
     }
     private void shoot_scout()
     {
         //Bullet going up
         GameObject bullet1 = Instantiate(BulletPrefab, new Vector2(this.transform.position.x, this.transform.position.y + 0.5f), new Quaternion());
-        bullet1.GetComponent<Rigidbody2D>().velocity = (new Vector2(0, 1) * bulletSpeed);
+        bullet1.GetComponent<Rigidbody2D>().velocity = (transform.rotation * new Vector2(0, 1) * bulletSpeed);
+        bullet1.GetComponent<Bullet>().setDamage(bulletDamage);
+        bullet1.GetComponent<Bullet>().setParentPlayerNum(parentPlayerNum);
         Destroy(bullet1, bulletLifetime);
 
         //Bullet going down
         GameObject bullet2 = Instantiate(BulletPrefab, new Vector2(this.transform.position.x, this.transform.position.y - 0.5f), new Quaternion());
-        bullet2.GetComponent<Rigidbody2D>().velocity = (new Vector2(0, -1) * bulletSpeed);
+        bullet2.GetComponent<Rigidbody2D>().velocity = (transform.rotation * new Vector2(0, -1) * bulletSpeed);
+        bullet2.GetComponent<Bullet>().setDamage(bulletDamage);
+        bullet2.GetComponent<Bullet>().setParentPlayerNum(parentPlayerNum);
         Destroy(bullet2, bulletLifetime);
     }
 }
