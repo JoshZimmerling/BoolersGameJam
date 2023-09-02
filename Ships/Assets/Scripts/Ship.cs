@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class Ship : MonoBehaviour
 {
-    float bulletSpeed = 1;
-    float bulletLifetime = 1;
-    float bulletDamage;
+    [SerializeField] float bulletSpeed;
+    [SerializeField] float bulletLifetime;
+    [SerializeField] float bulletDamage;
+    [Range(0.0f, 25.0f)] public float bulletsPerSecond;
 
     [SerializeField] GameObject BulletObject;
 
@@ -16,15 +17,23 @@ public class Ship : MonoBehaviour
         
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetKeyDown("space"))
-        {
-            GameObject bullet = Instantiate(BulletObject);
-            bullet.GetComponent<Rigidbody>().velocity = (new Vector2(1, 0) * bulletSpeed);
 
-            Destroy(this.gameObject, bulletLifetime);
+    int counter = 0;
+    void FixedUpdate()
+    {
+        counter++;
+        if (counter >= 50f / bulletsPerSecond)
+        {
+            shootBullet();
+            counter = 0;
         }
+    }
+
+    private void shootBullet()
+    {
+        GameObject bullet = Instantiate(BulletObject, this.transform.position, new Quaternion());
+        bullet.GetComponent<Rigidbody2D>().velocity = (new Vector2(1, 0) * bulletSpeed);
+
+        Destroy(bullet, bulletLifetime);
     }
 }
