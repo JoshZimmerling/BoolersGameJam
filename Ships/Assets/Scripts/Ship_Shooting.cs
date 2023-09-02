@@ -205,7 +205,7 @@ public class Ship_Shooting : NetworkBehaviour
     private void createBullet(float xOffset, float yOffset, int xVelo, int yVelo)
     {
         GameObject bullet = Instantiate(BulletPrefab, new Vector3(this.transform.position.x + xOffset, this.transform.position.y + yOffset, -1), new Quaternion());
-        //bullet.GetComponent<Rigidbody2D>().velocity = (transform.rotation * new Vector2(xVelo, yVelo) * bulletSpeed);
+        bullet.GetComponent<Rigidbody2D>().velocity = (transform.rotation * new Vector2(xVelo, yVelo) * bulletSpeed);
         bullet.GetComponent<Bullet>().setDamage(bulletDamage);
         bullet.GetComponent<Bullet>().setParentPlayerNum(parentPlayerNum);
         if(parentPlayerNum == 1)
