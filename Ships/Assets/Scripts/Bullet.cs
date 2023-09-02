@@ -22,9 +22,6 @@ public class Bullet : MonoBehaviour
 
     public void createBullet(float spd, float time, float damage, Vector2 velo)
     {
-        bulletSpeed = spd;
-        bulletLifetime = time;
-        bulletDamage = damage;
 
         GameObject bullet = Instantiate(BulletObject);
         bullet.GetComponent<Rigidbody>().velocity = (velo * spd);
