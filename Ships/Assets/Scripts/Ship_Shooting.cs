@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class Ship : MonoBehaviour
 {
+    public enum shipType
+    {
+        Ship_A,
+        Ship_B
+    }
     [SerializeField] float bulletSpeed;
     [SerializeField] float bulletLifetime;
     [SerializeField] float bulletDamage;
