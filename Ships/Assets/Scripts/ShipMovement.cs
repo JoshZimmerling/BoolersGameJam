@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Net.Http.Headers;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -9,21 +10,26 @@ using static UnityEngine.GraphicsBuffer;
 public class ShipMovement : MonoBehaviour
 {
     //TODO pub for tests
-    public Vector2 targetPos;
-    public float angle;
-    public float totalVelocity;
-    public Vector2 track;
-    public float timeToStop;
-    public float distToTarget;
-    public float secondsToSlow;
-    public float force;
-    public Vector2 path;
-    public Vector2 up;
+
+    // turn rate, stopping time, max speed, acceleration, 
+
+    float angle;
+    float totalVelocity;
+    float timeToStop;
+    float distToTarget;
+    float secondsToSlow;
+    float force;
+
+    Vector2 targetPos;
+    Vector2 track;
+
+
 
     Boolean noTarget;
     public Boolean moving; 
 
-    [SerializeField] float thrust;
+    [SerializeField] float acceleration;
+    [SerializeField] float turnRate;
     [SerializeField] float maxVelocity;
     [SerializeField] float distToStop;
 
@@ -60,11 +66,11 @@ public class ShipMovement : MonoBehaviour
         {
             if (angle > 0)
             {
-                transform.Rotate(0, 0, -40 * Time.deltaTime);
+                transform.Rotate(0, 0, -turnRate * Time.deltaTime);
             }
             else
             {
-                transform.Rotate(0, 0, 40 * Time.deltaTime);
+                transform.Rotate(0, 0, turnRate * Time.deltaTime);
             }
         }
         else if (MathF.Abs(angle) > 1)
@@ -96,7 +102,7 @@ public class ShipMovement : MonoBehaviour
         }
         else
         {
-            totalVelocity += thrust;
+            totalVelocity += acceleration;
             if (totalVelocity > maxVelocity)
             {
                 totalVelocity = maxVelocity;

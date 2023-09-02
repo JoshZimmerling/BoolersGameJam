@@ -43,4 +43,9 @@ public class PlayerController : NetworkBehaviour
             }
         }
     }
+
+    public void SetShips(List<Ship> ships)
+    {
+        this.ships = ships;
+    }
 }
