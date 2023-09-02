@@ -245,8 +245,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d703f05bb07ae9148b2f1d19f4ca3ea0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shipType: 4
-  BulletObject: {fileID: 9135911124565628530, guid: a02ebc28117ec194c9dcdaecc201af8b, type: 3}
+  BulletPrefab: {fileID: 0}
 --- !u!212 &523920434
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -329,6 +328,7 @@ GameObject:
   - component: {fileID: 1075219369}
   - component: {fileID: 1075219368}
   - component: {fileID: 1075219370}
+  - component: {fileID: 1075219371}
   m_Layer: 0
   m_Name: Destroyer
   m_TagString: Untagged
@@ -419,8 +419,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d703f05bb07ae9148b2f1d19f4ca3ea0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  BulletPrefab: {fileID: 9135911124565628530, guid: a02ebc28117ec194c9dcdaecc201af8b, type: 3}
+--- !u!114 &1075219371
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1075219367}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86373f9a087ba2a4cad036a5e8b47a94, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   shipType: 0
-  BulletObject: {fileID: 9135911124565628530, guid: a02ebc28117ec194c9dcdaecc201af8b, type: 3}
 --- !u!1 &1232702795
 GameObject:
   m_ObjectHideFlags: 0
@@ -451,8 +463,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d703f05bb07ae9148b2f1d19f4ca3ea0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shipType: 5
-  BulletObject: {fileID: 9135911124565628530, guid: a02ebc28117ec194c9dcdaecc201af8b, type: 3}
+  BulletPrefab: {fileID: 0}
 --- !u!212 &1232702797
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -554,8 +565,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d703f05bb07ae9148b2f1d19f4ca3ea0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shipType: 3
-  BulletObject: {fileID: 9135911124565628530, guid: a02ebc28117ec194c9dcdaecc201af8b, type: 3}
+  BulletPrefab: {fileID: 0}
 --- !u!212 &1462862824
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -657,8 +667,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d703f05bb07ae9148b2f1d19f4ca3ea0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shipType: 6
-  BulletObject: {fileID: 9135911124565628530, guid: a02ebc28117ec194c9dcdaecc201af8b, type: 3}
+  BulletPrefab: {fileID: 0}
 --- !u!212 &1618244517
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -760,8 +769,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d703f05bb07ae9148b2f1d19f4ca3ea0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shipType: 1
-  BulletObject: {fileID: 9135911124565628530, guid: a02ebc28117ec194c9dcdaecc201af8b, type: 3}
+  BulletPrefab: {fileID: 0}
 --- !u!212 &1619320641
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -863,8 +871,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d703f05bb07ae9148b2f1d19f4ca3ea0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shipType: 2
-  BulletObject: {fileID: 9135911124565628530, guid: a02ebc28117ec194c9dcdaecc201af8b, type: 3}
+  BulletPrefab: {fileID: 0}
 --- !u!212 &1627867673
 SpriteRenderer:
   m_ObjectHideFlags: 0
