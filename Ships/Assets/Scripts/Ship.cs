@@ -20,52 +20,62 @@ public class Ship : NetworkBehaviour
     [SerializeField] shipTypes shipType;
     [SerializeField] int playerNum;
 
-    float shipHP;
+    float maxShipHP;
+    float currentShipHP;
     float shipSpeed;
     float shipCost;
 
     ShipMovement moveController;
     Ship_Shooting shootController;
+    Healthbar healthBar;
 
     private void Start()
     {
         moveController = GetComponent<ShipMovement>();
         shootController = GetComponent<Ship_Shooting>();
+        healthBar = GetComponentInChildren<Healthbar>();
 
         switch (shipType)
         {
             case (Ship.shipTypes.Destroyer):
-                shipHP = 50f;
+                maxShipHP = 50f;
+                currentShipHP = maxShipHP;
                 shipSpeed = 3f;
                 shipCost = 20f;
                 break;
             case (Ship.shipTypes.Hawk):
-                shipHP = 20f;
+                maxShipHP = 20f;
+                currentShipHP = maxShipHP;
                 shipSpeed = 5f;
                 shipCost = 20f;
                 break;
             case (Ship.shipTypes.Challenger):
-                shipHP = 60f;
+                maxShipHP = 60f;
+                currentShipHP = maxShipHP;
                 shipSpeed = 3f;
                 shipCost = 20f;
                 break;
             case (Ship.shipTypes.Goliath):
-                shipHP = 150f;
+                maxShipHP = 150f;
+                currentShipHP = maxShipHP;
                 shipSpeed = 3f;
                 shipCost = 35f;
                 break;
             case (Ship.shipTypes.Lightning):
-                shipHP = 20f;
+                maxShipHP = 20f;
+                currentShipHP = maxShipHP;
                 shipSpeed = 5f;
                 shipCost = 35f;
                 break;
             case (Ship.shipTypes.Drone):
-                shipHP = 40f;
+                maxShipHP = 40f;
+                currentShipHP = maxShipHP;
                 shipSpeed = 5f;
                 shipCost = 5f;
                 break;
             case (Ship.shipTypes.Scout):
-                shipHP = 10f;
+                maxShipHP = 10f;
+                currentShipHP = maxShipHP;
                 shipSpeed = 6f;
                 shipCost = 10f;
                 break;
@@ -79,9 +89,9 @@ public class Ship : NetworkBehaviour
 
     public void doDamage(float damage)
     {
-        shipHP -= damage;
-        //TODO: Health bar updates here
-        if(shipHP <= 0)
+        currentShipHP -= damage;
+        healthBar.updateHPBar(maxShipHP, currentShipHP);
+        if (currentShipHP <= 0)
         {
             Destroy(this.gameObject);
         }
