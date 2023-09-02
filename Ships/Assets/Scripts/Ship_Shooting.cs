@@ -76,7 +76,7 @@ public class Ship_Shooting : NetworkBehaviour
     void FixedUpdate()
     {
         if (!IsHost)
-            return;
+           return;
 
         counter++;
         if (counter >= 50f / bulletsPerSecond)
@@ -128,18 +128,18 @@ public class Ship_Shooting : NetworkBehaviour
     private void shoot_destroyer()
     {
         //Bullet going up
-        createBullet(0f, 0.5f, 0, 1);
+        createBullet(0f, 1f, 0, 1);
 
         //Bullet going down
-        createBullet(0f, -0.5f, 0, -1);
+        createBullet(0f, -1f, 0, -1);
 
         //Bullets going right
-        createBullet(0.5f, 0.25f, 1, 0);
-        createBullet(0.5f, -0.25f, 1, 0);
+        createBullet(0.25f, 0.25f, 1, 0);
+        createBullet(0.25f, -0.25f, 1, 0);
 
         //Bullets going left
-        createBullet(-0.5f, 0.25f, -1, 0);
-        createBullet(-0.5f, -0.25f, -1, 0);
+        createBullet(-0.25f, 0.25f, -1, 0);
+        createBullet(-0.25f, -0.25f, -1, 0);
     }
     private void shoot_hawk()
     {
@@ -205,7 +205,7 @@ public class Ship_Shooting : NetworkBehaviour
     private void createBullet(float xOffset, float yOffset, int xVelo, int yVelo)
     {
         GameObject bullet = Instantiate(BulletPrefab, new Vector2(this.transform.position.x + xOffset, this.transform.position.y + yOffset), new Quaternion());
-        bullet.GetComponent<Rigidbody2D>().velocity = (transform.rotation * new Vector2(xVelo, yVelo) * bulletSpeed);
+        //bullet.GetComponent<Rigidbody2D>().velocity = (transform.rotation * new Vector2(xVelo, yVelo) * bulletSpeed);
         bullet.GetComponent<Bullet>().setDamage(bulletDamage);
         bullet.GetComponent<Bullet>().setParentPlayerNum(parentPlayerNum);
         if(parentPlayerNum == 1)

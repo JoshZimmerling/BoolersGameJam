@@ -25,12 +25,12 @@ public class PlayerController : NetworkBehaviour
             return;
 
         // Test code, remove later
-        Vector3 moveDir = new Vector3(0, 0, 0);
+        /*Vector3 moveDir = new Vector3(0, 0, 0);
         if (Input.GetKey("w")) moveDir.y += 1f;
         if (Input.GetKey("a")) moveDir.x -= 1f;
         if (Input.GetKey("s")) moveDir.y -= 1f;
         if (Input.GetKey("d")) moveDir.x += 1f;
-        transform.position += moveDir * Time.deltaTime * 3f;
+        transform.position += moveDir * Time.deltaTime * 3f;*/
 
         if (Input.GetButtonDown("Fire2"))
         {
