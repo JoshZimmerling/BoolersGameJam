@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using Unity.Netcode;
 
 public class PlayerShipSelection : MonoBehaviour
 {
@@ -67,12 +68,14 @@ public class PlayerShipSelection : MonoBehaviour
 
         Physics2D.OverlapBox(box.position, new Vector2(Mathf.Abs(box.localScale.x), Mathf.Abs(box.localScale.y)), 0, contactFilter, hitColliders);
 
+        int playerID = (int)player.GetComponent<NetworkObject>().OwnerClientId + 1;
 
         shipsFromHit.Clear(); 
         foreach (Collider2D col in hitColliders)
         {
-            Ship ship = col.GetComponent<Ship>();  
-            shipsFromHit.Add(ship);
+            Ship ship = col.GetComponent<Ship>();
+            if (playerID == ship.getPlayerNum())
+                shipsFromHit.Add(ship);
         }
 
         player.SetShips(shipsFromHit);

@@ -40,8 +40,6 @@ public class PlayerController : NetworkBehaviour
         if (!IsOwner)
             return;
 
-        
-
         // Setting the target destination for the ships
         if (Input.GetButtonDown("Fire2"))
         {
