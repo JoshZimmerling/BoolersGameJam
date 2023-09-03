@@ -74,8 +74,9 @@ public class PlayerShipSelection : MonoBehaviour
         foreach (Collider2D col in hitColliders)
         {
             Ship ship = col.GetComponent<Ship>();
-            if (playerID == ship.getPlayerNum())
-                shipsFromHit.Add(ship);
+            if(ship != null)
+                if (playerID == ship.getPlayerNum())
+                    shipsFromHit.Add(ship);
         }
 
         player.SetShips(shipsFromHit);
