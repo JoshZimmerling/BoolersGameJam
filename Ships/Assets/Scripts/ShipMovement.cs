@@ -3,11 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Net.Http.Headers;
+using Unity.Netcode;
 using Unity.VisualScripting;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
 
-public class ShipMovement : MonoBehaviour
+public class ShipMovement : NetworkBehaviour
 {
     //TODO pub for tests
 
@@ -19,7 +20,7 @@ public class ShipMovement : MonoBehaviour
     float timeToStop;
     float brakeTimer; 
 
-    Vector2 targetPos;
+    NetworkVariable<Vector2> targetPos = new NetworkVariable<Vector2>(new Vector2(), NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
     Vector2 track;
     Vector2 up;
     Vector2 path; 
@@ -47,12 +48,14 @@ public class ShipMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-      
-        track = targetPos - (Vector2) transform.position;
+        if (!IsHost)
+            return;
+
+        track = targetPos.Value - (Vector2) transform.position;
         angle = Vector2.SignedAngle(track, transform.up);
 
-        path = (Vector2)transform.position - targetPos;
-        distToTarget = Vector2.Distance(transform.position, targetPos); 
+        path = (Vector2)transform.position - targetPos.Value;
+        distToTarget = Vector2.Distance(transform.position, targetPos.Value); 
         
         up = transform.up; 
 
@@ -95,7 +98,7 @@ public class ShipMovement : MonoBehaviour
         // If the angle is small enough, will lock towards target
         else
         {
-            transform.rotation = Quaternion.LookRotation(Vector3.forward, targetPos - (Vector2)transform.position);
+            transform.rotation = Quaternion.LookRotation(Vector3.forward, targetPos.Value - (Vector2)transform.position);
         }
 
         // Prevents moving the ship if not moving and too high an angle
@@ -127,12 +130,12 @@ public class ShipMovement : MonoBehaviour
     
     public void StopShip ()
     {
-        targetPos = transform.position + transform.up * distToStop; 
+        targetPos.Value = transform.position + transform.up * distToStop; 
     }
 
     public void setTargetDestination(Vector2 target)
     {
         noTarget = false;
-        targetPos = target;
+        targetPos.Value = target;
     }
 }
