@@ -43,8 +43,8 @@ public class Ship_Shooting : NetworkBehaviour
                 bulletDamage = 2f;
                 break;
             case (Ship.shipTypes.Hawk):
-                bulletLifetime = 2f;
-                bulletSpeed = 8f;
+                bulletLifetime = 1.5f;
+                bulletSpeed = 12f;
                 bulletsPerSecond = 1f;
                 bulletDamage = 7f;
                 break;
