@@ -109,9 +109,9 @@ public class Ship : NetworkBehaviour
         }
     }
 
-    public void setDestination(float x, float y)
+    public void setDestination(Vector2 dest)
     {
-        moveController.setTargetDestination(new Vector2(x, y));
+        moveController.setTargetDestination(dest);
     }
 
     public void StopShip()
