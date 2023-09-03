@@ -143,11 +143,52 @@ public class Shop : MonoBehaviour
                     case Ship.shipTypes.Destroyer:
                         ship = Instantiate(p1_destroyer_prefab);
                         break;
+                    case Ship.shipTypes.Hawk:
+                        ship = Instantiate(p1_hawk_prefab);
+                        break;
+                    case Ship.shipTypes.Challenger:
+                        ship = Instantiate(p1_challenger_prefab);
+                        break;
+                    case Ship.shipTypes.Goliath:
+                        ship = Instantiate(p1_goliath_prefab);
+                        break;
+                    case Ship.shipTypes.Lightning:
+                        ship = Instantiate(p1_lightning_prefab);
+                        break;
+                    case Ship.shipTypes.Drone:
+                        ship = Instantiate(p1_drone_prefab);
+                        break;
+                    case Ship.shipTypes.Scout:
+                        ship = Instantiate(p1_scout_prefab);
+                        break;
                 }
             }
             else
             {
-
+                switch (shipType)
+                {
+                    case Ship.shipTypes.Destroyer:
+                        ship = Instantiate(p2_destroyer_prefab);
+                        break;
+                    case Ship.shipTypes.Hawk:
+                        ship = Instantiate(p2_hawk_prefab);
+                        break;
+                    case Ship.shipTypes.Challenger:
+                        ship = Instantiate(p2_challenger_prefab);
+                        break;
+                    case Ship.shipTypes.Goliath:
+                        ship = Instantiate(p2_goliath_prefab);
+                        break;
+                    case Ship.shipTypes.Lightning:
+                        ship = Instantiate(p2_lightning_prefab);
+                        break;
+                    case Ship.shipTypes.Drone:
+                        ship = Instantiate(p2_drone_prefab);
+                        break;
+                    case Ship.shipTypes.Scout:
+                        ship = Instantiate(p2_scout_prefab);
+                        break;
+                }
             }
 
             ship.GetComponent<NetworkObject>().Spawn();

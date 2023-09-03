@@ -23,12 +23,12 @@ public class PlayerController : NetworkBehaviour
     {
         ships = new List<Ship>();
 
-        GameObject newShop = Instantiate(shop);
-        newShop.transform.SetParent(GameObject.Find("Canvas").transform);
-        newShop.transform.localPosition = new Vector3(600, 0, -1);
-        /*newShop.GetComponent<RectTransform>().anchorMax = new Vector2(1, 0.5f);
+        GameObject newShop = Instantiate(shop, GameObject.Find("Canvas").transform);
+        newShop.GetComponent<RectTransform>().anchorMax = new Vector2(1, 0.5f);
         newShop.GetComponent<RectTransform>().anchorMin = new Vector2(1, 0.5f);
-        newShop.GetComponent<RectTransform>().pivot = new Vector2(0.5f, 0.5f);*/
+        newShop.GetComponent<RectTransform>().pivot = new Vector2(0.5f, 0.5f);
+        newShop.GetComponent<RectTransform>().anchoredPosition = new Vector3(-100, 0, -1);
+
         shopScript = newShop.GetComponent<Shop>();
 
         playerGold = 200f;
