@@ -277,6 +277,7 @@ GameObject:
   - component: {fileID: 5359609189724012131}
   - component: {fileID: 1404406682510899363}
   - component: {fileID: 3413614161273106321}
+  - component: {fileID: 4149236178933291029}
   m_Layer: 0
   m_Name: Hawk-P1
   m_TagString: Untagged
@@ -448,19 +449,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ddcc5185b0555044b99e0ecb8647e29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetPos: {x: 0, y: 0}
-  angle: 0
-  totalVelocity: 0
-  track: {x: 0, y: 0}
-  timeToStop: 0
-  distToTarget: 0
-  secondsToSlow: 0
-  force: 0
-  path: {x: 0, y: 0}
-  up: {x: 0, y: 0}
-  moving: 0
-  thrust: 0
-  maxVelocity: 0
   distToStop: 0
 --- !u!61 &3413614161273106321
 BoxCollider2D:
@@ -507,6 +495,33 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 4}
   m_EdgeRadius: 0
+--- !u!50 &4149236178933291029
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7600558637701834722}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 0.0001
+  m_LinearDrag: 0
+  m_AngularDrag: 0
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &8697615326822413045
 GameObject:
   m_ObjectHideFlags: 0

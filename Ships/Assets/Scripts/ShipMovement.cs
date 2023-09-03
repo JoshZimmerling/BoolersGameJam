@@ -31,12 +31,17 @@ public class ShipMovement : MonoBehaviour
 
     [SerializeField] float distToStop;
 
+/*    LineRenderer lineRenderer;*/
+
 
     // Start is called before the first frame update
     void Start()
     {
         noTarget = true;
         ship = transform.GetComponent<Ship>();
+
+/*        lineRenderer = GetComponent<LineRenderer>();
+        lineRenderer.SetWidth(.1f, .1f);*/
         distToStop = 2;
     }
 
@@ -101,6 +106,8 @@ public class ShipMovement : MonoBehaviour
 
 
         moving = true;
+/*        lineRenderer.SetPosition(0, transform.position);
+        lineRenderer.SetPosition(1, targetPos);*/
 
         if (distToTarget < distToStop)
         {

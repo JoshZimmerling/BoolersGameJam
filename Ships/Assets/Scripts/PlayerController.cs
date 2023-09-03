@@ -9,6 +9,14 @@ public class PlayerController : NetworkBehaviour
     [SerializeField] List<Ship> ships;
     [SerializeField] int playerNum;
 
+    float xMax;
+    float yMax;
+    float xMin;
+    float yMin;
+    float xDiff;
+    float yDiff;
+    Vector2 shipCenter;
+
     private void Start()
     {
         ships = new List<Ship>();
@@ -26,9 +34,14 @@ public class PlayerController : NetworkBehaviour
             Vector3 mousePos = Input.mousePosition;
             mousePos.z = 0;
             Vector3 worldPosition = Camera.main.ScreenToWorldPoint(mousePos);
-            foreach (Ship ship in ships)
+
+            if (ships.Count == 1)
             {
-                ship.setDestination(worldPosition.x, worldPosition.y);
+                ships[0].setDestination(worldPosition);
+            }
+            else
+            {
+                SetDestinationInFormation(); 
             }
         }
 
@@ -39,6 +52,44 @@ public class PlayerController : NetworkBehaviour
                 ship.StopShip(); 
             }
         }
+    }
+
+    public void SetDestinationInFormation()
+    {
+        if (ships.Count == 0) 
+        {
+            return;
+        }
+        else 
+        {
+            xMax = ships[0].transform.position.x;
+            yMax = ships[0].transform.position.y;
+            xMin = ships[0].transform.position.x;
+            yMin = ships[0].transform.position.y;
+        }
+
+        foreach (Ship ship in ships)
+        {
+            if (ship.transform.position.x > xMax) { xMax = ship.transform.position.x; }
+            if (ship.transform.position.x < xMin) { xMin = ship.transform.position.x; }
+            if (ship.transform.position.y > yMax) { yMax = ship.transform.position.y; }
+            if (ship.transform.position.y < yMin) { yMin = ship.transform.position.y; }
+        }
+
+        xDiff = xMax - xMin;
+        yDiff = yMax - yMin;
+
+        shipCenter = new Vector2(xMin + (xDiff / 2), yMin + (yDiff / 2)); 
+
+        Vector3 mousePos = Input.mousePosition;
+        mousePos.z = 0;
+        Vector3 worldPosition = Camera.main.ScreenToWorldPoint(mousePos);
+
+        foreach (Ship ship in ships)
+        {
+            ship.setDestination((Vector2) worldPosition + ((Vector2) ship.transform.position - shipCenter));
+        }
+
     }
 
     public void SetShips(List<Ship> ships)
