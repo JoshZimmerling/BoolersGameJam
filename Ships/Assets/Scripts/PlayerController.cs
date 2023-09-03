@@ -10,6 +10,7 @@ public class PlayerController : NetworkBehaviour
     float playerGold;
     [SerializeField] GameObject shop;
     Shop shopScript;
+    Camera_Control cameraScript;
 
     float xMax;
     float yMax;
@@ -32,6 +33,16 @@ public class PlayerController : NetworkBehaviour
         shopScript = newShop.GetComponent<Shop>();
 
         playerGold = 200f;
+
+        cameraScript = GameObject.Find("Main Camera").GetComponent<Camera_Control>();
+
+        Debug.Log("WASD/Mouse - Move Camera\n" +
+                  "Scroll Wheel - Zoom Camera\n" +
+                  "E - Toggle Camera Lock\n" +
+                  "Left Click - Select Ships\n" +
+                  "Right Click - Move Selected Ships\n" +
+                  "Q - Stop Ships\n" +
+                  "R - Open Shop\n");
     }
 
     // Update is called once per frame
@@ -58,7 +69,9 @@ public class PlayerController : NetworkBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.S))
+        //WASD keys are used in the Camera_Control script
+
+        if (Input.GetKeyDown(KeyCode.Q))
         {
             foreach (Ship ship in ships)
             {
@@ -66,9 +79,14 @@ public class PlayerController : NetworkBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.R))
         {
             shopScript.openShop(this.gameObject);
+        }
+
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            cameraScript.toggleLockState();
         }
     }
 
