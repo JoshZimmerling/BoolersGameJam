@@ -153,14 +153,9 @@ public class Ship_Shooting : NetworkBehaviour
                 break;
         }
         bullet.GetComponent<Bullet>().setDamage(bulletDamage);
-        bullet.GetComponent<Bullet>().setParentPlayerNum(parentPlayerNum);
-        if(parentPlayerNum == 1)
-            bullet.GetComponent<SpriteRenderer>().color = Color.red;
-        else if(parentPlayerNum == 2)
-            bullet.GetComponent<SpriteRenderer>().color = Color.blue;
-        else
-            bullet.GetComponent<SpriteRenderer>().color = Color.black;
+        bullet.GetComponent<Bullet>().setBulletLifetime(bulletLifetime);
+        
         bullet.GetComponent<NetworkObject>().Spawn(true);
-        Destroy(bullet, bulletLifetime);
+        bullet.GetComponent<Bullet>().setParentPlayerNum(parentPlayerNum);
     }
 }

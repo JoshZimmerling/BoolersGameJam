@@ -21,7 +21,7 @@ public class Ship : NetworkBehaviour
     [SerializeField] int playerNum;
 
     float maxShipHP;
-    float currentShipHP;
+    NetworkVariable<float> currentShipHP = new NetworkVariable<float>();
     float shipAcceleration;
     float shipMaxSpeed;
     float shipCost;
@@ -30,6 +30,15 @@ public class Ship : NetworkBehaviour
     ShipMovement moveController;
     Ship_Shooting shootController;
     Healthbar healthBar;
+
+    public override void OnNetworkSpawn()
+    {
+        // Update healthbar for both players when it changes
+        currentShipHP.OnValueChanged += (float previousValue, float newValue) =>
+        {
+            healthBar.updateHPBar(maxShipHP, currentShipHP.Value);
+        };
+    }
 
     private void Start()
     {
@@ -43,7 +52,7 @@ public class Ship : NetworkBehaviour
         {
             case (Ship.shipTypes.Destroyer):
                 maxShipHP = 50f;
-                currentShipHP = maxShipHP;
+                currentShipHP.Value = maxShipHP;
                 shipMaxSpeed = 3f;
                 shipAcceleration = .1f;
                 shipTurnRate = 50f;
@@ -51,7 +60,7 @@ public class Ship : NetworkBehaviour
                 break;
             case (Ship.shipTypes.Hawk):
                 maxShipHP = 20f;
-                currentShipHP = maxShipHP;
+                currentShipHP.Value = maxShipHP;
                 shipMaxSpeed = 5f;
                 shipAcceleration = 1f;
                 shipTurnRate = 60f;
@@ -59,7 +68,7 @@ public class Ship : NetworkBehaviour
                 break;
             case (Ship.shipTypes.Challenger):
                 maxShipHP = 60f;
-                currentShipHP = maxShipHP;
+                currentShipHP.Value = maxShipHP;
                 shipMaxSpeed = 3f;
                 shipAcceleration = .08f;
                 shipTurnRate = 45f;
@@ -67,7 +76,7 @@ public class Ship : NetworkBehaviour
                 break;
             case (Ship.shipTypes.Goliath):
                 maxShipHP = 150f;
-                currentShipHP = maxShipHP;
+                currentShipHP.Value = maxShipHP;
                 shipMaxSpeed = 3f;
                 shipAcceleration = .05f;
                 shipTurnRate = 30f;
@@ -75,7 +84,7 @@ public class Ship : NetworkBehaviour
                 break;
             case (Ship.shipTypes.Lightning):
                 maxShipHP = 30f;
-                currentShipHP = maxShipHP;
+                currentShipHP.Value = maxShipHP;
                 shipMaxSpeed = 5f;
                 shipAcceleration = .3f;
                 shipTurnRate = 60f;
@@ -83,7 +92,7 @@ public class Ship : NetworkBehaviour
                 break;
             case (Ship.shipTypes.Drone):
                 maxShipHP = 40f;
-                currentShipHP = maxShipHP;
+                currentShipHP.Value = maxShipHP;
                 shipMaxSpeed = 5f;
                 shipAcceleration = .2f;
                 shipTurnRate = 1000f;
@@ -91,7 +100,7 @@ public class Ship : NetworkBehaviour
                 break;
             case (Ship.shipTypes.Scout):
                 maxShipHP = 10f;
-                currentShipHP = maxShipHP;
+                currentShipHP.Value = maxShipHP;
                 shipMaxSpeed = 6f;
                 shipAcceleration = 1f;
                 shipTurnRate = 120f;
@@ -112,10 +121,10 @@ public class Ship : NetworkBehaviour
 
     public void doDamage(float damage)
     {
-        currentShipHP -= damage;
-        healthBar.updateHPBar(maxShipHP, currentShipHP);
-        if (currentShipHP <= 0)
+        currentShipHP.Value -= damage;
+        if (currentShipHP.Value <= 0)
         {
+            this.GetComponent<NetworkObject>().Despawn();
             Destroy(this.gameObject);
         }
     }
