@@ -75,7 +75,8 @@ public class Shop : MonoBehaviour
     private void createShip(GameObject shipType, float cost, int playerNum)
     {
         //Add a check for gold based on player number
-        GameObject ship = Instantiate(shipType);
+
+        GameObject ship = Instantiate(shipType); // Need to find a way to tell the host to do the spawning
         ship.GetComponent<NetworkObject>().Spawn();
     }
 }

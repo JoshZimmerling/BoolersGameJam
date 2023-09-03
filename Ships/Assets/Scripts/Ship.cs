@@ -31,6 +31,15 @@ public class Ship : NetworkBehaviour
     Ship_Shooting shootController;
     Healthbar healthBar;
 
+    public override void OnNetworkSpawn()
+    {
+        // Update healthbar for both players when it changes
+        currentShipHP.OnValueChanged += (float previousValue, float newValue) =>
+        {
+            healthBar.updateHPBar(maxShipHP, currentShipHP.Value);
+        };
+    }
+
     private void Start()
     {
         moveController = GetComponent<ShipMovement>();
@@ -108,7 +117,6 @@ public class Ship : NetworkBehaviour
     public void doDamage(float damage)
     {
         currentShipHP.Value -= damage;
-        healthBar.updateHPBar(maxShipHP, currentShipHP.Value);
         if (currentShipHP.Value <= 0)
         {
             this.GetComponent<NetworkObject>().Despawn();

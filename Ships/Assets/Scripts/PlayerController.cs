@@ -7,7 +7,7 @@ using UnityEngine;
 public class PlayerController : NetworkBehaviour
 {
     [SerializeField] List<Ship> ships;
-    [SerializeField] int playerID;
+    [SerializeField] int playerNum;
 
     private void Start()
     {
