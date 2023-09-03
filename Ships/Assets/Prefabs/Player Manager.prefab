@@ -237,7 +237,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ships: []
-  playerID: 0
+  shop: {fileID: 5226446369671715092, guid: c2bb4a741b220984782caea330aa31f3, type: 3}
 --- !u!114 &4994716780539004643
 MonoBehaviour:
   m_ObjectHideFlags: 0

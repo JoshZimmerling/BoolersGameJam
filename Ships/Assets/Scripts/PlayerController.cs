@@ -7,7 +7,9 @@ using UnityEngine;
 public class PlayerController : NetworkBehaviour
 {
     [SerializeField] List<Ship> ships;
-    [SerializeField] int playerNum;
+    float playerGold;
+    [SerializeField] GameObject shop;
+    Shop shopScript;
 
     float xMax;
     float yMax;
@@ -20,6 +22,16 @@ public class PlayerController : NetworkBehaviour
     private void Start()
     {
         ships = new List<Ship>();
+
+        GameObject newShop = Instantiate(shop, GameObject.Find("Canvas").transform);
+        newShop.GetComponent<RectTransform>().anchorMax = new Vector2(1, 0.5f);
+        newShop.GetComponent<RectTransform>().anchorMin = new Vector2(1, 0.5f);
+        newShop.GetComponent<RectTransform>().pivot = new Vector2(0.5f, 0.5f);
+        newShop.GetComponent<RectTransform>().anchoredPosition = new Vector3(-100, 0, -1);
+
+        shopScript = newShop.GetComponent<Shop>();
+
+        playerGold = 200f;
     }
 
     // Update is called once per frame
@@ -51,6 +63,11 @@ public class PlayerController : NetworkBehaviour
             {
                 ship.StopShip(); 
             }
+        }
+
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            shopScript.openShop(this.gameObject);
         }
     }
 
@@ -95,5 +112,14 @@ public class PlayerController : NetworkBehaviour
     public void SetShips(List<Ship> ships)
     {
         this.ships = ships;
+    }
+
+    public float getPlayerGold()
+    {
+        return playerGold;
+    }
+    public void changePlayerGold(float gold)
+    {
+        playerGold += gold;
     }
 }
