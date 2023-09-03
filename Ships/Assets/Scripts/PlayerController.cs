@@ -40,9 +40,12 @@ public class PlayerController : NetworkBehaviour
         if (!IsOwner)
             return;
 
+        
+
         // Setting the target destination for the ships
         if (Input.GetButtonDown("Fire2"))
         {
+            
             Vector3 mousePos = Input.mousePosition;
             mousePos.z = 0;
             Vector3 worldPosition = Camera.main.ScreenToWorldPoint(mousePos);
@@ -107,6 +110,74 @@ public class PlayerController : NetworkBehaviour
             ship.setDestination((Vector2) worldPosition + ((Vector2) ship.transform.position - shipCenter));
         }
 
+    }
+
+    [ServerRpc]
+    public void createShipServerRPC(Ship.shipTypes shipType, float cost, int playerNum)
+    {
+        if (getPlayerGold() >= cost)
+        {
+            changePlayerGold(-cost);
+
+            //SPAWN THE SHIP
+            GameObject ship = null;
+
+            if (playerNum == 1)
+            {
+                switch (shipType)
+                {
+                    case Ship.shipTypes.Destroyer:
+                        ship = Instantiate(shopScript.p1_destroyer_prefab);
+                        break;
+                    case Ship.shipTypes.Hawk:
+                        ship = Instantiate(shopScript.p1_hawk_prefab);
+                        break;
+                    case Ship.shipTypes.Challenger:
+                        ship = Instantiate(shopScript.p1_challenger_prefab);
+                        break;
+                    case Ship.shipTypes.Goliath:
+                        ship = Instantiate(shopScript.p1_goliath_prefab);
+                        break;
+                    case Ship.shipTypes.Lightning:
+                        ship = Instantiate(shopScript.p1_lightning_prefab);
+                        break;
+                    case Ship.shipTypes.Drone:
+                        ship = Instantiate(shopScript.p1_drone_prefab);
+                        break;
+                    case Ship.shipTypes.Scout:
+                        ship = Instantiate(shopScript.p1_scout_prefab);
+                        break;
+                }
+            }
+            else
+            {
+                switch (shipType)
+                {
+                    case Ship.shipTypes.Destroyer:
+                        ship = Instantiate(shopScript.p2_destroyer_prefab);
+                        break;
+                    case Ship.shipTypes.Hawk:
+                        ship = Instantiate(shopScript.p2_hawk_prefab);
+                        break;
+                    case Ship.shipTypes.Challenger:
+                        ship = Instantiate(shopScript.p2_challenger_prefab);
+                        break;
+                    case Ship.shipTypes.Goliath:
+                        ship = Instantiate(shopScript.p2_goliath_prefab);
+                        break;
+                    case Ship.shipTypes.Lightning:
+                        ship = Instantiate(shopScript.p2_lightning_prefab);
+                        break;
+                    case Ship.shipTypes.Drone:
+                        ship = Instantiate(shopScript.p2_drone_prefab);
+                        break;
+                    case Ship.shipTypes.Scout:
+                        ship = Instantiate(shopScript.p2_scout_prefab);
+                        break;
+                }
+            }
+            ship.GetComponent<NetworkObject>().SpawnWithOwnership((ulong)(ship.GetComponent<Ship>().getPlayerNum() - 1));
+        }
     }
 
     public void SetShips(List<Ship> ships)

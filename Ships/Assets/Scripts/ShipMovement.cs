@@ -20,12 +20,12 @@ public class ShipMovement : NetworkBehaviour
     float timeToStop;
     float brakeTimer; 
 
-    NetworkVariable<Vector2> targetPos = new NetworkVariable<Vector2>(new Vector2(), NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+    Vector2 targetPos;
     Vector2 track;
     Vector2 up;
-    Vector2 path; 
+    Vector2 path;
 
-    Boolean noTarget;
+    bool noTarget;
     Boolean moving;
 
     Ship ship;
@@ -48,19 +48,19 @@ public class ShipMovement : NetworkBehaviour
 
     private void FixedUpdate()
     {
+
         if (!IsHost)
             return;
 
-        track = targetPos.Value - (Vector2) transform.position;
+        track = targetPos - (Vector2) transform.position;
         angle = Vector2.SignedAngle(track, transform.up);
 
-        path = (Vector2)transform.position - targetPos.Value;
-        distToTarget = Vector2.Distance(transform.position, targetPos.Value); 
+        path = (Vector2)transform.position - targetPos;
+        distToTarget = Vector2.Distance(transform.position, targetPos); 
         
         up = transform.up; 
 
         if (noTarget) { return; }
-
 
         // Stopping
         if (distToTarget < 0.1) 
@@ -98,7 +98,7 @@ public class ShipMovement : NetworkBehaviour
         // If the angle is small enough, will lock towards target
         else
         {
-            transform.rotation = Quaternion.LookRotation(Vector3.forward, targetPos.Value - (Vector2)transform.position);
+            transform.rotation = Quaternion.LookRotation(Vector3.forward, targetPos - (Vector2)transform.position);
         }
 
         // Prevents moving the ship if not moving and too high an angle
@@ -106,7 +106,6 @@ public class ShipMovement : NetworkBehaviour
         {
             return;
         }
-
 
         moving = true;
 /*        lineRenderer.SetPosition(0, transform.position);
@@ -127,15 +126,17 @@ public class ShipMovement : NetworkBehaviour
         }
 
     }
-    
-    public void StopShip ()
+
+    [ServerRpc]
+    public void StopShipServerRPC ()
     {
-        targetPos.Value = transform.position + transform.up * distToStop; 
+        targetPos = transform.position + transform.up * distToStop; 
     }
 
-    public void setTargetDestination(Vector2 target)
+    [ServerRpc]
+    public void setTargetDestinationServerRPC(Vector2 target)
     {
         noTarget = false;
-        targetPos.Value = target;
+        targetPos = target;
     }
 }

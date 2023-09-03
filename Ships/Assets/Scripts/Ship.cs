@@ -52,7 +52,6 @@ public class Ship : NetworkBehaviour
         {
             case (Ship.shipTypes.Destroyer):
                 maxShipHP = 50f;
-                currentShipHP.Value = maxShipHP;
                 shipMaxSpeed = 3f;
                 shipAcceleration = .1f;
                 shipTurnRate = 50f;
@@ -60,7 +59,6 @@ public class Ship : NetworkBehaviour
                 break;
             case (Ship.shipTypes.Hawk):
                 maxShipHP = 20f;
-                currentShipHP.Value = maxShipHP;
                 shipMaxSpeed = 5f;
                 shipAcceleration = 1f;
                 shipTurnRate = 60f;
@@ -68,7 +66,6 @@ public class Ship : NetworkBehaviour
                 break;
             case (Ship.shipTypes.Challenger):
                 maxShipHP = 60f;
-                currentShipHP.Value = maxShipHP;
                 shipMaxSpeed = 3f;
                 shipAcceleration = .08f;
                 shipTurnRate = 45f;
@@ -76,7 +73,6 @@ public class Ship : NetworkBehaviour
                 break;
             case (Ship.shipTypes.Goliath):
                 maxShipHP = 150f;
-                currentShipHP.Value = maxShipHP;
                 shipMaxSpeed = 3f;
                 shipAcceleration = .05f;
                 shipTurnRate = 30f;
@@ -84,7 +80,6 @@ public class Ship : NetworkBehaviour
                 break;
             case (Ship.shipTypes.Lightning):
                 maxShipHP = 30f;
-                currentShipHP.Value = maxShipHP;
                 shipMaxSpeed = 5f;
                 shipAcceleration = .3f;
                 shipTurnRate = 60f;
@@ -92,7 +87,6 @@ public class Ship : NetworkBehaviour
                 break;
             case (Ship.shipTypes.Drone):
                 maxShipHP = 40f;
-                currentShipHP.Value = maxShipHP;
                 shipMaxSpeed = 5f;
                 shipAcceleration = .2f;
                 shipTurnRate = 1000f;
@@ -100,23 +94,25 @@ public class Ship : NetworkBehaviour
                 break;
             case (Ship.shipTypes.Scout):
                 maxShipHP = 10f;
-                currentShipHP.Value = maxShipHP;
                 shipMaxSpeed = 6f;
                 shipAcceleration = 1f;
                 shipTurnRate = 120f;
                 shipCost = 10f;
                 break;
         }
+
+        if (IsHost)
+            currentShipHP.Value = maxShipHP;
     }
 
     public void setDestination(Vector2 dest)
     {
-        moveController.setTargetDestination(dest);
+        moveController.setTargetDestinationServerRPC(dest);
     }
 
     public void StopShip()
     {
-        moveController.StopShip(); 
+        moveController.StopShipServerRPC(); 
     }
 
     public void doDamage(float damage)
