@@ -105,6 +105,11 @@ public class Ship : NetworkBehaviour
         moveController.setTargetDestination(new Vector2(x, y));
     }
 
+    public void StopShip()
+    {
+        moveController.StopShip(); 
+    }
+
     public void doDamage(float damage)
     {
         currentShipHP -= damage;

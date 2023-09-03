@@ -12,9 +12,6 @@ public class PlayerController : NetworkBehaviour
     private void Start()
     {
         ships = new List<Ship>();
-
-        /* TODO - Temp add ships */ 
-        ships.Add(FindObjectOfType<Ship>());
     }
 
     // Update is called once per frame
@@ -40,6 +37,14 @@ public class PlayerController : NetworkBehaviour
             foreach (Ship ship in ships)
             {
                 ship.setDestination(worldPosition.x, worldPosition.y);
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            foreach (Ship ship in ships)
+            {
+                ship.StopShip(); 
             }
         }
     }

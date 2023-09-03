@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Net.Http.Headers;
 using Unity.VisualScripting;
+using UnityEditorInternal;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
 
@@ -16,6 +17,8 @@ public class ShipMovement : MonoBehaviour
     float angle;
     float totalVelocity;
     float distToTarget;
+    float timeToStop;
+    float brakeTimer; 
 
     Vector2 targetPos;
     Vector2 track;
@@ -23,7 +26,7 @@ public class ShipMovement : MonoBehaviour
     Vector2 path; 
 
     Boolean noTarget;
-    public Boolean moving;
+    Boolean moving;
 
     Ship ship;
 
@@ -34,8 +37,8 @@ public class ShipMovement : MonoBehaviour
     void Start()
     {
         noTarget = true;
-        distToStop = 3f; 
         ship = transform.GetComponent<Ship>();
+        distToStop = 2;
     }
 
     private void FixedUpdate()
@@ -52,6 +55,7 @@ public class ShipMovement : MonoBehaviour
         if (noTarget) { return; }
 
 
+        // Stopping
         if (distToTarget < 0.1) 
         {
             noTarget = true;
@@ -60,6 +64,7 @@ public class ShipMovement : MonoBehaviour
             return; 
         }
 
+        // Turning
         if (MathF.Abs(angle) > 10)
         {
             if (angle > 0)
@@ -71,6 +76,7 @@ public class ShipMovement : MonoBehaviour
                 transform.Rotate(0, 0, ship.getShipTurnRate() * Time.deltaTime);
             }
         }
+        // Slowing turns
         else if (MathF.Abs(angle) > 1)
         {
             if (angle > 0)
@@ -82,15 +88,18 @@ public class ShipMovement : MonoBehaviour
                 transform.Rotate(0, 0, (10 + (Mathf.Abs(angle) * 3)) * Time.deltaTime);
             }
         }
+        // If the angle is small enough, will lock towards target
         else
         {
             transform.rotation = Quaternion.LookRotation(Vector3.forward, targetPos - (Vector2)transform.position);
         }
 
+        // Prevents moving the ship if not moving and too high an angle
         if (Mathf.Abs(angle) > 45 && !moving)
         {
             return;
         }
+
 
         moving = true;
 
@@ -107,11 +116,17 @@ public class ShipMovement : MonoBehaviour
             }
             transform.Translate(Vector2.up * totalVelocity * Time.deltaTime);
         }
+
+    }
+    
+    public void StopShip ()
+    {
+        targetPos = transform.position + transform.up * distToStop; 
     }
 
     public void setTargetDestination(Vector2 target)
     {
-        noTarget = false;   
+        noTarget = false;
         targetPos = target;
     }
 }
