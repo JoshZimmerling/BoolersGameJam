@@ -34,10 +34,14 @@ public class Ship : NetworkBehaviour
     public override void OnNetworkSpawn()
     {
         // Update healthbar for both players when it changes
+
         currentShipHP.OnValueChanged += (float previousValue, float newValue) =>
         {
             healthBar.updateHPBar(maxShipHP, currentShipHP.Value);
         };
+
+        if (!IsOwner)
+            GetComponentInChildren<SpriteMask>().enabled = false;
     }
 
     private void Start()
