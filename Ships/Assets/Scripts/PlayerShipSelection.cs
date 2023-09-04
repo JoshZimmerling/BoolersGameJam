@@ -69,14 +69,12 @@ public class PlayerShipSelection : MonoBehaviour
 
         Physics2D.OverlapBox(box.position, new Vector2(Mathf.Abs(box.localScale.x), Mathf.Abs(box.localScale.y)), 0, contactFilter, hitColliders);
 
-        int playerID = (int)player.GetComponent<NetworkObject>().OwnerClientId + 1;
-
         shipsFromHit.Clear(); 
         foreach (Collider2D col in hitColliders)
         {
             Ship ship = col.GetComponent<Ship>();
             if(ship != null)
-                if (playerID == ship.getPlayerNum())
+                if (player.GetComponent<NetworkObject>().OwnerClientId == ship.OwnerClientId)
                     shipsFromHit.Add(ship);
         }
 

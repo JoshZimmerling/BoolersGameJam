@@ -7,19 +7,10 @@ public class Bullet : NetworkBehaviour
 {
     float dmg;
     float maxbulletLifetime;
-    NetworkVariable<int> parentPlayerNum = new NetworkVariable<int>();
 
     public override void OnNetworkSpawn()
     {
-        parentPlayerNum.OnValueChanged += (int previousValue, int newValue) =>
-        {
-            if (newValue == 1)
-                GetComponent<SpriteRenderer>().color = Color.red;
-            else if (newValue == 2)
-                GetComponent<SpriteRenderer>().color = Color.blue;
-            else
-                GetComponent<SpriteRenderer>().color = Color.black;
-        };
+        GetComponent<SpriteRenderer>().color = GameManager.Singleton.playerColors[OwnerClientId];
     }
 
     float bulletLifetime = 0;
@@ -42,33 +33,24 @@ public class Bullet : NetworkBehaviour
         if (!IsHost)
             return;
 
-        //Ensures not colliding with another bullet
-        if (collision.GetComponent<Bullet>() == null)
+        //Ensures collision with enemy ship
+        if (collision.GetComponent<Bullet>() == null &&
+            collision.GetComponent<Ship>() != null &&
+            collision.GetComponent<Ship>().OwnerClientId != OwnerClientId)
         {
-            if(collision.GetComponent<Ship>() != null)
-            {
-                if(collision.GetComponent<Ship>().getPlayerNum() != parentPlayerNum.Value)
-                {
-                    collision.GetComponent<Ship>().doDamage(dmg);
-                    GetComponent<NetworkObject>().Despawn();
-                    Destroy(this.gameObject);
-                }
-            }
+            collision.GetComponent<Ship>().DoDamage(dmg);
+            GetComponent<NetworkObject>().Despawn();
+            Destroy(this.gameObject);
         }
     }
 
-    public void setBulletLifetime(float lifetime)
+    public void SetBulletLifetime(float lifetime)
     {
         maxbulletLifetime = lifetime;
     }
 
-    public void setDamage(float damage)
+    public void SetDamage(float damage)
     {
         dmg = damage;
-    }
-
-    public void setParentPlayerNum(int num)
-    {
-        parentPlayerNum.Value = num;
     }
 }

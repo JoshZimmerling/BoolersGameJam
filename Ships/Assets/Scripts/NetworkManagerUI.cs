@@ -12,6 +12,7 @@ public class NetworkManagerUI : MonoBehaviour
     [SerializeField] private Button serverButton;
     [SerializeField] private TMPro.TMP_InputField ipAddress;
     [SerializeField] private GameObject map;
+    [SerializeField] private string defaultIP; // "131.93.247.207"
 
     private void Awake()
     {
@@ -27,7 +28,7 @@ public class NetworkManagerUI : MonoBehaviour
             if (ipAddress.text != "")
                 NetworkManager.Singleton.GetComponent<Unity.Netcode.Transports.UTP.UnityTransport>().ConnectionData.Address = ipAddress.text;
             else
-                NetworkManager.Singleton.GetComponent<Unity.Netcode.Transports.UTP.UnityTransport>().ConnectionData.Address = "131.93.247.207";
+                NetworkManager.Singleton.GetComponent<Unity.Netcode.Transports.UTP.UnityTransport>().ConnectionData.Address = defaultIP;
 
             this.gameObject.SetActive(false);
             map.gameObject.SetActive(true);

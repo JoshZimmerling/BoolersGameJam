@@ -6,9 +6,9 @@ using static Ship_Shooting;
 public class Bullet_Spawn_Points : MonoBehaviour
 {
 
-    [SerializeField] shotDirection Bullet_Direction;
+    [SerializeField] ShotDirection Bullet_Direction;
 
-    public shotDirection GetDirection() 
+    public ShotDirection GetDirection() 
     { 
         return Bullet_Direction;
     }

@@ -6,7 +6,6 @@ using UnityEngine;
 
 public class Ship : NetworkBehaviour
 {
-    
     public enum shipTypes
     {
         Destroyer,
@@ -17,15 +16,20 @@ public class Ship : NetworkBehaviour
         Drone,
         Scout
     }
-    [SerializeField] shipTypes shipType;
-    [SerializeField] int playerNum;
+
+    [SerializeField]
+    shipTypes shipType;
+    int playerNum;
 
     float maxShipHP;
     NetworkVariable<float> currentShipHP = new NetworkVariable<float>();
     float shipAcceleration;
     float shipMaxSpeed;
     float shipCost;
-    float shipTurnRate; 
+    float shipTurnRate;
+
+    [SerializeField]
+    SpriteRenderer accents;
 
     ShipMovement moveController;
     Ship_Shooting shootController;
@@ -39,8 +43,7 @@ public class Ship : NetworkBehaviour
         healthBar = GetComponentInChildren<Healthbar>();
         outline = GetComponentInChildren<Outline>();
 
-        shipAcceleration = .1f;
-
+        // Initializing ship variables
         switch (shipType)
         {
             case (Ship.shipTypes.Destroyer):
@@ -93,27 +96,27 @@ public class Ship : NetworkBehaviour
                 shipCost = 10f;
                 break;
         }
-
         if (IsHost)
             currentShipHP.Value = maxShipHP;
 
-        // Update healthbar for both players when it changes
+        // Set the team color
+        accents.color = GameManager.Singleton.playerColors[OwnerClientId];
+        outline.GetComponent<SpriteRenderer>().color = GameManager.Singleton.playerColors[OwnerClientId];
 
-        currentShipHP.OnValueChanged += (float previousValue, float newValue) =>
-        {
+        // Update healthbar for both players when it changes
+        currentShipHP.OnValueChanged += (float previousValue, float newValue) => {
             healthBar.updateHPBar(maxShipHP, currentShipHP.Value);
         };
 
-        if (!IsOwner)
+        // Disable the fog clearer and outline
+        if (!IsOwner) {
             GetComponentInChildren<SpriteMask>().enabled = false;
+            outline.gameObject.SetActive(false);
+        }
     }
 
-    private void Start()
-    {
-        
-    }
-
-    public void setDestination(Vector2 dest)
+    // Movement Functions
+    public void SetDestination(Vector2 dest)
     {
         moveController.setTargetDestinationServerRPC(dest);
     }
@@ -128,7 +131,7 @@ public class Ship : NetworkBehaviour
         moveController.BackupServerRPC(); 
     }
 
-    public void doDamage(float damage)
+    public void DoDamage(float damage)
     {
         currentShipHP.Value -= damage;
         if (currentShipHP.Value <= 0)
@@ -142,34 +145,32 @@ public class Ship : NetworkBehaviour
     {
         outline.SetSelected();
     }
+
     public void Unselect()
     {
         outline.SetUnselected();
     }
 
-    public shipTypes getShipType()
+    // Getter Functions
+    public shipTypes GetShipType()
     {
         return shipType;
     }
-    public int getPlayerNum()
-    {
-        return playerNum;
-    }
-    public float getShipMaxSpeed()
+    public float GetShipMaxSpeed()
     {
         return shipMaxSpeed;
     }
 
-    public float getShipAcceleration() 
+    public float GetShipAcceleration() 
     {
         return shipAcceleration;
     }
 
-    public float getShipTurnRate()
+    public float GetShipTurnRate()
     {
         return shipTurnRate;
     }
-    public float getShipCost()
+    public float GetShipCost()
     {
         return shipCost;
     }

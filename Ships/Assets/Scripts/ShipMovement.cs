@@ -33,11 +33,11 @@ public class ShipMovement : NetworkBehaviour
 
     [SerializeField] float distToStop;
 
-/*    LineRenderer lineRenderer;*/
+    /*    LineRenderer lineRenderer;*/
 
 
     // Start is called before the first frame update
-    void Start()
+    public override void OnNetworkSpawn()
     {
         noTarget = true;
         ship = transform.GetComponent<Ship>();
@@ -47,7 +47,6 @@ public class ShipMovement : NetworkBehaviour
 
     private void FixedUpdate()
     {
-
         if (!IsHost)
             return;
 
@@ -78,11 +77,11 @@ public class ShipMovement : NetworkBehaviour
             {
                 if (angle > 0)
                 {
-                    transform.Rotate(0, 0, -ship.getShipTurnRate() * Time.deltaTime);
+                    transform.Rotate(0, 0, -ship.GetShipTurnRate() * Time.deltaTime);
                 }
                 else
                 {
-                    transform.Rotate(0, 0, ship.getShipTurnRate() * Time.deltaTime);
+                    transform.Rotate(0, 0, ship.GetShipTurnRate() * Time.deltaTime);
                 }
             }
             // Slowing turns
@@ -117,10 +116,10 @@ public class ShipMovement : NetworkBehaviour
             }
             else
             {
-                totalVelocity += ship.getShipAcceleration();
-                if (totalVelocity > ship.getShipMaxSpeed())
+                totalVelocity += ship.GetShipAcceleration();
+                if (totalVelocity > ship.GetShipMaxSpeed())
                 {
-                    totalVelocity = ship.getShipMaxSpeed();
+                    totalVelocity = ship.GetShipMaxSpeed();
                 }
                 transform.Translate(Vector2.up * totalVelocity * Time.deltaTime);
             }
@@ -133,10 +132,10 @@ public class ShipMovement : NetworkBehaviour
             }
             else
             {
-                totalVelocity += ship.getShipAcceleration();
-                if (totalVelocity > ship.getShipMaxSpeed())
+                totalVelocity += ship.GetShipAcceleration();
+                if (totalVelocity > ship.GetShipMaxSpeed())
                 {
-                    totalVelocity = ship.getShipMaxSpeed();
+                    totalVelocity = ship.GetShipMaxSpeed();
                 }
                 transform.Translate(-Vector2.up * totalVelocity * Time.deltaTime);
             }

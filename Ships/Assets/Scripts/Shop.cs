@@ -9,144 +9,66 @@ using UnityEngine.UI;
 
 public class Shop : MonoBehaviour
 {
-    [SerializeField] GameObject destroyer;
-    [SerializeField] GameObject hawk;
-    [SerializeField] GameObject challenger;
-    [SerializeField] GameObject goliath;
-    [SerializeField] GameObject lightning;
-    [SerializeField] GameObject drone;
-    [SerializeField] GameObject scout;
-
-    Button destroyer_button;
-    Button hawk_button;
-    Button challenger_button;
-    Button goliath_button;
-    Button lightning_button;
-    Button drone_button;
-    Button scout_button;
-
-    [SerializeField] Sprite p1_destroyer;
-    [SerializeField] Sprite p1_hawk;
-    [SerializeField] Sprite p1_challenger;
-    [SerializeField] Sprite p1_goliath;
-    [SerializeField] Sprite p1_lightning;
-    [SerializeField] Sprite p1_drone;
-    [SerializeField] Sprite p1_scout;
-
-    [SerializeField] Sprite p2_destroyer;
-    [SerializeField] Sprite p2_hawk;
-    [SerializeField] Sprite p2_challenger;
-    [SerializeField] Sprite p2_goliath;
-    [SerializeField] Sprite p2_lightning;
-    [SerializeField] Sprite p2_drone;
-    [SerializeField] Sprite p2_scout;
-
-    [SerializeField] public GameObject p1_destroyer_prefab;
-    [SerializeField] public GameObject p1_hawk_prefab;
-    [SerializeField] public GameObject p1_challenger_prefab;
-    [SerializeField] public GameObject p1_goliath_prefab;
-    [SerializeField] public GameObject p1_lightning_prefab;
-    [SerializeField] public GameObject p1_drone_prefab;
-    [SerializeField] public GameObject p1_scout_prefab;
-
-    [SerializeField] public GameObject p2_destroyer_prefab;
-    [SerializeField] public GameObject p2_hawk_prefab;
-    [SerializeField] public GameObject p2_challenger_prefab;
-    [SerializeField] public GameObject p2_goliath_prefab;
-    [SerializeField] public GameObject p2_lightning_prefab;
-    [SerializeField] public GameObject p2_drone_prefab;
-    [SerializeField] public GameObject p2_scout_prefab;
+    [SerializeField] Button destroyer_button;
+    [SerializeField] Button hawk_button;
+    [SerializeField] Button challenger_button;
+    [SerializeField] Button goliath_button;
+    [SerializeField] Button lightning_button;
+    [SerializeField] Button drone_button;
+    [SerializeField] Button scout_button;
 
     [SerializeField] GameObject goldTextObject;
     Text goldText;
     float playerGold = 200f;
 
-    bool shopOpenedBefore = false;
-    GameObject parent;
-    int playerNum;
-    PlayerController parentPlayerScript;
+    PlayerController playerScript;
 
-    // Start is called before the first frame update
-    void Start()
+    public void SetupShop(PlayerController player)
     {
-        destroyer_button = destroyer.GetComponent<Button>();
-        hawk_button = hawk.GetComponent<Button>();
-        challenger_button = challenger.GetComponent<Button>();
-        goliath_button = goliath.GetComponent<Button>();
-        lightning_button = lightning.GetComponent<Button>();
-        drone_button = drone.GetComponent<Button>();
-        scout_button = scout.GetComponent<Button>();
-
-        goldText = goldTextObject.GetComponent<Text>();
-        updateGoldText();
+        playerScript = player;
 
         this.gameObject.SetActive(false);
+
+        goldText = goldTextObject.GetComponent<Text>();
+        UpdateGoldText();
+
+        GameObject[] shipPrefabs = GameManager.Singleton.shipPrefabs;
+        destroyer_button.image.sprite = shipPrefabs[0].GetComponent<SpriteRenderer>().sprite;
+        hawk_button.image.sprite = shipPrefabs[1].GetComponent<SpriteRenderer>().sprite;
+        challenger_button.image.sprite = shipPrefabs[2].GetComponent<SpriteRenderer>().sprite;
+        goliath_button.image.sprite = shipPrefabs[3].GetComponent<SpriteRenderer>().sprite;
+        lightning_button.image.sprite = shipPrefabs[4].GetComponent<SpriteRenderer>().sprite;
+        drone_button.image.sprite = shipPrefabs[5].GetComponent<SpriteRenderer>().sprite;
+        scout_button.image.sprite = shipPrefabs[6].GetComponent<SpriteRenderer>().sprite;
+
+        destroyer_button.onClick.AddListener(() => BuyShip(Ship.shipTypes.Destroyer, 20));
+        hawk_button.onClick.AddListener(() => BuyShip(Ship.shipTypes.Hawk, 20));
+        challenger_button.onClick.AddListener(() => BuyShip(Ship.shipTypes.Challenger, 20));
+        goliath_button.onClick.AddListener(() => BuyShip(Ship.shipTypes.Goliath, 35));
+        lightning_button.onClick.AddListener(() => BuyShip(Ship.shipTypes.Lightning, 35));
+        drone_button.onClick.AddListener(() => BuyShip(Ship.shipTypes.Drone, 5));
+        scout_button.onClick.AddListener(() => BuyShip(Ship.shipTypes.Scout, 10));
     }
 
-    private void Update()
+    private void BuyShip(Ship.shipTypes type, float cost)
     {
-        
-    }
-
-    public void openShop(GameObject player)
-    {
-        parent = player;
-        playerNum = (int)player.GetComponent<NetworkObject>().OwnerClientId + 1;
-        parentPlayerScript = player.GetComponent<PlayerController>();
-
-        if (this.gameObject.activeSelf == false)
+        if (playerGold >= cost)
         {
-            this.gameObject.SetActive(true);
-            if (shopOpenedBefore == false)
-            {
-                if (playerNum == 1)
-                {
-                    destroyer_button.image.sprite = p1_destroyer;
-                    hawk_button.image.sprite = p1_hawk;
-                    challenger_button.image.sprite = p1_challenger;
-                    goliath_button.image.sprite = p1_goliath;
-                    lightning_button.image.sprite = p1_lightning;
-                    drone_button.image.sprite = p1_drone;
-                    scout_button.image.sprite = p1_scout;
-                }
-                else
-                {
-                    destroyer_button.image.sprite = p2_destroyer;
-                    hawk_button.image.sprite = p2_hawk;
-                    challenger_button.image.sprite = p2_challenger;
-                    goliath_button.image.sprite = p2_goliath;
-                    lightning_button.image.sprite = p2_lightning;
-                    drone_button.image.sprite = p2_drone;
-                    scout_button.image.sprite = p2_scout;
-                }
-
-                destroyer_button.onClick.AddListener(() => createShipAndUpdateGoldUI(Ship.shipTypes.Destroyer, 20, playerNum));
-                hawk_button.onClick.AddListener(() => createShipAndUpdateGoldUI(Ship.shipTypes.Hawk, 20, playerNum));
-                challenger_button.onClick.AddListener(() => createShipAndUpdateGoldUI(Ship.shipTypes.Challenger, 20, playerNum));
-                goliath_button.onClick.AddListener(() => createShipAndUpdateGoldUI(Ship.shipTypes.Goliath, 35, playerNum));
-                lightning_button.onClick.AddListener(() => createShipAndUpdateGoldUI(Ship.shipTypes.Lightning, 35, playerNum));
-                drone_button.onClick.AddListener(() => createShipAndUpdateGoldUI(Ship.shipTypes.Drone, 5, playerNum));
-                scout_button.onClick.AddListener(() => createShipAndUpdateGoldUI(Ship.shipTypes.Scout, 10, playerNum));
-            }
-            shopOpenedBefore = true;
-        }
-        else
-        {
-            this.gameObject.SetActive(false);
+            playerGold -= cost;
+            UpdateGoldText();
+            GameManager.Singleton.players[GameManager.Singleton.playerIndex].SpawnShipServerRPC(type, playerScript.OwnerClientId);
         }
     }
 
-    public void updateGoldText()
+    public void OpenShop()
+    {
+        this.gameObject.SetActive(!this.gameObject.activeSelf);
+    }
+
+    public void UpdateGoldText()
     {
         goldText.text = "Gold: $" + playerGold;
     }
 
-    private void createShipAndUpdateGoldUI(Ship.shipTypes type, float cost, int player)
-    {
-        if(playerGold >= cost){
-            playerGold -= cost;
-            updateGoldText();
-            parentPlayerScript.createShipServerRPC(type, player);
-        }
-    }
+    
 }

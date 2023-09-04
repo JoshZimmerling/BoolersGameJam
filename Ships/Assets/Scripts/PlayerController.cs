@@ -6,58 +6,17 @@ using UnityEngine;
 
 public class PlayerController : NetworkBehaviour
 {
-    [SerializeField] List<Ship> ships;
-    [SerializeField] GameObject shop;
-    Shop shopScript;
+    [SerializeField] List<Ship> selectedShips;
     Camera_Control cameraScript;
 
-    int playerNum;
-    GameObject spawnPlatform;
-
-    float xMax;
-    float yMax;
-    float xMin;
-    float yMin;
-    float xDiff;
-    float yDiff;
-    Vector2 shipCenter;
-
-    private void Start()
+    public override void OnNetworkSpawn()
     {
-        ships = new List<Ship>();
+        GameManager.Singleton.AddPlayer(this);
+        selectedShips = new List<Ship>();
+        cameraScript = Camera.main.GetComponent<Camera_Control>();
 
-        GameObject newShop = Instantiate(shop, GameObject.Find("Canvas").transform);
-        newShop.GetComponent<RectTransform>().anchorMax = new Vector2(1, 0.5f);
-        newShop.GetComponent<RectTransform>().anchorMin = new Vector2(1, 0.5f);
-        newShop.GetComponent<RectTransform>().pivot = new Vector2(0.5f, 0.5f);
-        newShop.GetComponent<RectTransform>().anchoredPosition = new Vector3(-100, 0, -1);
-
-        shopScript = newShop.GetComponent<Shop>();
-
-        playerNum = (int)this.GetComponent<NetworkObject>().OwnerClientId + 1;
-
-        cameraScript = GameObject.Find("Main Camera").GetComponent<Camera_Control>();
-        if(playerNum == 1)
-        {
-            spawnPlatform = GameObject.Find("p1Spawn");
-            if (IsOwner) 
-                cameraScript.transform.position = new Vector3(spawnPlatform.transform.position.x, spawnPlatform.transform.position.y, cameraScript.transform.position.z);
-        }
-        else
-        {
-            spawnPlatform = GameObject.Find("p2Spawn");
-            if(IsOwner)
-                cameraScript.transform.position = new Vector3(spawnPlatform.transform.position.x, spawnPlatform.transform.position.y, cameraScript.transform.position.z);
-        }
-
-        Debug.Log("WASD/Mouse - Move Camera\n" +
-                  "Scroll Wheel - Zoom Camera\n" +
-                  "E - Toggle Camera Lock\n" +
-                  "Left Click - Select Ships\n" +
-                  "Right Click - Move Selected Ships\n" +
-                  "Q - Stop Selected Ships\n" +
-                  "Z - Move Selected Ships Backwards\n" +
-                  "R - Open Shop\n");
+        if (IsOwner)
+            GameManager.Singleton.StartGame((int)OwnerClientId);
     }
 
     // Update is called once per frame
@@ -76,9 +35,9 @@ public class PlayerController : NetworkBehaviour
             mousePos.z = 0;
             Vector3 worldPosition = Camera.main.ScreenToWorldPoint(mousePos);
 
-            if (ships.Count == 1)
+            if (selectedShips.Count == 1)
             {
-                ships[0].setDestination(worldPosition);
+                selectedShips[0].SetDestination(worldPosition);
             }
             else
             {
@@ -90,7 +49,7 @@ public class PlayerController : NetworkBehaviour
 
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            foreach (Ship ship in ships)
+            foreach (Ship ship in selectedShips)
             {
                 ship.StopShip(); 
             }
@@ -98,7 +57,7 @@ public class PlayerController : NetworkBehaviour
 
         if (Input.GetKeyDown(KeyCode.Z))
         {
-            foreach (Ship ship in ships)
+            foreach (Ship ship in selectedShips)
             {
                 ship.ReverseShip();
             }
@@ -106,7 +65,7 @@ public class PlayerController : NetworkBehaviour
 
         if (Input.GetKeyDown(KeyCode.R))
         {
-            shopScript.openShop(this.gameObject);
+            GameManager.Singleton.shop.OpenShop();
         }
 
         if (Input.GetKeyDown(KeyCode.E))
@@ -117,30 +76,38 @@ public class PlayerController : NetworkBehaviour
 
     private void VerifySelection()
     {
-        for (int i = 0; i < ships.Count; i++) 
+        for (int i = 0; i < selectedShips.Count; i++) 
         {
-            if (ships[i] == null) 
+            if (selectedShips[i] == null) 
             {
-                ships.RemoveAt(i);
+                selectedShips.RemoveAt(i);
             }
         }
     }
 
+    // Ship movement / selection
+    float xMax;
+    float yMax;
+    float xMin;
+    float yMin;
+    float xDiff;
+    float yDiff;
+    Vector2 shipCenter;
     public void SetDestinationInFormation()
     {
-        if (ships.Count == 0) 
+        if (selectedShips.Count == 0) 
         {
             return;
         }
         else 
         {
-            xMax = ships[0].transform.position.x;
-            yMax = ships[0].transform.position.y;
-            xMin = ships[0].transform.position.x;
-            yMin = ships[0].transform.position.y;
+            xMax = selectedShips[0].transform.position.x;
+            yMax = selectedShips[0].transform.position.y;
+            xMin = selectedShips[0].transform.position.x;
+            yMin = selectedShips[0].transform.position.y;
         }
 
-        foreach (Ship ship in ships)
+        foreach (Ship ship in selectedShips)
         {
             if (ship.transform.position.x > xMax) { xMax = ship.transform.position.x; }
             if (ship.transform.position.x < xMin) { xMin = ship.transform.position.x; }
@@ -157,81 +124,18 @@ public class PlayerController : NetworkBehaviour
         mousePos.z = 0;
         Vector3 worldPosition = Camera.main.ScreenToWorldPoint(mousePos);
 
-        foreach (Ship ship in ships)
+        foreach (Ship ship in selectedShips)
         {
-            ship.setDestination((Vector2) worldPosition + ((Vector2) ship.transform.position - shipCenter));
+            ship.SetDestination((Vector2) worldPosition + ((Vector2) ship.transform.position - shipCenter));
         }
 
-    }
-
-    [ServerRpc]
-    public void createShipServerRPC(Ship.shipTypes shipType, int playerNum)
-    {
-        //SPAWN THE SHIP
-        GameObject ship = null;
-
-        if (playerNum == 1)
-        {
-            switch (shipType)
-            {
-                case Ship.shipTypes.Destroyer:
-                    ship = Instantiate(shopScript.p1_destroyer_prefab, new Vector3(spawnPlatform.transform.position.x, spawnPlatform.transform.position.y, shopScript.p1_destroyer_prefab.transform.position.z), Quaternion.Euler(0f, 0f, 225f));
-                    break;
-                case Ship.shipTypes.Hawk:
-                    ship = Instantiate(shopScript.p1_hawk_prefab, new Vector3(spawnPlatform.transform.position.x, spawnPlatform.transform.position.y, shopScript.p1_hawk_prefab.transform.position.z), Quaternion.Euler(0f, 0f, 225f));
-                    break;
-                case Ship.shipTypes.Challenger:
-                    ship = Instantiate(shopScript.p1_challenger_prefab, new Vector3(spawnPlatform.transform.position.x, spawnPlatform.transform.position.y, shopScript.p1_challenger_prefab.transform.position.z), Quaternion.Euler(0f, 0f, 225f));
-                    break;
-                case Ship.shipTypes.Goliath:
-                    ship = Instantiate(shopScript.p1_goliath_prefab, new Vector3(spawnPlatform.transform.position.x, spawnPlatform.transform.position.y, shopScript.p1_goliath_prefab.transform.position.z), Quaternion.Euler(0f, 0f, 225f));
-                    break;
-                case Ship.shipTypes.Lightning:
-                    ship = Instantiate(shopScript.p1_lightning_prefab, new Vector3(spawnPlatform.transform.position.x, spawnPlatform.transform.position.y, shopScript.p1_lightning_prefab.transform.position.z), Quaternion.Euler(0f, 0f, 225f));
-                    break;
-                case Ship.shipTypes.Drone:
-                    ship = Instantiate(shopScript.p1_drone_prefab, new Vector3(spawnPlatform.transform.position.x, spawnPlatform.transform.position.y, shopScript.p1_drone_prefab.transform.position.z), Quaternion.Euler(0f, 0f, 225f));
-                    break;
-                case Ship.shipTypes.Scout:
-                    ship = Instantiate(shopScript.p1_scout_prefab, new Vector3(spawnPlatform.transform.position.x, spawnPlatform.transform.position.y, shopScript.p1_scout_prefab.transform.position.z), Quaternion.Euler(0f, 0f, 225f));
-                    break;
-            }
-        }
-        else
-        {
-            switch (shipType)
-            {
-                case Ship.shipTypes.Destroyer:
-                    ship = Instantiate(shopScript.p2_destroyer_prefab, new Vector3(spawnPlatform.transform.position.x, spawnPlatform.transform.position.y, shopScript.p2_destroyer_prefab.transform.position.z), Quaternion.Euler(0f, 0f, 45f));
-                    break;
-                case Ship.shipTypes.Hawk:
-                    ship = Instantiate(shopScript.p2_hawk_prefab, new Vector3(spawnPlatform.transform.position.x, spawnPlatform.transform.position.y, shopScript.p2_hawk_prefab.transform.position.z), Quaternion.Euler(0f, 0f, 45f));
-                    break;
-                case Ship.shipTypes.Challenger:
-                    ship = Instantiate(shopScript.p2_challenger_prefab, new Vector3(spawnPlatform.transform.position.x, spawnPlatform.transform.position.y, shopScript.p2_challenger_prefab.transform.position.z), Quaternion.Euler(0f, 0f, 45f));
-                    break;
-                case Ship.shipTypes.Goliath:
-                    ship = Instantiate(shopScript.p2_goliath_prefab, new Vector3(spawnPlatform.transform.position.x, spawnPlatform.transform.position.y, shopScript.p2_goliath_prefab.transform.position.z), Quaternion.Euler(0f, 0f, 45f));
-                    break;
-                case Ship.shipTypes.Lightning:
-                    ship = Instantiate(shopScript.p2_lightning_prefab, new Vector3(spawnPlatform.transform.position.x, spawnPlatform.transform.position.y, shopScript.p2_lightning_prefab.transform.position.z), Quaternion.Euler(0f, 0f, 45f));
-                    break;
-                case Ship.shipTypes.Drone:
-                    ship = Instantiate(shopScript.p2_drone_prefab, new Vector3(spawnPlatform.transform.position.x, spawnPlatform.transform.position.y, shopScript.p2_drone_prefab.transform.position.z), Quaternion.Euler(0f, 0f, 45f));
-                    break;
-                case Ship.shipTypes.Scout:
-                    ship = Instantiate(shopScript.p2_scout_prefab, new Vector3(spawnPlatform.transform.position.x, spawnPlatform.transform.position.y, shopScript.p2_scout_prefab.transform.position.z), Quaternion.Euler(0f, 0f, 45f));
-                    break;
-            }
-        }
-        ship.GetComponent<NetworkObject>().SpawnWithOwnership((ulong)(ship.GetComponent<Ship>().getPlayerNum() - 1));
     }
 
     public void SetShips(List<Ship> ships)
     {
         VerifySelection();
 
-        foreach (Ship ship in this.ships)
+        foreach (Ship ship in this.selectedShips)
         {
             ship.Unselect();
         }
@@ -241,10 +145,17 @@ public class PlayerController : NetworkBehaviour
             ship.Select(); 
         }
 
-        this.ships.Clear(); 
+        this.selectedShips.Clear(); 
         foreach (Ship newShip in ships)
         {
-            this.ships.Add(newShip);
+            this.selectedShips.Add(newShip);
         }
+    }
+
+    [ServerRpc]
+    public void SpawnShipServerRPC(Ship.shipTypes shipType, ulong playerID)
+    {
+        GameObject ship = Instantiate(GameManager.Singleton.shipPrefabs[(int)shipType], GameManager.Singleton.playerSpawns[playerID].transform.position, Quaternion.Euler(0f, 0f, 225f));
+        ship.GetComponent<NetworkObject>().SpawnWithOwnership(playerID);
     }
 }
