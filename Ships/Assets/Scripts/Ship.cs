@@ -34,19 +34,6 @@ public class Ship : NetworkBehaviour
 
     public override void OnNetworkSpawn()
     {
-        // Update healthbar for both players when it changes
-
-        currentShipHP.OnValueChanged += (float previousValue, float newValue) =>
-        {
-            healthBar.updateHPBar(maxShipHP, currentShipHP.Value);
-        };
-
-        if (!IsOwner)
-            GetComponentInChildren<SpriteMask>().enabled = false;
-    }
-
-    private void Start()
-    {
         moveController = GetComponent<ShipMovement>();
         shootController = GetComponent<Ship_Shooting>();
         healthBar = GetComponentInChildren<Healthbar>();
@@ -78,7 +65,7 @@ public class Ship : NetworkBehaviour
                 shipCost = 20f;
                 break;
             case (Ship.shipTypes.Goliath):
-                maxShipHP = 150f;
+                maxShipHP = 170f;
                 shipMaxSpeed = 3f;
                 shipAcceleration = .05f;
                 shipTurnRate = 30f;
@@ -86,7 +73,7 @@ public class Ship : NetworkBehaviour
                 break;
             case (Ship.shipTypes.Lightning):
                 maxShipHP = 30f;
-                shipMaxSpeed = 5f;
+                shipMaxSpeed = 5.5f;
                 shipAcceleration = .3f;
                 shipTurnRate = 60f;
                 shipCost = 35f;
@@ -109,6 +96,21 @@ public class Ship : NetworkBehaviour
 
         if (IsHost)
             currentShipHP.Value = maxShipHP;
+
+        // Update healthbar for both players when it changes
+
+        currentShipHP.OnValueChanged += (float previousValue, float newValue) =>
+        {
+            healthBar.updateHPBar(maxShipHP, currentShipHP.Value);
+        };
+
+        if (!IsOwner)
+            GetComponentInChildren<SpriteMask>().enabled = false;
+    }
+
+    private void Start()
+    {
+        
     }
 
     public void setDestination(Vector2 dest)
