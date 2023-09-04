@@ -30,6 +30,7 @@ public class Ship : NetworkBehaviour
     ShipMovement moveController;
     Ship_Shooting shootController;
     Healthbar healthBar;
+    Outline outline; 
 
     public override void OnNetworkSpawn()
     {
@@ -49,6 +50,7 @@ public class Ship : NetworkBehaviour
         moveController = GetComponent<ShipMovement>();
         shootController = GetComponent<Ship_Shooting>();
         healthBar = GetComponentInChildren<Healthbar>();
+        outline = GetComponentInChildren<Outline>();
 
         shipAcceleration = .1f;
 
@@ -119,6 +121,11 @@ public class Ship : NetworkBehaviour
         moveController.StopShipServerRPC(); 
     }
 
+    public void ReverseShip()
+    {
+        moveController.BackupServerRPC(); 
+    }
+
     public void doDamage(float damage)
     {
         currentShipHP.Value -= damage;
@@ -127,6 +134,15 @@ public class Ship : NetworkBehaviour
             this.GetComponent<NetworkObject>().Despawn();
             Destroy(this.gameObject);
         }
+    }
+
+    public void Select()
+    {
+        outline.SetSelected();
+    }
+    public void Unselect()
+    {
+        outline.SetUnselected();
     }
 
     public shipTypes getShipType()

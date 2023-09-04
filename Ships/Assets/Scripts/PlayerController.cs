@@ -70,7 +70,9 @@ public class PlayerController : NetworkBehaviour
         // Setting the target destination for the ships
         if (Input.GetButtonDown("Fire2"))
         {
-            
+
+            VerifySelection();
+
             Vector3 mousePos = Input.mousePosition;
             mousePos.z = 0;
             Vector3 worldPosition = Camera.main.ScreenToWorldPoint(mousePos);
@@ -95,6 +97,14 @@ public class PlayerController : NetworkBehaviour
             }
         }
 
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            foreach (Ship ship in ships)
+            {
+                ship.ReverseShip();
+            }
+        }
+
         if (Input.GetKeyDown(KeyCode.R))
         {
             shopScript.openShop(this.gameObject);
@@ -103,6 +113,17 @@ public class PlayerController : NetworkBehaviour
         if (Input.GetKeyDown(KeyCode.E))
         {
             cameraScript.toggleLockState();
+        }
+    }
+
+    private void VerifySelection()
+    {
+        for (int i = 0; i < ships.Count; i++) 
+        {
+            if (ships[i] == null) 
+            {
+                ships.RemoveAt(i);
+            }
         }
     }
 
@@ -159,25 +180,25 @@ public class PlayerController : NetworkBehaviour
                 switch (shipType)
                 {
                     case Ship.shipTypes.Destroyer:
-                        ship = Instantiate(shopScript.p1_destroyer_prefab, new Vector3(spawnPlatform.transform.position.x, spawnPlatform.transform.position.y, shopScript.p1_destroyer_prefab.transform.position.z), new Quaternion());
+                        ship = Instantiate(shopScript.p1_destroyer_prefab, new Vector3(spawnPlatform.transform.position.x, spawnPlatform.transform.position.y, shopScript.p1_destroyer_prefab.transform.position.z), Quaternion.Euler(0f, 0f, 225f));
                         break;
                     case Ship.shipTypes.Hawk:
-                        ship = Instantiate(shopScript.p1_hawk_prefab, new Vector3(spawnPlatform.transform.position.x, spawnPlatform.transform.position.y, shopScript.p1_hawk_prefab.transform.position.z), new Quaternion());
+                        ship = Instantiate(shopScript.p1_hawk_prefab, new Vector3(spawnPlatform.transform.position.x, spawnPlatform.transform.position.y, shopScript.p1_hawk_prefab.transform.position.z), Quaternion.Euler(0f, 0f, 225f));
                         break;
                     case Ship.shipTypes.Challenger:
-                        ship = Instantiate(shopScript.p1_challenger_prefab, new Vector3(spawnPlatform.transform.position.x, spawnPlatform.transform.position.y, shopScript.p1_challenger_prefab.transform.position.z), new Quaternion());
+                        ship = Instantiate(shopScript.p1_challenger_prefab, new Vector3(spawnPlatform.transform.position.x, spawnPlatform.transform.position.y, shopScript.p1_challenger_prefab.transform.position.z), Quaternion.Euler(0f, 0f, 225f));
                         break;
                     case Ship.shipTypes.Goliath:
-                        ship = Instantiate(shopScript.p1_goliath_prefab, new Vector3(spawnPlatform.transform.position.x, spawnPlatform.transform.position.y, shopScript.p1_goliath_prefab.transform.position.z), new Quaternion());
+                        ship = Instantiate(shopScript.p1_goliath_prefab, new Vector3(spawnPlatform.transform.position.x, spawnPlatform.transform.position.y, shopScript.p1_goliath_prefab.transform.position.z), Quaternion.Euler(0f, 0f, 225f));
                         break;
                     case Ship.shipTypes.Lightning:
-                        ship = Instantiate(shopScript.p1_lightning_prefab, new Vector3(spawnPlatform.transform.position.x, spawnPlatform.transform.position.y, shopScript.p1_lightning_prefab.transform.position.z), new Quaternion());
+                        ship = Instantiate(shopScript.p1_lightning_prefab, new Vector3(spawnPlatform.transform.position.x, spawnPlatform.transform.position.y, shopScript.p1_lightning_prefab.transform.position.z), Quaternion.Euler(0f, 0f, 225f));
                         break;
                     case Ship.shipTypes.Drone:
-                        ship = Instantiate(shopScript.p1_drone_prefab, new Vector3(spawnPlatform.transform.position.x, spawnPlatform.transform.position.y, shopScript.p1_drone_prefab.transform.position.z), new Quaternion());
+                        ship = Instantiate(shopScript.p1_drone_prefab, new Vector3(spawnPlatform.transform.position.x, spawnPlatform.transform.position.y, shopScript.p1_drone_prefab.transform.position.z), Quaternion.Euler(0f, 0f, 225f));
                         break;
                     case Ship.shipTypes.Scout:
-                        ship = Instantiate(shopScript.p1_scout_prefab, new Vector3(spawnPlatform.transform.position.x, spawnPlatform.transform.position.y, shopScript.p1_scout_prefab.transform.position.z), new Quaternion());
+                        ship = Instantiate(shopScript.p1_scout_prefab, new Vector3(spawnPlatform.transform.position.x, spawnPlatform.transform.position.y, shopScript.p1_scout_prefab.transform.position.z), Quaternion.Euler(0f, 0f, 225f));
                         break;
                 }
             }
@@ -186,25 +207,25 @@ public class PlayerController : NetworkBehaviour
                 switch (shipType)
                 {
                     case Ship.shipTypes.Destroyer:
-                        ship = Instantiate(shopScript.p2_destroyer_prefab, new Vector3(spawnPlatform.transform.position.x, spawnPlatform.transform.position.y, shopScript.p2_destroyer_prefab.transform.position.z), new Quaternion());
+                        ship = Instantiate(shopScript.p2_destroyer_prefab, new Vector3(spawnPlatform.transform.position.x, spawnPlatform.transform.position.y, shopScript.p2_destroyer_prefab.transform.position.z), Quaternion.Euler(0f, 0f, 45f));
                         break;
                     case Ship.shipTypes.Hawk:
-                        ship = Instantiate(shopScript.p2_hawk_prefab, new Vector3(spawnPlatform.transform.position.x, spawnPlatform.transform.position.y, shopScript.p2_hawk_prefab.transform.position.z), new Quaternion());
+                        ship = Instantiate(shopScript.p2_hawk_prefab, new Vector3(spawnPlatform.transform.position.x, spawnPlatform.transform.position.y, shopScript.p2_hawk_prefab.transform.position.z), Quaternion.Euler(0f, 0f, 45f));
                         break;
                     case Ship.shipTypes.Challenger:
-                        ship = Instantiate(shopScript.p2_challenger_prefab, new Vector3(spawnPlatform.transform.position.x, spawnPlatform.transform.position.y, shopScript.p2_challenger_prefab.transform.position.z), new Quaternion());
+                        ship = Instantiate(shopScript.p2_challenger_prefab, new Vector3(spawnPlatform.transform.position.x, spawnPlatform.transform.position.y, shopScript.p2_challenger_prefab.transform.position.z), Quaternion.Euler(0f, 0f, 45f));
                         break;
                     case Ship.shipTypes.Goliath:
-                        ship = Instantiate(shopScript.p2_goliath_prefab, new Vector3(spawnPlatform.transform.position.x, spawnPlatform.transform.position.y, shopScript.p2_goliath_prefab.transform.position.z), new Quaternion());
+                        ship = Instantiate(shopScript.p2_goliath_prefab, new Vector3(spawnPlatform.transform.position.x, spawnPlatform.transform.position.y, shopScript.p2_goliath_prefab.transform.position.z), Quaternion.Euler(0f, 0f, 45f));
                         break;
                     case Ship.shipTypes.Lightning:
-                        ship = Instantiate(shopScript.p2_lightning_prefab, new Vector3(spawnPlatform.transform.position.x, spawnPlatform.transform.position.y, shopScript.p2_lightning_prefab.transform.position.z), new Quaternion());
+                        ship = Instantiate(shopScript.p2_lightning_prefab, new Vector3(spawnPlatform.transform.position.x, spawnPlatform.transform.position.y, shopScript.p2_lightning_prefab.transform.position.z), Quaternion.Euler(0f, 0f, 45f));
                         break;
                     case Ship.shipTypes.Drone:
-                        ship = Instantiate(shopScript.p2_drone_prefab, new Vector3(spawnPlatform.transform.position.x, spawnPlatform.transform.position.y, shopScript.p2_drone_prefab.transform.position.z), new Quaternion());
+                        ship = Instantiate(shopScript.p2_drone_prefab, new Vector3(spawnPlatform.transform.position.x, spawnPlatform.transform.position.y, shopScript.p2_drone_prefab.transform.position.z), Quaternion.Euler(0f, 0f, 45f));
                         break;
                     case Ship.shipTypes.Scout:
-                        ship = Instantiate(shopScript.p2_scout_prefab, new Vector3(spawnPlatform.transform.position.x, spawnPlatform.transform.position.y, shopScript.p2_scout_prefab.transform.position.z), new Quaternion());
+                        ship = Instantiate(shopScript.p2_scout_prefab, new Vector3(spawnPlatform.transform.position.x, spawnPlatform.transform.position.y, shopScript.p2_scout_prefab.transform.position.z), Quaternion.Euler(0f, 0f, 45f));
                         break;
                 }
             }
@@ -214,7 +235,21 @@ public class PlayerController : NetworkBehaviour
 
     public void SetShips(List<Ship> ships)
     {
-        this.ships = ships;
+        foreach (Ship ship in this.ships)
+        {
+            ship.Unselect();
+        }
+
+        foreach (Ship ship in ships)
+        {
+            ship.Select(); 
+        }
+
+        this.ships.Clear(); 
+        foreach (Ship newShip in ships)
+        {
+            this.ships.Add(newShip);
+        }
     }
 
     public float getPlayerGold()

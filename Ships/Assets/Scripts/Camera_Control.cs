@@ -8,7 +8,7 @@ public class Camera_Control : MonoBehaviour
     [SerializeField] float maxZoomIn = 10f;
     [SerializeField] float zoomSpeed = 1f;
     [SerializeField] float moveCamBorderSize = 0.05f;
-    [SerializeField] float camMoveSpeed = 0.10f;
+    [SerializeField] float camMoveSpeed = 2.5f;
     float currentZoomLevel;
     bool camLocked;
 
@@ -41,22 +41,22 @@ public class Camera_Control : MonoBehaviour
         if ((Input.mousePosition.y >= (Screen.height * (1 - moveCamBorderSize)) || Input.GetKey(KeyCode.W)) && !camLocked)
         {
             //Move cam up
-            transform.Translate(Vector3.up * camMoveSpeed);
+            transform.Translate(Vector3.up * camMoveSpeed * currentZoomLevel * Time.deltaTime);
         }
-        else if ((Input.mousePosition.y <= (Screen.height * moveCamBorderSize) || Input.GetKey(KeyCode.S)) && !camLocked)
+        if ((Input.mousePosition.y <= (Screen.height * moveCamBorderSize) || Input.GetKey(KeyCode.S)) && !camLocked)
         {
             //Move cam down
-            transform.Translate(Vector3.down * camMoveSpeed);
+            transform.Translate(Vector3.down * camMoveSpeed * currentZoomLevel * Time.deltaTime);
         }
-        else if ((Input.mousePosition.x >= (Screen.width * (1 - moveCamBorderSize)) || Input.GetKey(KeyCode.D)) && !camLocked)
+        if ((Input.mousePosition.x >= (Screen.width * (1 - moveCamBorderSize)) || Input.GetKey(KeyCode.D)) && !camLocked)
         {
             //Move cam right
-            transform.Translate(Vector3.right * camMoveSpeed);
+            transform.Translate(Vector3.right * camMoveSpeed * currentZoomLevel * Time.deltaTime);
         }
-        else if ((Input.mousePosition.x <= (Screen.width * moveCamBorderSize) || Input.GetKey(KeyCode.A)) && !camLocked)
+        if ((Input.mousePosition.x <= (Screen.width * moveCamBorderSize) || Input.GetKey(KeyCode.A)) && !camLocked)
         {
             //Move cam left
-            transform.Translate(Vector3.left * camMoveSpeed);
+            transform.Translate(Vector3.left * camMoveSpeed * currentZoomLevel * Time.deltaTime);
         }
     }
 
