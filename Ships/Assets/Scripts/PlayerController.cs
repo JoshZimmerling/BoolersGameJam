@@ -108,8 +108,7 @@ public class PlayerController : NetworkBehaviour
 
         if (Input.GetKeyDown(KeyCode.R))
         {
-
-            shopScript.setGoldText(getPlayerGold());
+            shopScript.updateGoldText(getPlayerGold());
             shopScript.openShop(this.gameObject);
         }
 
@@ -174,7 +173,6 @@ public class PlayerController : NetworkBehaviour
         if (getPlayerGold() >= cost)
         {
             changePlayerGold(-cost);
-            shopScript.setGoldText(getPlayerGold());
 
             //SPAWN THE SHIP
             GameObject ship = null;

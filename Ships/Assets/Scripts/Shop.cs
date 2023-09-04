@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using Unity.Netcode;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
@@ -117,13 +118,13 @@ public class Shop : MonoBehaviour
                     scout_button.image.sprite = p2_scout;
                 }
 
-                destroyer_button.onClick.AddListener(() => parentPlayerScript.createShipServerRPC(Ship.shipTypes.Destroyer, 20, playerNum));
-                hawk_button.onClick.AddListener(() => parentPlayerScript.createShipServerRPC(Ship.shipTypes.Hawk, 20, playerNum));
-                challenger_button.onClick.AddListener(() => parentPlayerScript.createShipServerRPC(Ship.shipTypes.Challenger, 20, playerNum));
-                goliath_button.onClick.AddListener(() => parentPlayerScript.createShipServerRPC(Ship.shipTypes.Goliath, 35, playerNum));
-                lightning_button.onClick.AddListener(() => parentPlayerScript.createShipServerRPC(Ship.shipTypes.Lightning, 35, playerNum));
-                drone_button.onClick.AddListener(() => parentPlayerScript.createShipServerRPC(Ship.shipTypes.Drone, 5, playerNum));
-                scout_button.onClick.AddListener(() => parentPlayerScript.createShipServerRPC(Ship.shipTypes.Scout, 10, playerNum));
+                destroyer_button.onClick.AddListener(() => createShipAndUpdateGoldUI(Ship.shipTypes.Destroyer, 20, playerNum));
+                hawk_button.onClick.AddListener(() => createShipAndUpdateGoldUI(Ship.shipTypes.Hawk, 20, playerNum));
+                challenger_button.onClick.AddListener(() => createShipAndUpdateGoldUI(Ship.shipTypes.Challenger, 20, playerNum));
+                goliath_button.onClick.AddListener(() => createShipAndUpdateGoldUI(Ship.shipTypes.Goliath, 35, playerNum));
+                lightning_button.onClick.AddListener(() => createShipAndUpdateGoldUI(Ship.shipTypes.Lightning, 35, playerNum));
+                drone_button.onClick.AddListener(() => createShipAndUpdateGoldUI(Ship.shipTypes.Drone, 5, playerNum));
+                scout_button.onClick.AddListener(() => createShipAndUpdateGoldUI(Ship.shipTypes.Scout, 10, playerNum));
             }
             shopOpenedBefore = true;
         }
@@ -132,8 +133,15 @@ public class Shop : MonoBehaviour
             this.gameObject.SetActive(false);
         }
     }
-    public void setGoldText(float gold)
+
+    public void updateGoldText(float gold)
     {
         goldText.text = "Gold: $" + gold;
+    }
+
+    private void createShipAndUpdateGoldUI(Ship.shipTypes type, float cost, int player)
+    {
+        parentPlayerScript.createShipServerRPC(type, cost, player);
+        updateGoldText(parentPlayerScript.getPlayerGold());
     }
 }
