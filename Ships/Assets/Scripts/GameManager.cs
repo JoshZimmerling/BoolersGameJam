@@ -48,5 +48,6 @@ public class GameManager : NetworkBehaviour
     {
         players[player.OwnerClientId] = player;
         playerSpawns[player.OwnerClientId].SetActive(true);
+        playerSpawns[player.OwnerClientId].GetComponent<SpriteRenderer>().color = playerColors[player.OwnerClientId]; // TODO: Set spawns to white
     }
 }

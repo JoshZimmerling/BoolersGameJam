@@ -32,8 +32,6 @@ public class Ship_Shooting : NetworkBehaviour
         
         typeOfShip = this.gameObject.GetComponent<Ship>().GetShipType();
 
-        Debug.Log(typeOfShip);
-
         switch (typeOfShip)
         {
             case (Ship.shipTypes.Destroyer):
