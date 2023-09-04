@@ -8,6 +8,8 @@ public class NetworkManagerUI : MonoBehaviour
 {
     [SerializeField] private Button hostButton;
     [SerializeField] private Button joinButton;
+    [SerializeField] private Button serverButton;
+    //[SerializeField] private 
 
     private void Awake()
     {

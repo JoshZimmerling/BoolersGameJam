@@ -231,7 +231,7 @@ MonoBehaviour:
   ConnectionData:
     Address: 127.0.0.1
     Port: 7777
-    ServerListenAddress: 127.0.0.1
+    ServerListenAddress: 0.0.0.0
   DebugSimulator:
     PacketDelayMS: 0
     PacketJitterMS: 0
@@ -1892,6 +1892,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hostButton: {fileID: 1832151108}
   joinButton: {fileID: 1166336032}
+  serverButton: {fileID: 0}
 --- !u!1 &2025252360
 GameObject:
   m_ObjectHideFlags: 0
