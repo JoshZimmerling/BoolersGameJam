@@ -235,6 +235,8 @@ public class PlayerController : NetworkBehaviour
 
     public void SetShips(List<Ship> ships)
     {
+        VerifySelection();
+
         foreach (Ship ship in this.ships)
         {
             ship.Unselect();
