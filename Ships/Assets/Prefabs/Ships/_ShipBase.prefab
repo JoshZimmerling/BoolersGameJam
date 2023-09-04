@@ -323,6 +323,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86373f9a087ba2a4cad036a5e8b47a94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shipType: 0
   accents: {fileID: 5548237794063707659}
 --- !u!114 &1363217247369419061
 MonoBehaviour:
@@ -337,12 +338,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BulletPrefab: {fileID: 9135911124565628530, guid: a02ebc28117ec194c9dcdaecc201af8b, type: 3}
-  spawnPointList:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  spawnPointList: []
 --- !u!114 &5019182491059803514
 MonoBehaviour:
   m_ObjectHideFlags: 0

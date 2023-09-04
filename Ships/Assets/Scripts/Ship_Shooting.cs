@@ -22,8 +22,8 @@ public class Ship_Shooting : NetworkBehaviour
     public enum ShotDirection
     {
         Right,
-        Left,
         Up,
+        Left,
         Down
     }
 
@@ -133,25 +133,11 @@ public class Ship_Shooting : NetworkBehaviour
 
     private void CreateBullet(ShotDirection dir, GameObject spawnPoint)
     {
-        GameObject bullet = Instantiate(BulletPrefab, spawnPoint.transform.position + new Vector3(0, 0, -1), new Quaternion());
-        switch (dir)
-        {
-            case ShotDirection.Right:
-                bullet.GetComponent<Rigidbody2D>().velocity = (transform.rotation * new Vector2(1, 0) * bulletSpeed);
-                break;
-            case ShotDirection.Left:
-                bullet.GetComponent<Rigidbody2D>().velocity = (transform.rotation * new Vector2(-1, 0) * bulletSpeed);
-                break;
-            case ShotDirection.Up:
-                bullet.GetComponent<Rigidbody2D>().velocity = (transform.rotation * new Vector2(0, 1) * bulletSpeed);
-                break;
-            case ShotDirection.Down:
-                bullet.GetComponent<Rigidbody2D>().velocity = (transform.rotation * new Vector2(0, -1) * bulletSpeed);
-                break;
-        }
+        GameObject bullet = Instantiate(BulletPrefab, spawnPoint.transform.position + new Vector3(0, 0, -1), Quaternion.Euler(0,0, 90 * (int)dir + transform.rotation.eulerAngles.z));
         bullet.GetComponent<Bullet>().SetDamage(bulletDamage);
         bullet.GetComponent<Bullet>().SetBulletLifetime(bulletLifetime);
-        
+        bullet.GetComponent<Bullet>().SetBulletSpeed(bulletSpeed);
+
         bullet.GetComponent<NetworkObject>().SpawnWithOwnership(OwnerClientId);
     }
 }

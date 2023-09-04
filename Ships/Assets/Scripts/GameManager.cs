@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 
-public class GameManager : NetworkBehaviour
+public class GameManager : MonoBehaviour
 {
     public static GameManager Singleton;
 
@@ -28,7 +28,6 @@ public class GameManager : NetworkBehaviour
     public void StartGame(int playerID)
     {
         playerIndex = playerID;
-
         Debug.Log("WASD/Mouse - Move Camera\n" +
                   "Scroll Wheel - Zoom Camera\n" +
                   "E - Toggle Camera Lock\n" +
@@ -48,6 +47,6 @@ public class GameManager : NetworkBehaviour
     {
         players[player.OwnerClientId] = player;
         playerSpawns[player.OwnerClientId].SetActive(true);
-        playerSpawns[player.OwnerClientId].GetComponent<SpriteRenderer>().color = playerColors[player.OwnerClientId]; // TODO: Set spawns to white
+        playerSpawns[player.OwnerClientId].GetComponent<SpriteRenderer>().color = playerColors[player.OwnerClientId];
     }
 }

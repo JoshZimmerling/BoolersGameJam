@@ -25,21 +25,13 @@ public class Shop : MonoBehaviour
 
     public void SetupShop(PlayerController player)
     {
+
         playerScript = player;
 
         this.gameObject.SetActive(false);
 
         goldText = goldTextObject.GetComponent<Text>();
         UpdateGoldText();
-
-        GameObject[] shipPrefabs = GameManager.Singleton.shipPrefabs;
-        destroyer_button.image.sprite = shipPrefabs[0].GetComponent<SpriteRenderer>().sprite;
-        hawk_button.image.sprite = shipPrefabs[1].GetComponent<SpriteRenderer>().sprite;
-        challenger_button.image.sprite = shipPrefabs[2].GetComponent<SpriteRenderer>().sprite;
-        goliath_button.image.sprite = shipPrefabs[3].GetComponent<SpriteRenderer>().sprite;
-        lightning_button.image.sprite = shipPrefabs[4].GetComponent<SpriteRenderer>().sprite;
-        drone_button.image.sprite = shipPrefabs[5].GetComponent<SpriteRenderer>().sprite;
-        scout_button.image.sprite = shipPrefabs[6].GetComponent<SpriteRenderer>().sprite;
 
         destroyer_button.onClick.AddListener(() => BuyShip(Ship.shipTypes.Destroyer, 20));
         hawk_button.onClick.AddListener(() => BuyShip(Ship.shipTypes.Hawk, 20));

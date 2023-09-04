@@ -89,7 +89,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abd34ae949ff91a4385f7007e5947780, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Bullet_Direction: 1
+  Bullet_Direction: 2
 --- !u!1 &5433765893953462145
 GameObject:
   m_ObjectHideFlags: 0
@@ -134,7 +134,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abd34ae949ff91a4385f7007e5947780, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Bullet_Direction: 2
+  Bullet_Direction: 1
 --- !u!1 &8332989235957020891
 GameObject:
   m_ObjectHideFlags: 0

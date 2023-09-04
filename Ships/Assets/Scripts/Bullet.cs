@@ -7,6 +7,7 @@ public class Bullet : NetworkBehaviour
 {
     float dmg;
     float maxbulletLifetime;
+    float bulletSpeed;
 
     public override void OnNetworkSpawn()
     {
@@ -19,6 +20,8 @@ public class Bullet : NetworkBehaviour
         if (!IsHost)
             return;
 
+        transform.Translate(new Vector3(1, 0) * bulletSpeed * Time.deltaTime);
+        Debug.Log(new Vector3(1, 0) * bulletSpeed * Time.deltaTime);
         bulletLifetime += Time.deltaTime;
 
         if (bulletLifetime > maxbulletLifetime)
@@ -52,5 +55,10 @@ public class Bullet : NetworkBehaviour
     public void SetDamage(float damage)
     {
         dmg = damage;
+    }
+
+    public void SetBulletSpeed(float speed)
+    {
+        bulletSpeed = speed;
     }
 }
