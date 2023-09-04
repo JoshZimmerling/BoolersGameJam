@@ -65,7 +65,7 @@ public class Ship : NetworkBehaviour
                 shipCost = 20f;
                 break;
             case (Ship.shipTypes.Goliath):
-                maxShipHP = 150f;
+                maxShipHP = 170f;
                 shipMaxSpeed = 3f;
                 shipAcceleration = .05f;
                 shipTurnRate = 30f;
@@ -73,7 +73,7 @@ public class Ship : NetworkBehaviour
                 break;
             case (Ship.shipTypes.Lightning):
                 maxShipHP = 30f;
-                shipMaxSpeed = 5f;
+                shipMaxSpeed = 5.5f;
                 shipAcceleration = .3f;
                 shipTurnRate = 60f;
                 shipCost = 35f;
