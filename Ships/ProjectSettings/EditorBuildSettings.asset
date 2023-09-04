@@ -5,10 +5,16 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/shootingTest.unity
     guid: 2cda990e2423bbf4892e6590ba056729
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/MultiplayerSetup.unity
     guid: 6c7f3cbfe33638a44b492d342d2e2711
+  - enabled: 0
+    path: Assets/Scenes/setShooting.unity
+    guid: 8a79ee68fdf15ea4fbab36c198b1d02d
+  - enabled: 1
+    path: Assets/Scenes/settySh2.unity
+    guid: 85f34360ae5ace34e829d08d3366da12
   m_configObjects: {}

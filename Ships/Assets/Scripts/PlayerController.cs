@@ -70,7 +70,9 @@ public class PlayerController : NetworkBehaviour
         // Setting the target destination for the ships
         if (Input.GetButtonDown("Fire2"))
         {
-            
+
+            VerifySelection();
+
             Vector3 mousePos = Input.mousePosition;
             mousePos.z = 0;
             Vector3 worldPosition = Camera.main.ScreenToWorldPoint(mousePos);
@@ -103,6 +105,17 @@ public class PlayerController : NetworkBehaviour
         if (Input.GetKeyDown(KeyCode.E))
         {
             cameraScript.toggleLockState();
+        }
+    }
+
+    private void VerifySelection()
+    {
+        for (int i = 0; i < ships.Count; i++) 
+        {
+            if (ships[i] == null) 
+            {
+                ships.RemoveAt(i);
+            }
         }
     }
 
@@ -214,7 +227,21 @@ public class PlayerController : NetworkBehaviour
 
     public void SetShips(List<Ship> ships)
     {
-        this.ships = ships;
+        foreach (Ship ship in this.ships)
+        {
+            ship.Unselect();
+        }
+
+        foreach (Ship ship in ships)
+        {
+            ship.Select(); 
+        }
+
+        this.ships.Clear(); 
+        foreach (Ship newShip in ships)
+        {
+            this.ships.Add(newShip);
+        }
     }
 
     public float getPlayerGold()
