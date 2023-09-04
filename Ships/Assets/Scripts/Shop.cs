@@ -59,6 +59,7 @@ public class Shop : MonoBehaviour
 
     [SerializeField] GameObject goldTextObject;
     Text goldText;
+    float playerGold = 200f;
 
     bool shopOpenedBefore = false;
     GameObject parent;
@@ -77,6 +78,7 @@ public class Shop : MonoBehaviour
         scout_button = scout.GetComponent<Button>();
 
         goldText = goldTextObject.GetComponent<Text>();
+        updateGoldText();
 
         this.gameObject.SetActive(false);
     }
@@ -134,14 +136,17 @@ public class Shop : MonoBehaviour
         }
     }
 
-    public void updateGoldText(float gold)
+    public void updateGoldText()
     {
-        goldText.text = "Gold: $" + gold;
+        goldText.text = "Gold: $" + playerGold;
     }
 
     private void createShipAndUpdateGoldUI(Ship.shipTypes type, float cost, int player)
     {
-        parentPlayerScript.createShipServerRPC(type, cost, player);
-        updateGoldText(parentPlayerScript.getPlayerGold());
+        if(playerGold >= cost){
+            playerGold -= cost;
+            updateGoldText();
+            parentPlayerScript.createShipServerRPC(type, player);
+        }
     }
 }

@@ -101,8 +101,6 @@ public class Ship : NetworkBehaviour
 
         currentShipHP.OnValueChanged += (float previousValue, float newValue) =>
         {
-            Debug.Log("Max" + maxShipHP);
-            Debug.Log(currentShipHP.Value);
             healthBar.updateHPBar(maxShipHP, currentShipHP.Value);
         };
 
