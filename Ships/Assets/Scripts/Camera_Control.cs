@@ -43,17 +43,17 @@ public class Camera_Control : MonoBehaviour
             //Move cam up
             transform.Translate(Vector3.up * camMoveSpeed * currentZoomLevel * Time.deltaTime);
         }
-        else if ((Input.mousePosition.y <= (Screen.height * moveCamBorderSize) || Input.GetKey(KeyCode.S)) && !camLocked)
+        if ((Input.mousePosition.y <= (Screen.height * moveCamBorderSize) || Input.GetKey(KeyCode.S)) && !camLocked)
         {
             //Move cam down
             transform.Translate(Vector3.down * camMoveSpeed * currentZoomLevel * Time.deltaTime);
         }
-        else if ((Input.mousePosition.x >= (Screen.width * (1 - moveCamBorderSize)) || Input.GetKey(KeyCode.D)) && !camLocked)
+        if ((Input.mousePosition.x >= (Screen.width * (1 - moveCamBorderSize)) || Input.GetKey(KeyCode.D)) && !camLocked)
         {
             //Move cam right
             transform.Translate(Vector3.right * camMoveSpeed * currentZoomLevel * Time.deltaTime);
         }
-        else if ((Input.mousePosition.x <= (Screen.width * moveCamBorderSize) || Input.GetKey(KeyCode.A)) && !camLocked)
+        if ((Input.mousePosition.x <= (Screen.width * moveCamBorderSize) || Input.GetKey(KeyCode.A)) && !camLocked)
         {
             //Move cam left
             transform.Translate(Vector3.left * camMoveSpeed * currentZoomLevel * Time.deltaTime);
