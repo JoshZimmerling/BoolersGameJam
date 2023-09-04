@@ -57,7 +57,8 @@ public class PlayerController : NetworkBehaviour
                   "E - Toggle Camera Lock\n" +
                   "Left Click - Select Ships\n" +
                   "Right Click - Move Selected Ships\n" +
-                  "Q - Stop Ships\n" +
+                  "Q - Stop Selected Ships\n" +
+                  "Z - Move Selected Ships Backwards\n" +
                   "R - Open Shop\n");
     }
 
@@ -107,6 +108,8 @@ public class PlayerController : NetworkBehaviour
 
         if (Input.GetKeyDown(KeyCode.R))
         {
+
+            shopScript.setGoldText(getPlayerGold());
             shopScript.openShop(this.gameObject);
         }
 
@@ -171,6 +174,7 @@ public class PlayerController : NetworkBehaviour
         if (getPlayerGold() >= cost)
         {
             changePlayerGold(-cost);
+            shopScript.setGoldText(getPlayerGold());
 
             //SPAWN THE SHIP
             GameObject ship = null;

@@ -56,6 +56,9 @@ public class Shop : MonoBehaviour
     [SerializeField] public GameObject p2_drone_prefab;
     [SerializeField] public GameObject p2_scout_prefab;
 
+    [SerializeField] GameObject goldTextObject;
+    Text goldText;
+
     bool shopOpenedBefore = false;
     GameObject parent;
     int playerNum;
@@ -71,6 +74,9 @@ public class Shop : MonoBehaviour
         lightning_button = lightning.GetComponent<Button>();
         drone_button = drone.GetComponent<Button>();
         scout_button = scout.GetComponent<Button>();
+
+        goldText = goldTextObject.GetComponent<Text>();
+
         this.gameObject.SetActive(false);
     }
 
@@ -126,6 +132,8 @@ public class Shop : MonoBehaviour
             this.gameObject.SetActive(false);
         }
     }
-
-    
+    public void setGoldText(float gold)
+    {
+        goldText.text = "Gold: $" + gold;
+    }
 }
