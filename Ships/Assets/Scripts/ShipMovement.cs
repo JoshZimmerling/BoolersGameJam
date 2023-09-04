@@ -27,6 +27,7 @@ public class ShipMovement : NetworkBehaviour
 
     bool noTarget;
     Boolean moving;
+    Boolean backingUp;
 
     Ship ship;
 
@@ -41,8 +42,6 @@ public class ShipMovement : NetworkBehaviour
         noTarget = true;
         ship = transform.GetComponent<Ship>();
 
-/*        lineRenderer = GetComponent<LineRenderer>();
-        lineRenderer.SetWidth(.1f, .1f);*/
         distToStop = 2;
     }
 
@@ -68,63 +67,89 @@ public class ShipMovement : NetworkBehaviour
             noTarget = true;
             totalVelocity = 0;
             moving = false;
+            backingUp = false;
             return; 
         }
 
-        // Turning
-        if (MathF.Abs(angle) > 10)
+        if (!backingUp)
         {
-            if (angle > 0)
+            // Turning
+            if (MathF.Abs(angle) > 10)
             {
-                transform.Rotate(0, 0, -ship.getShipTurnRate() * Time.deltaTime);
+                if (angle > 0)
+                {
+                    transform.Rotate(0, 0, -ship.getShipTurnRate() * Time.deltaTime);
+                }
+                else
+                {
+                    transform.Rotate(0, 0, ship.getShipTurnRate() * Time.deltaTime);
+                }
+            }
+            // Slowing turns
+            else if (MathF.Abs(angle) > 1)
+            {
+                if (angle > 0)
+                {
+                    transform.Rotate(0, 0, (-10 - (Mathf.Abs(angle) * 3)) * Time.deltaTime);
+                }
+                else
+                {
+                    transform.Rotate(0, 0, (10 + (Mathf.Abs(angle) * 3)) * Time.deltaTime);
+                }
+            }
+            // If the angle is small enough, will lock towards target
+            else
+            {
+                transform.rotation = Quaternion.LookRotation(Vector3.forward, targetPos - (Vector2)transform.position);
+            }
+
+            // Prevents moving the ship if not moving and too high an angle
+            if (Mathf.Abs(angle) > 45 && !moving)
+            {
+                return;
+            }
+
+            moving = true;
+
+            if (distToTarget < distToStop)
+            {
+                transform.Translate(Vector2.up * distToTarget * Time.deltaTime);
             }
             else
             {
-                transform.Rotate(0, 0, ship.getShipTurnRate() * Time.deltaTime);
+                totalVelocity += ship.getShipAcceleration();
+                if (totalVelocity > ship.getShipMaxSpeed())
+                {
+                    totalVelocity = ship.getShipMaxSpeed();
+                }
+                transform.Translate(Vector2.up * totalVelocity * Time.deltaTime);
             }
         }
-        // Slowing turns
-        else if (MathF.Abs(angle) > 1)
+        else // backing up
         {
-            if (angle > 0)
+            if (distToTarget < distToStop)
             {
-                transform.Rotate(0, 0, (-10 - (Mathf.Abs(angle) * 3)) * Time.deltaTime);
+                transform.Translate(-Vector2.up * distToTarget * Time.deltaTime);
             }
             else
             {
-                transform.Rotate(0, 0, (10 + (Mathf.Abs(angle) * 3)) * Time.deltaTime);
+                totalVelocity += ship.getShipAcceleration();
+                if (totalVelocity > ship.getShipMaxSpeed())
+                {
+                    totalVelocity = ship.getShipMaxSpeed();
+                }
+                transform.Translate(-Vector2.up * totalVelocity * Time.deltaTime);
             }
         }
-        // If the angle is small enough, will lock towards target
-        else
-        {
-            transform.rotation = Quaternion.LookRotation(Vector3.forward, targetPos - (Vector2)transform.position);
-        }
 
-        // Prevents moving the ship if not moving and too high an angle
-        if (Mathf.Abs(angle) > 45 && !moving)
-        {
-            return;
-        }
+    }
 
-        moving = true;
-/*        lineRenderer.SetPosition(0, transform.position);
-        lineRenderer.SetPosition(1, targetPos);*/
-
-        if (distToTarget < distToStop)
-        {
-            transform.Translate(Vector2.up * distToTarget * Time.deltaTime);
-        }
-        else
-        {
-            totalVelocity += ship.getShipAcceleration();
-            if (totalVelocity > ship.getShipMaxSpeed())
-            {
-                totalVelocity = ship.getShipMaxSpeed();
-            }
-            transform.Translate(Vector2.up * totalVelocity * Time.deltaTime);
-        }
-
+    [ServerRpc]
+    public void BackupServerRPC ()
+    {
+        targetPos = transform.position + (-transform.up * distToStop);
+        backingUp = true;
+        noTarget = false; 
     }
 
     [ServerRpc]
@@ -137,6 +162,7 @@ public class ShipMovement : NetworkBehaviour
     public void setTargetDestinationServerRPC(Vector2 target)
     {
         noTarget = false;
+        backingUp = false; 
         targetPos = target;
     }
 }

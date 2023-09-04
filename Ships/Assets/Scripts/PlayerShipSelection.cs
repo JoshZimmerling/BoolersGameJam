@@ -24,6 +24,7 @@ public class PlayerShipSelection : MonoBehaviour
     private void Start()
     {
         hitColliders = new List<Collider2D>();
+        shipsFromHit = new List<Ship>();
 
         player = transform.GetComponent<PlayerController>();    
     }
