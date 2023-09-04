@@ -38,22 +38,22 @@ public class Camera_Control : MonoBehaviour
         }
 
         //Moving camera around
-        if ((Input.mousePosition.y >= (Screen.height * (1 - moveCamBorderSize)) || Input.GetKey(KeyCode.W)) && !camLocked)
+        if ((Input.mousePosition.y >= (Screen.height * (1 - moveCamBorderSize)) || Input.GetKey(KeyCode.W)) && !camLocked && transform.position.y <= 125)
         {
             //Move cam up
             transform.Translate(Vector3.up * camMoveSpeed * currentZoomLevel * Time.deltaTime);
         }
-        if ((Input.mousePosition.y <= (Screen.height * moveCamBorderSize) || Input.GetKey(KeyCode.S)) && !camLocked)
+        if ((Input.mousePosition.y <= (Screen.height * moveCamBorderSize) || Input.GetKey(KeyCode.S)) && !camLocked && transform.position.y >= -125)
         {
             //Move cam down
             transform.Translate(Vector3.down * camMoveSpeed * currentZoomLevel * Time.deltaTime);
         }
-        if ((Input.mousePosition.x >= (Screen.width * (1 - moveCamBorderSize)) || Input.GetKey(KeyCode.D)) && !camLocked)
+        if ((Input.mousePosition.x >= (Screen.width * (1 - moveCamBorderSize)) || Input.GetKey(KeyCode.D)) && !camLocked && transform.position.x <= 125)
         {
             //Move cam right
             transform.Translate(Vector3.right * camMoveSpeed * currentZoomLevel * Time.deltaTime);
         }
-        if ((Input.mousePosition.x <= (Screen.width * moveCamBorderSize) || Input.GetKey(KeyCode.A)) && !camLocked)
+        if ((Input.mousePosition.x <= (Screen.width * moveCamBorderSize) || Input.GetKey(KeyCode.A)) && !camLocked && transform.position.x >= -125)
         {
             //Move cam left
             transform.Translate(Vector3.left * camMoveSpeed * currentZoomLevel * Time.deltaTime);
