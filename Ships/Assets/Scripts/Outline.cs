@@ -21,6 +21,5 @@ public class Outline : MonoBehaviour
     {
         outlineSprite.color = new Color(0.25f, 0.25f, 0.25f); 
     }
-
     
 }

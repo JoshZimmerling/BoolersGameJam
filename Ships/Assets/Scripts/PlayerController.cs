@@ -97,6 +97,14 @@ public class PlayerController : NetworkBehaviour
             }
         }
 
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            foreach (Ship ship in ships)
+            {
+                ship.ReverseShip();
+            }
+        }
+
         if (Input.GetKeyDown(KeyCode.R))
         {
             shopScript.openShop(this.gameObject);

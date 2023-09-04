@@ -117,6 +117,11 @@ public class Ship : NetworkBehaviour
         moveController.StopShipServerRPC(); 
     }
 
+    public void ReverseShip()
+    {
+        moveController.BackupServerRPC(); 
+    }
+
     public void doDamage(float damage)
     {
         currentShipHP.Value -= damage;
