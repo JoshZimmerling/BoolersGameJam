@@ -62,7 +62,7 @@ public class Ship_Shooting : NetworkBehaviour
                 break;
             case (Ship.shipTypes.Lightning):
                 bulletLifetime = 2f;
-                bulletSpeed = 8f;
+                bulletSpeed = 10f;
                 bulletsPerSecond = 0.5f;
                 bulletDamage = 10f;
                 break;
