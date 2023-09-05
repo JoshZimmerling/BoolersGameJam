@@ -10,6 +10,6 @@ public class Healthbar : MonoBehaviour
     {
         float hpPercent = currHP / maxHP;
         hpBar.transform.localScale = new Vector3(hpPercent, 1, 1);
-        hpBar.transform.localPosition = new Vector3((hpPercent * 0.5f) - 0.5f, 0, -0.1f);
+        hpBar.transform.localPosition = new Vector3((hpPercent * 0.5f) - 0.5f, 0, 0);
     }
 }

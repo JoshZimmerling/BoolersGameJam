@@ -10,9 +10,10 @@ public class NetworkManagerUI : MonoBehaviour
     [SerializeField] private Button hostButton;
     [SerializeField] private Button joinButton;
     [SerializeField] private Button serverButton;
+    [SerializeField] private Button testButton;
     [SerializeField] private TMPro.TMP_InputField ipAddress;
     [SerializeField] private GameObject map;
-    [SerializeField] private string defaultIP; // "131.93.247.207"
+    [SerializeField] private string defaultIP; // "131.93.247.207" "127.0.0.1"
 
     private void Awake()
     {
@@ -24,7 +25,6 @@ public class NetworkManagerUI : MonoBehaviour
 
         joinButton.onClick.AddListener(() => {
             // TODO: Check for actual IP
-            Debug.Log(ipAddress.text);
             if (ipAddress.text != "")
                 NetworkManager.Singleton.GetComponent<Unity.Netcode.Transports.UTP.UnityTransport>().ConnectionData.Address = ipAddress.text;
             else
@@ -32,7 +32,12 @@ public class NetworkManagerUI : MonoBehaviour
 
             this.gameObject.SetActive(false);
             map.gameObject.SetActive(true);
-            
+            NetworkManager.Singleton.StartClient();
+        });
+
+        testButton.onClick.AddListener(() => {
+            this.gameObject.SetActive(false);
+            map.gameObject.SetActive(true);
             NetworkManager.Singleton.StartClient();
         });
     }

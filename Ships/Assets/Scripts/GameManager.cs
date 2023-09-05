@@ -47,6 +47,8 @@ public class GameManager : MonoBehaviour
     {
         players[player.OwnerClientId] = player;
         playerSpawns[player.OwnerClientId].SetActive(true);
-        playerSpawns[player.OwnerClientId].GetComponent<SpriteRenderer>().color = playerColors[player.OwnerClientId];
+        Color playerColor = playerColors[player.OwnerClientId];
+        playerColor.a = 0.1f;
+        playerSpawns[player.OwnerClientId].GetComponent<SpriteRenderer>().color = playerColor;
     }
 }

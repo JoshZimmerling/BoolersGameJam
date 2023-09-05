@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7597090460994900236}
-  - component: {fileID: 3596149766658358771}
   m_Layer: 0
   m_Name: HealthBar
   m_TagString: Untagged
@@ -29,8 +28,8 @@ RectTransform:
   m_LocalScale: {x: 2, y: 0.32999998, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 4670333798322740288}
   - {fileID: 2584582384227705070}
+  - {fileID: 4670333798322740288}
   m_Father: {fileID: 6010934806082289777}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -38,19 +37,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -3}
   m_SizeDelta: {x: 1, y: 1}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &3596149766658358771
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 134601730479606179}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a8212f558fb37b49907db1809a30089, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hpBar: {fileID: 7834353691568528466}
 --- !u!1 &3852303580308677989
 GameObject:
   m_ObjectHideFlags: 0
@@ -324,7 +310,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shipType: 0
-  accents: {fileID: 5548237794063707659}
+  accentsSprite: {fileID: 5548237794063707659}
+  outline: {fileID: 1941251886330462044}
+  hpBar: {fileID: 7834353691568528466}
 --- !u!114 &1363217247369419061
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -434,7 +422,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1169489743053793471}
   - component: {fileID: 8754977973035085754}
-  - component: {fileID: 1899272698205117292}
+  - component: {fileID: 1941251886330462044}
   m_Layer: 0
   m_Name: Outline
   m_TagString: Untagged
@@ -499,7 +487,7 @@ SpriteRenderer:
   m_SortingLayer: 1
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 72cee9edaed85e84ab1b98b7bf8b15b5, type: 3}
-  m_Color: {r: 0.25, g: 0.25, b: 0.25, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 1
@@ -509,7 +497,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 1
   m_SpriteSortPoint: 0
---- !u!114 &1899272698205117292
+--- !u!114 &1941251886330462044
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

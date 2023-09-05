@@ -21,7 +21,6 @@ public class Bullet : NetworkBehaviour
             return;
 
         transform.Translate(new Vector3(1, 0) * bulletSpeed * Time.deltaTime);
-        Debug.Log(new Vector3(1, 0) * bulletSpeed * Time.deltaTime);
         bulletLifetime += Time.deltaTime;
 
         if (bulletLifetime > maxbulletLifetime)

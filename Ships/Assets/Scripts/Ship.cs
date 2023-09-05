@@ -28,20 +28,17 @@ public class Ship : NetworkBehaviour
     float shipCost;
     float shipTurnRate;
 
-    [SerializeField]
-    SpriteRenderer accents;
+    [SerializeField] SpriteRenderer accentsSprite;
+    [SerializeField] Outline outline;
+    [SerializeField] GameObject hpBar;
 
     ShipMovement moveController;
-    Ship_Shooting shootController;
-    Healthbar healthBar;
-    Outline outline; 
 
     public override void OnNetworkSpawn()
     {
         moveController = GetComponent<ShipMovement>();
-        shootController = GetComponent<Ship_Shooting>();
-        healthBar = GetComponentInChildren<Healthbar>();
-        outline = GetComponentInChildren<Outline>();
+        //shootController = GetComponent<Ship_Shooting>();
+        //healthBar = GetComponentInChildren<Healthbar>();
 
         // Initializing ship variables
         switch (shipType)
@@ -100,15 +97,16 @@ public class Ship : NetworkBehaviour
             currentShipHP.Value = maxShipHP;
 
         // Set the team color
-        accents.color = GameManager.Singleton.playerColors[OwnerClientId];
-        outline.GetComponent<SpriteRenderer>().color = GameManager.Singleton.playerColors[OwnerClientId];
+        accentsSprite.color = GameManager.Singleton.playerColors[OwnerClientId];
+        outline.SetupOutlineColor(GameManager.Singleton.playerColors[OwnerClientId]);
 
         // Update healthbar for both players when it changes
         currentShipHP.OnValueChanged += (float previousValue, float newValue) => {
-            healthBar.updateHPBar(maxShipHP, currentShipHP.Value);
+            hpBar.transform.localScale = new Vector3(newValue, 1, 1);
+            hpBar.transform.localPosition = new Vector3((newValue * 0.5f) - 0.5f, 0, 0);
         };
 
-        // Disable the fog clearer and outline
+        // Disable the fog clearer and outline on opponent ships
         if (!IsOwner) {
             GetComponentInChildren<SpriteMask>().enabled = false;
             outline.gameObject.SetActive(false);
@@ -160,12 +158,10 @@ public class Ship : NetworkBehaviour
     {
         return shipMaxSpeed;
     }
-
     public float GetShipAcceleration() 
     {
         return shipAcceleration;
     }
-
     public float GetShipTurnRate()
     {
         return shipTurnRate;
