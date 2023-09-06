@@ -6,9 +6,8 @@ public class Healthbar : MonoBehaviour
 {
     [SerializeField] GameObject hpBar;
 
-    public void updateHPBar(float maxHP, float currHP)
+    public void UpdateHPBar(float hpPercent)
     {
-        float hpPercent = currHP / maxHP;
         hpBar.transform.localScale = new Vector3(hpPercent, 1, 1);
         hpBar.transform.localPosition = new Vector3((hpPercent * 0.5f) - 0.5f, 0, 0);
     }

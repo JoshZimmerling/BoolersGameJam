@@ -29,16 +29,17 @@ public class Ship : NetworkBehaviour
     float shipTurnRate;
 
     [SerializeField] SpriteRenderer accentsSprite;
+    [SerializeField] SpriteRenderer mapMarkerSprite;
     [SerializeField] Outline outline;
-    [SerializeField] GameObject hpBar;
-
+    
+    Healthbar healthBar;
     ShipMovement moveController;
 
     public override void OnNetworkSpawn()
     {
         moveController = GetComponent<ShipMovement>();
         //shootController = GetComponent<Ship_Shooting>();
-        //healthBar = GetComponentInChildren<Healthbar>();
+        healthBar = GetComponentInChildren<Healthbar>();
 
         // Initializing ship variables
         switch (shipType)
@@ -96,14 +97,18 @@ public class Ship : NetworkBehaviour
         if (IsHost)
             currentShipHP.Value = maxShipHP;
 
+        Debug.Log("AAA");
+
         // Set the team color
         accentsSprite.color = GameManager.Singleton.playerColors[OwnerClientId];
+        //mapMarkerSprite.color = GameManager.Singleton.playerColors[OwnerClientId];
         outline.SetupOutlineColor(GameManager.Singleton.playerColors[OwnerClientId]);
+
+        Debug.Log("BBB");
 
         // Update healthbar for both players when it changes
         currentShipHP.OnValueChanged += (float previousValue, float newValue) => {
-            hpBar.transform.localScale = new Vector3(newValue, 1, 1);
-            hpBar.transform.localPosition = new Vector3((newValue * 0.5f) - 0.5f, 0, 0);
+            healthBar.UpdateHPBar(currentShipHP.Value / maxShipHP);
         };
 
         // Disable the fog clearer and outline on opponent ships
