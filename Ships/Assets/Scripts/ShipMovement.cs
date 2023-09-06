@@ -158,7 +158,7 @@ public class ShipMovement : NetworkBehaviour
     }
 
     [ServerRpc]
-    public void setTargetDestinationServerRPC(Vector2 target)
+    public void SetTargetDestinationServerRPC(Vector2 target)
     {
         noTarget = false;
         backingUp = false; 

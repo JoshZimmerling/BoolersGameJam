@@ -45,8 +45,6 @@ public class PlayerController : NetworkBehaviour
             }
         }
 
-        //WASD keys are used in the Camera_Control script
-
         if (Input.GetKeyDown(KeyCode.Q))
         {
             foreach (Ship ship in selectedShips)

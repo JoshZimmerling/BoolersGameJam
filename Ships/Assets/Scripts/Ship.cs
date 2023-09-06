@@ -97,14 +97,10 @@ public class Ship : NetworkBehaviour
         if (IsHost)
             currentShipHP.Value = maxShipHP;
 
-        Debug.Log("AAA");
-
         // Set the team color
         accentsSprite.color = GameManager.Singleton.playerColors[OwnerClientId];
-        //mapMarkerSprite.color = GameManager.Singleton.playerColors[OwnerClientId];
+        mapMarkerSprite.color = GameManager.Singleton.playerColors[OwnerClientId];
         outline.SetupOutlineColor(GameManager.Singleton.playerColors[OwnerClientId]);
-
-        Debug.Log("BBB");
 
         // Update healthbar for both players when it changes
         currentShipHP.OnValueChanged += (float previousValue, float newValue) => {
@@ -121,7 +117,7 @@ public class Ship : NetworkBehaviour
     // Movement Functions
     public void SetDestination(Vector2 dest)
     {
-        moveController.setTargetDestinationServerRPC(dest);
+        moveController.SetTargetDestinationServerRPC(dest);
     }
 
     public void StopShip()
@@ -134,6 +130,7 @@ public class Ship : NetworkBehaviour
         moveController.BackupServerRPC(); 
     }
 
+    // Helper Functions
     public void DoDamage(float damage)
     {
         currentShipHP.Value -= damage;
