@@ -30,7 +30,7 @@ public class Ship_Shooting : NetworkBehaviour
     public override void OnNetworkSpawn()
     {
         
-        typeOfShip = this.gameObject.GetComponent<Ship>().GetShipType();
+        //typeOfShip = this.gameObject.GetComponent<Ship>().GetShipType();
 
         switch (typeOfShip)
         {
@@ -125,7 +125,7 @@ public class Ship_Shooting : NetworkBehaviour
             {
                 for (int i = 0; i < spawnPointList.Count; i++)
                 {
-                    CreateBullet(spawnPointList[i].GetComponent<Bullet_Spawn_Points>().GetDirection(), spawnPointList[i]);
+                    //CreateBullet(spawnPointList[i].GetComponent<Bullet_Spawn_Points>().GetDirection(), spawnPointList[i]);
                 }
             }
         }

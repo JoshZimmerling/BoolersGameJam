@@ -153,7 +153,9 @@ public class PlayerController : NetworkBehaviour
     [ServerRpc]
     public void SpawnShipServerRPC(Ship.ShipTypes shipType, ulong playerID)
     {
-        GameObject ship = Instantiate(GameManager.Singleton.shipPrefabs[(int)shipType], GameManager.Singleton.playerSpawns[playerID].transform.position, Quaternion.Euler(0f, 0f, 225f));
+        Vector3 spawnPos = GameManager.Singleton.playerSpawns[playerID].transform.position;
+        GameObject ship = Instantiate(GameManager.Singleton.shipPrefabs[(int)shipType], spawnPos, Quaternion.LookRotation(new Vector3(0, 0, 1), -spawnPos));
         ship.GetComponent<NetworkObject>().SpawnWithOwnership(playerID);
+        ship.transform.parent = transform;
     }
 }

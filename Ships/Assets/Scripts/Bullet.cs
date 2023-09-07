@@ -35,9 +35,11 @@ public class Bullet : NetworkBehaviour
         if (!IsHost)
             return;
 
-        //Ensures collision with enemy ship
-        if (collision.gameObject.layer == LayerMask.NameToLayer("EnemyShip"))
-            collision.GetComponent<Ship>().DoDamage(dmg); // Shooting itself rn.. need to deal with bullets differently
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Ship"))
+            if (collision.GetComponent<Ship>().OwnerClientId == this.OwnerClientId)
+                return;
+            else
+                collision.GetComponent<Ship>().DoDamage(dmg);
 
         GetComponent<NetworkObject>().Despawn();
         Destroy(this.gameObject);

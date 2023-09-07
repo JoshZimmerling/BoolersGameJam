@@ -262,7 +262,6 @@ GameObject:
   - component: {fileID: 58428459759939203}
   - component: {fileID: 6956426341357070569}
   - component: {fileID: 1563128425230990010}
-  - component: {fileID: 1363217247369419061}
   - component: {fileID: 3985505458702315912}
   - component: {fileID: 4275652453864163433}
   m_Layer: 11
@@ -412,18 +411,6 @@ MonoBehaviour:
   mapMarkerSprite: {fileID: 2767865747623681743}
   outline: {fileID: 1941251886330462044}
   distToStop: 0
---- !u!114 &1363217247369419061
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5167211490098671168}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d703f05bb07ae9148b2f1d19f4ca3ea0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
   BulletPrefab: {fileID: 9135911124565628530, guid: a02ebc28117ec194c9dcdaecc201af8b, type: 3}
   spawnPointList: []
 --- !u!61 &3985505458702315912

@@ -101,7 +101,6 @@ public class Ship : NetworkBehaviour
             GetComponentInChildren<SpriteMask>().enabled = false;
             outline.gameObject.SetActive(false);
             mapMarkerSprite.gameObject.SetActive(true);
-            gameObject.layer = LayerMask.NameToLayer("EnemyShip"); //Sets layer to hostile ships
         }
 
         // Set the team color
@@ -115,14 +114,15 @@ public class Ship : NetworkBehaviour
         };
 
         ShipMovementSpawn();
+        ShipShootingSpawn();
     }
 
-    public void Update()
+    public void FixedUpdate()
     {
         ShipMovement();
+        ShootingUpdate();
     }
 
-    // Helper Functions
     public void DoDamage(float damage)
     {
         currentShipHP.Value -= damage;
@@ -141,28 +141,6 @@ public class Ship : NetworkBehaviour
     public void Unselect()
     {
         outline.SetUnselected();
-    }
-
-    // Getter Functions
-    public ShipTypes GetShipType()
-    {
-        return shipType;
-    }
-    public float GetShipMaxSpeed()
-    {
-        return shipMaxSpeed;
-    }
-    public float GetShipAcceleration() 
-    {
-        return shipAcceleration;
-    }
-    public float GetShipTurnRate()
-    {
-        return shipTurnRate;
-    }
-    public float GetShipCost()
-    {
-        return shipCost;
     }
 
     // ======================= Ship Movement =========================
@@ -232,11 +210,11 @@ public class Ship : NetworkBehaviour
             {
                 if (angle > 0)
                 {
-                    transform.Rotate(0, 0, -ship.GetShipTurnRate() * Time.deltaTime);
+                    transform.Rotate(0, 0, -shipTurnRate * Time.deltaTime);
                 }
                 else
                 {
-                    transform.Rotate(0, 0, ship.GetShipTurnRate() * Time.deltaTime);
+                    transform.Rotate(0, 0, shipTurnRate * Time.deltaTime);
                 }
             }
             // Slowing turns
@@ -271,10 +249,10 @@ public class Ship : NetworkBehaviour
             }
             else
             {
-                totalVelocity += ship.GetShipAcceleration();
-                if (totalVelocity > ship.GetShipMaxSpeed())
+                totalVelocity += shipAcceleration;
+                if (totalVelocity > shipMaxSpeed)
                 {
-                    totalVelocity = ship.GetShipMaxSpeed();
+                    totalVelocity = shipMaxSpeed;
                 }
                 transform.Translate(Vector2.up * totalVelocity * Time.deltaTime);
             }
@@ -287,10 +265,10 @@ public class Ship : NetworkBehaviour
             }
             else
             {
-                totalVelocity += ship.GetShipAcceleration();
-                if (totalVelocity > ship.GetShipMaxSpeed())
+                totalVelocity += shipAcceleration;
+                if (totalVelocity > shipMaxSpeed)
                 {
-                    totalVelocity = ship.GetShipMaxSpeed();
+                    totalVelocity = shipMaxSpeed;
                 }
                 transform.Translate(-Vector2.up * totalVelocity * Time.deltaTime);
             }
@@ -318,5 +296,136 @@ public class Ship : NetworkBehaviour
         noTarget = false;
         backingUp = false;
         targetPos = target;
+    }
+
+    // ======================= Ship Shooting =========================
+
+    float bulletLifetime;
+    float bulletSpeed;
+    float bulletsPerSecond;
+    float bulletDamage;
+
+    int bulletsShotCounter_Drone = 0;
+
+    [SerializeField] GameObject BulletPrefab;
+    [SerializeField] List<GameObject> spawnPointList;
+
+    public enum ShotDirection
+    {
+        Right,
+        Up,
+        Left,
+        Down
+    }
+
+    public void ShipShootingSpawn()
+    {
+        switch (shipType)
+        {
+            case (ShipTypes.Destroyer):
+                bulletLifetime = 2f;
+                bulletSpeed = 8f;
+                bulletsPerSecond = 1f;
+                bulletDamage = 1.5f;
+                break;
+            case (ShipTypes.Hawk):
+                bulletLifetime = 1.75f;
+                bulletSpeed = 12f;
+                bulletsPerSecond = 1f;
+                bulletDamage = 10f;
+                break;
+            case (ShipTypes.Challenger):
+                bulletLifetime = 0.75f;
+                bulletSpeed = 12f;
+                bulletsPerSecond = 0.75f;
+                bulletDamage = 3f;
+                break;
+            case (ShipTypes.Goliath):
+                bulletLifetime = 2f;
+                bulletSpeed = 8f;
+                bulletsPerSecond = 1f;
+                bulletDamage = 1f;
+                break;
+            case (ShipTypes.Lightning):
+                bulletLifetime = 2f;
+                bulletSpeed = 10f;
+                bulletsPerSecond = 0.5f;
+                bulletDamage = 10f;
+                break;
+            case (ShipTypes.Drone):
+                bulletLifetime = 0.75f;
+                bulletSpeed = 12f;
+                bulletsPerSecond = 2f;
+                bulletDamage = 1f;
+                break;
+            case (ShipTypes.Scout):
+                bulletLifetime = 1.0f;
+                bulletSpeed = 16f;
+                bulletsPerSecond = 0.25f;
+                bulletDamage = 4f;
+                break;
+        }
+    }
+
+    int counter = 0;
+    private void ShootingUpdate()
+    {
+        if (!IsHost)
+            return;
+
+        counter++;
+        if (counter >= 50f / bulletsPerSecond)
+        {
+            ShootBullet();
+            counter = 0;
+        }
+    }
+
+    private void ShootBullet()
+    {
+        if (spawnPointList.Count != 0)
+        {
+            if (shipType == Ship.ShipTypes.Drone)
+            {
+                bulletsShotCounter_Drone++;
+                if (bulletsShotCounter_Drone == 4)
+                {
+                    bulletsShotCounter_Drone = 0;
+                }
+
+                //Bullet going up
+                if (bulletsShotCounter_Drone == 0)
+                    CreateBullet(ShotDirection.Up, spawnPointList[0]);
+
+                //Bullet going right
+                if (bulletsShotCounter_Drone == 1)
+                    CreateBullet(ShotDirection.Right, spawnPointList[1]);
+
+                //Bullet going down
+                if (bulletsShotCounter_Drone == 2)
+                    CreateBullet(ShotDirection.Down, spawnPointList[2]);
+
+                //Bullet going left
+                if (bulletsShotCounter_Drone == 3)
+                    CreateBullet(ShotDirection.Left, spawnPointList[3]);
+            }
+            else
+            {
+                for (int i = 0; i < spawnPointList.Count; i++)
+                {
+                    CreateBullet(spawnPointList[i].GetComponent<Bullet_Spawn_Points>().GetDirection(), spawnPointList[i]);
+                }
+            }
+        }
+    }
+
+    private void CreateBullet(ShotDirection dir, GameObject spawnPoint)
+    {
+        GameObject bullet = Instantiate(BulletPrefab, spawnPoint.transform.position + new Vector3(0, 0, -1), Quaternion.Euler(0, 0, 90 * (int)dir + transform.rotation.eulerAngles.z));
+        bullet.GetComponent<Bullet>().SetDamage(bulletDamage);
+        bullet.GetComponent<Bullet>().SetBulletLifetime(bulletLifetime);
+        bullet.GetComponent<Bullet>().SetBulletSpeed(bulletSpeed);
+
+        bullet.GetComponent<NetworkObject>().SpawnWithOwnership(OwnerClientId);
     }
 }
