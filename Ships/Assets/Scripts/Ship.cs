@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using Unity.Netcode;
 using UnityEngine;
+using System;
 
 public class Ship : NetworkBehaviour
 {
-    public enum shipTypes
+    public enum ShipTypes
     {
         Destroyer,
         Hawk,
@@ -18,8 +19,7 @@ public class Ship : NetworkBehaviour
     }
 
     [SerializeField]
-    shipTypes shipType;
-    int playerNum;
+    ShipTypes shipType;
 
     float maxShipHP;
     NetworkVariable<float> currentShipHP = new NetworkVariable<float>();
@@ -33,60 +33,58 @@ public class Ship : NetworkBehaviour
     [SerializeField] Outline outline;
     
     Healthbar healthBar;
-    ShipMovement moveController;
 
     public override void OnNetworkSpawn()
     {
-        moveController = GetComponent<ShipMovement>();
         //shootController = GetComponent<Ship_Shooting>();
         healthBar = GetComponentInChildren<Healthbar>();
 
         // Initializing ship variables
         switch (shipType)
         {
-            case (Ship.shipTypes.Destroyer):
+            case (Ship.ShipTypes.Destroyer):
                 maxShipHP = 50f;
                 shipMaxSpeed = 3f;
                 shipAcceleration = .1f;
                 shipTurnRate = 50f;
                 shipCost = 20f;
                 break;
-            case (Ship.shipTypes.Hawk):
+            case (Ship.ShipTypes.Hawk):
                 maxShipHP = 20f;
                 shipMaxSpeed = 5f;
                 shipAcceleration = 1f;
                 shipTurnRate = 60f;
                 shipCost = 20f;
                 break;
-            case (Ship.shipTypes.Challenger):
+            case (Ship.ShipTypes.Challenger):
                 maxShipHP = 60f;
                 shipMaxSpeed = 3f;
                 shipAcceleration = .08f;
                 shipTurnRate = 45f;
                 shipCost = 20f;
                 break;
-            case (Ship.shipTypes.Goliath):
+            case (Ship.ShipTypes.Goliath):
                 maxShipHP = 170f;
                 shipMaxSpeed = 3f;
                 shipAcceleration = .05f;
                 shipTurnRate = 30f;
                 shipCost = 35f;
                 break;
-            case (Ship.shipTypes.Lightning):
+            case (Ship.ShipTypes.Lightning):
                 maxShipHP = 30f;
                 shipMaxSpeed = 5.5f;
                 shipAcceleration = .3f;
                 shipTurnRate = 60f;
                 shipCost = 35f;
                 break;
-            case (Ship.shipTypes.Drone):
+            case (Ship.ShipTypes.Drone):
                 maxShipHP = 40f;
                 shipMaxSpeed = 5f;
                 shipAcceleration = .2f;
                 shipTurnRate = 1000f;
                 shipCost = 5f;
                 break;
-            case (Ship.shipTypes.Scout):
+            case (Ship.ShipTypes.Scout):
                 maxShipHP = 10f;
                 shipMaxSpeed = 6f;
                 shipAcceleration = 1f;
@@ -96,6 +94,15 @@ public class Ship : NetworkBehaviour
         }
         if (IsHost)
             currentShipHP.Value = maxShipHP;
+
+        // Disable the fog clearer and outline on opponent ships
+        if (!IsOwner)
+        {
+            GetComponentInChildren<SpriteMask>().enabled = false;
+            outline.gameObject.SetActive(false);
+            mapMarkerSprite.gameObject.SetActive(true);
+            gameObject.layer = LayerMask.NameToLayer("EnemyShip"); //Sets layer to hostile ships
+        }
 
         // Set the team color
         accentsSprite.color = GameManager.Singleton.playerColors[OwnerClientId];
@@ -107,27 +114,12 @@ public class Ship : NetworkBehaviour
             healthBar.UpdateHPBar(currentShipHP.Value / maxShipHP);
         };
 
-        // Disable the fog clearer and outline on opponent ships
-        if (!IsOwner) {
-            GetComponentInChildren<SpriteMask>().enabled = false;
-            outline.gameObject.SetActive(false);
-        }
+        ShipMovementSpawn();
     }
 
-    // Movement Functions
-    public void SetDestination(Vector2 dest)
+    public void Update()
     {
-        moveController.SetTargetDestinationServerRPC(dest);
-    }
-
-    public void StopShip()
-    {
-        moveController.StopShipServerRPC(); 
-    }
-
-    public void ReverseShip()
-    {
-        moveController.BackupServerRPC(); 
+        ShipMovement();
     }
 
     // Helper Functions
@@ -152,7 +144,7 @@ public class Ship : NetworkBehaviour
     }
 
     // Getter Functions
-    public shipTypes GetShipType()
+    public ShipTypes GetShipType()
     {
         return shipType;
     }
@@ -171,5 +163,160 @@ public class Ship : NetworkBehaviour
     public float GetShipCost()
     {
         return shipCost;
+    }
+
+    // ======================= Ship Movement =========================
+
+    //TODO pub for tests
+
+    // turn rate, stopping time, max speed, acceleration, 
+
+    float angle;
+    float totalVelocity;
+    float distToTarget;
+    float timeToStop;
+    float brakeTimer;
+
+    Vector2 targetPos;
+    Vector2 track;
+
+    bool noTarget;
+    Boolean moving;
+    Boolean backingUp;
+
+    Ship ship;
+
+    [SerializeField] float distToStop;
+
+    /*    LineRenderer lineRenderer;*/
+
+
+    // Start is called before the first frame update
+    public void ShipMovementSpawn()
+    {
+        noTarget = true;
+        ship = transform.GetComponent<Ship>();
+
+        distToStop = 2;
+    }
+
+    private void ShipMovement()
+    {
+        if (!IsHost)
+            return;
+
+        track = targetPos - (Vector2)transform.position;
+        angle = Vector2.SignedAngle(track, transform.up);
+
+        //path = (Vector2)transform.position - targetPos;
+        distToTarget = Vector2.Distance(transform.position, targetPos);
+
+        //up = transform.up;
+
+        if (noTarget) { return; }
+
+        // Stopping
+        if (distToTarget < 0.1)
+        {
+            noTarget = true;
+            totalVelocity = 0;
+            moving = false;
+            backingUp = false;
+            return;
+        }
+
+        if (!backingUp)
+        {
+            // Turning
+            if (MathF.Abs(angle) > 10)
+            {
+                if (angle > 0)
+                {
+                    transform.Rotate(0, 0, -ship.GetShipTurnRate() * Time.deltaTime);
+                }
+                else
+                {
+                    transform.Rotate(0, 0, ship.GetShipTurnRate() * Time.deltaTime);
+                }
+            }
+            // Slowing turns
+            else if (MathF.Abs(angle) > 1)
+            {
+                if (angle > 0)
+                {
+                    transform.Rotate(0, 0, (-10 - (Mathf.Abs(angle) * 3)) * Time.deltaTime);
+                }
+                else
+                {
+                    transform.Rotate(0, 0, (10 + (Mathf.Abs(angle) * 3)) * Time.deltaTime);
+                }
+            }
+            // If the angle is small enough, will lock towards target
+            else
+            {
+                transform.rotation = Quaternion.LookRotation(Vector3.forward, targetPos - (Vector2)transform.position);
+            }
+
+            // Prevents moving the ship if not moving and too high an angle
+            if (Mathf.Abs(angle) > 45 && !moving)
+            {
+                return;
+            }
+
+            moving = true;
+
+            if (distToTarget < distToStop)
+            {
+                transform.Translate(Vector2.up * distToTarget * Time.deltaTime);
+            }
+            else
+            {
+                totalVelocity += ship.GetShipAcceleration();
+                if (totalVelocity > ship.GetShipMaxSpeed())
+                {
+                    totalVelocity = ship.GetShipMaxSpeed();
+                }
+                transform.Translate(Vector2.up * totalVelocity * Time.deltaTime);
+            }
+        }
+        else // backing up
+        {
+            if (distToTarget < distToStop)
+            {
+                transform.Translate(-Vector2.up * distToTarget * Time.deltaTime);
+            }
+            else
+            {
+                totalVelocity += ship.GetShipAcceleration();
+                if (totalVelocity > ship.GetShipMaxSpeed())
+                {
+                    totalVelocity = ship.GetShipMaxSpeed();
+                }
+                transform.Translate(-Vector2.up * totalVelocity * Time.deltaTime);
+            }
+        }
+
+    }
+
+    [ServerRpc]
+    public void BackupServerRPC()
+    {
+        targetPos = transform.position + (-transform.up * distToStop);
+        backingUp = true;
+        noTarget = false;
+    }
+
+    [ServerRpc]
+    public void StopShipServerRPC()
+    {
+        targetPos = transform.position + transform.up * distToStop;
+    }
+
+    [ServerRpc]
+    public void SetTargetDestinationServerRPC(Vector2 target)
+    {
+        noTarget = false;
+        backingUp = false;
+        targetPos = target;
     }
 }

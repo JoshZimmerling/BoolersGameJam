@@ -7,7 +7,7 @@ using UnityEngine;
 public class Ship_Shooting : NetworkBehaviour
 {
 
-    Ship.shipTypes typeOfShip;
+    Ship.ShipTypes typeOfShip;
 
     float bulletLifetime; 
     float bulletSpeed;
@@ -34,43 +34,43 @@ public class Ship_Shooting : NetworkBehaviour
 
         switch (typeOfShip)
         {
-            case (Ship.shipTypes.Destroyer):
+            case (Ship.ShipTypes.Destroyer):
                 bulletLifetime = 2f;
                 bulletSpeed = 8f;
                 bulletsPerSecond = 1f;
                 bulletDamage = 1.5f;
                 break;
-            case (Ship.shipTypes.Hawk):
+            case (Ship.ShipTypes.Hawk):
                 bulletLifetime = 1.75f;
                 bulletSpeed = 12f;
                 bulletsPerSecond = 1f;
                 bulletDamage = 10f;
                 break;
-            case (Ship.shipTypes.Challenger):
+            case (Ship.ShipTypes.Challenger):
                 bulletLifetime = 0.75f;
                 bulletSpeed = 12f;
                 bulletsPerSecond = 0.75f;
                 bulletDamage = 3f;
                 break;
-            case (Ship.shipTypes.Goliath):
+            case (Ship.ShipTypes.Goliath):
                 bulletLifetime = 2f;
                 bulletSpeed = 8f;
                 bulletsPerSecond = 1f;
                 bulletDamage = 1f;
                 break;
-            case (Ship.shipTypes.Lightning):
+            case (Ship.ShipTypes.Lightning):
                 bulletLifetime = 2f;
                 bulletSpeed = 10f;
                 bulletsPerSecond = 0.5f;
                 bulletDamage = 10f;
                 break;
-            case (Ship.shipTypes.Drone):
+            case (Ship.ShipTypes.Drone):
                 bulletLifetime = 0.75f;
                 bulletSpeed = 12f;
                 bulletsPerSecond = 2f;
                 bulletDamage = 1f;
                 break;
-            case (Ship.shipTypes.Scout):
+            case (Ship.ShipTypes.Scout):
                 bulletLifetime = 1.0f;
                 bulletSpeed = 16f;
                 bulletsPerSecond = 0.25f;
@@ -97,7 +97,7 @@ public class Ship_Shooting : NetworkBehaviour
     {
         if (spawnPointList.Count != 0)
         {
-            if (typeOfShip == Ship.shipTypes.Drone)
+            if (typeOfShip == Ship.ShipTypes.Drone)
             {
                 bulletsShotCounter_Drone++;
                 if (bulletsShotCounter_Drone == 4)

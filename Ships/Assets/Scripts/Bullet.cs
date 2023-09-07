@@ -36,14 +36,11 @@ public class Bullet : NetworkBehaviour
             return;
 
         //Ensures collision with enemy ship
-        if (collision.GetComponent<Bullet>() == null &&
-            collision.GetComponent<Ship>() != null &&
-            collision.GetComponent<Ship>().OwnerClientId != OwnerClientId)
-        {
-            collision.GetComponent<Ship>().DoDamage(dmg);
-            GetComponent<NetworkObject>().Despawn();
-            Destroy(this.gameObject);
-        }
+        if (collision.gameObject.layer == LayerMask.NameToLayer("EnemyShip"))
+            collision.GetComponent<Ship>().DoDamage(dmg); // Shooting itself rn.. need to deal with bullets differently
+
+        GetComponent<NetworkObject>().Despawn();
+        Destroy(this.gameObject);
     }
 
     public void SetBulletLifetime(float lifetime)

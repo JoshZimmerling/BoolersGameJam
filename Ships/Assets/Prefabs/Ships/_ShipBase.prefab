@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7597090460994900236}
   - component: {fileID: 7353066191557043621}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: HealthBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -60,7 +60,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2211049490574980914}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: SpawnPoints
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -92,7 +92,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7110747226838194002}
   - component: {fileID: 3156416027981528853}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Fog Remover
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -175,13 +175,13 @@ GameObject:
   m_Component:
   - component: {fileID: 7998052403546193370}
   - component: {fileID: 2767865747623681743}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: MapMarker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7998052403546193370
 Transform:
   m_ObjectHideFlags: 0
@@ -235,8 +235,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 257962177
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 0}
@@ -247,7 +247,7 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
+  m_MaskInteraction: 1
   m_SpriteSortPoint: 0
 --- !u!1 &5167211490098671168
 GameObject:
@@ -263,10 +263,9 @@ GameObject:
   - component: {fileID: 6956426341357070569}
   - component: {fileID: 1563128425230990010}
   - component: {fileID: 1363217247369419061}
-  - component: {fileID: 5019182491059803514}
   - component: {fileID: 3985505458702315912}
   - component: {fileID: 4275652453864163433}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: _ShipBase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -282,7 +281,7 @@ Transform:
   m_GameObject: {fileID: 5167211490098671168}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.2}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -412,6 +411,7 @@ MonoBehaviour:
   accentsSprite: {fileID: 5548237794063707659}
   mapMarkerSprite: {fileID: 2767865747623681743}
   outline: {fileID: 1941251886330462044}
+  distToStop: 0
 --- !u!114 &1363217247369419061
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -426,19 +426,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BulletPrefab: {fileID: 9135911124565628530, guid: a02ebc28117ec194c9dcdaecc201af8b, type: 3}
   spawnPointList: []
---- !u!114 &5019182491059803514
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5167211490098671168}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4ddcc5185b0555044b99e0ecb8647e29, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  distToStop: 3
 --- !u!61 &3985505458702315912
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -522,7 +509,7 @@ GameObject:
   - component: {fileID: 1169489743053793471}
   - component: {fileID: 8754977973035085754}
   - component: {fileID: 1941251886330462044}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Outline
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -618,7 +605,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2584582384227705070}
   - component: {fileID: 5262583075078497285}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -706,7 +693,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4670333798322740288}
   - component: {fileID: 6765624796333560670}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Health
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -794,7 +781,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3707732466072944563}
   - component: {fileID: 5548237794063707659}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: ShipAccent
   m_TagString: Untagged
   m_Icon: {fileID: 0}

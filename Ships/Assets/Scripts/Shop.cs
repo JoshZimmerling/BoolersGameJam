@@ -33,16 +33,16 @@ public class Shop : MonoBehaviour
         goldText = goldTextObject.GetComponent<Text>();
         UpdateGoldText();
 
-        destroyer_button.onClick.AddListener(() => BuyShip(Ship.shipTypes.Destroyer, 20));
-        hawk_button.onClick.AddListener(() => BuyShip(Ship.shipTypes.Hawk, 20));
-        challenger_button.onClick.AddListener(() => BuyShip(Ship.shipTypes.Challenger, 20));
-        goliath_button.onClick.AddListener(() => BuyShip(Ship.shipTypes.Goliath, 35));
-        lightning_button.onClick.AddListener(() => BuyShip(Ship.shipTypes.Lightning, 35));
-        drone_button.onClick.AddListener(() => BuyShip(Ship.shipTypes.Drone, 5));
-        scout_button.onClick.AddListener(() => BuyShip(Ship.shipTypes.Scout, 10));
+        destroyer_button.onClick.AddListener(() => BuyShip(Ship.ShipTypes.Destroyer, 20));
+        hawk_button.onClick.AddListener(() => BuyShip(Ship.ShipTypes.Hawk, 20));
+        challenger_button.onClick.AddListener(() => BuyShip(Ship.ShipTypes.Challenger, 20));
+        goliath_button.onClick.AddListener(() => BuyShip(Ship.ShipTypes.Goliath, 35));
+        lightning_button.onClick.AddListener(() => BuyShip(Ship.ShipTypes.Lightning, 35));
+        drone_button.onClick.AddListener(() => BuyShip(Ship.ShipTypes.Drone, 5));
+        scout_button.onClick.AddListener(() => BuyShip(Ship.ShipTypes.Scout, 10));
     }
 
-    private void BuyShip(Ship.shipTypes type, float cost)
+    private void BuyShip(Ship.ShipTypes type, float cost)
     {
         if (playerGold >= cost)
         {

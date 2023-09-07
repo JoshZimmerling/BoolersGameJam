@@ -37,7 +37,7 @@ public class PlayerController : NetworkBehaviour
 
             if (selectedShips.Count == 1)
             {
-                selectedShips[0].SetDestination(worldPosition);
+                selectedShips[0].SetTargetDestinationServerRPC(worldPosition);
             }
             else
             {
@@ -49,7 +49,7 @@ public class PlayerController : NetworkBehaviour
         {
             foreach (Ship ship in selectedShips)
             {
-                ship.StopShip(); 
+                ship.StopShipServerRPC(); 
             }
         }
 
@@ -57,7 +57,7 @@ public class PlayerController : NetworkBehaviour
         {
             foreach (Ship ship in selectedShips)
             {
-                ship.ReverseShip();
+                ship.BackupServerRPC();
             }
         }
 
@@ -124,7 +124,7 @@ public class PlayerController : NetworkBehaviour
 
         foreach (Ship ship in selectedShips)
         {
-            ship.SetDestination((Vector2) worldPosition + ((Vector2) ship.transform.position - shipCenter));
+            ship.SetTargetDestinationServerRPC((Vector2) worldPosition + ((Vector2) ship.transform.position - shipCenter));
         }
 
     }
@@ -151,7 +151,7 @@ public class PlayerController : NetworkBehaviour
     }
 
     [ServerRpc]
-    public void SpawnShipServerRPC(Ship.shipTypes shipType, ulong playerID)
+    public void SpawnShipServerRPC(Ship.ShipTypes shipType, ulong playerID)
     {
         GameObject ship = Instantiate(GameManager.Singleton.shipPrefabs[(int)shipType], GameManager.Singleton.playerSpawns[playerID].transform.position, Quaternion.Euler(0f, 0f, 225f));
         ship.GetComponent<NetworkObject>().SpawnWithOwnership(playerID);

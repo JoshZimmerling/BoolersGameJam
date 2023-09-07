@@ -14,10 +14,10 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
-  - 
-  - 
+  - Terrain
+  - Bullet
+  - FriendlyShip
+  - EnemyShip
   - 
   - 
   - 
@@ -41,6 +41,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Secondary
+  - name: HideInFog
     uniqueID: 2182174917
+    locked: 0
+  - name: Scanner
+    uniqueID: 257962177
     locked: 0
