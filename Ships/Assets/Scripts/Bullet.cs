@@ -45,18 +45,10 @@ public class Bullet : NetworkBehaviour
         Destroy(this.gameObject);
     }
 
-    public void SetBulletLifetime(float lifetime)
+    public void SetupBullet(float lifetime, float damage, float speed)
     {
         maxbulletLifetime = lifetime;
-    }
-
-    public void SetDamage(float damage)
-    {
         dmg = damage;
-    }
-
-    public void SetBulletSpeed(float speed)
-    {
         bulletSpeed = speed;
     }
 }

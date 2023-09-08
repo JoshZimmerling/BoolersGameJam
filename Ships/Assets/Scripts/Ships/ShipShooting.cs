@@ -5,13 +5,16 @@ using UnityEngine;
 
 public class ShipShooting : NetworkBehaviour
 {
+    // Bullet variables
     [SerializeField] private float bulletLifetime;
     [SerializeField] private float bulletSpeed;
     [SerializeField] private float bulletsPerSecond;
     [SerializeField] private float bulletDamage;
-
     [SerializeField] private GameObject BulletPrefab;
+
+
     [SerializeField] protected List<GameObject> spawnPointList; // TODO: Make this easier to work with
+    public List<BulletSpawner> bulletSpawners;
 
     public enum ShotDirection
     {
@@ -19,6 +22,16 @@ public class ShipShooting : NetworkBehaviour
         Up,
         Left,
         Down
+    }
+
+    public struct BulletSpawner{
+        public Vector2 shotSpawn;
+        public Vector2 shotDirection;
+        
+        //public float bulletLifetime;
+        //public float bulletSpeed;
+        //public float bulletsPerSecond;
+        //public float bulletDamage;
     }
 
     float counter = 0;
@@ -44,13 +57,10 @@ public class ShipShooting : NetworkBehaviour
         }
     }
 
-    protected void CreateBullet(ShotDirection dir, GameObject spawnPoint) // TODO: something better than shot direction and a constructor or somthing for the bullets
+    protected void CreateBullet(ShotDirection dir, GameObject spawnPoint) // TODO: something better than shot direction
     {
         GameObject bullet = Instantiate(BulletPrefab, spawnPoint.transform.position + new Vector3(0, 0, -1), Quaternion.Euler(0, 0, 90 * (int)dir + transform.rotation.eulerAngles.z));
-        bullet.GetComponent<Bullet>().SetDamage(bulletDamage);
-        bullet.GetComponent<Bullet>().SetBulletLifetime(bulletLifetime);
-        bullet.GetComponent<Bullet>().SetBulletSpeed(bulletSpeed);
-
         bullet.GetComponent<NetworkObject>().SpawnWithOwnership(OwnerClientId);
+        bullet.GetComponent<Bullet>().SetupBullet(bulletLifetime, bulletDamage, bulletSpeed);
     }
 }
