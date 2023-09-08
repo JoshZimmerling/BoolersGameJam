@@ -209,8 +209,48 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 3064457726134628259}
     - target: {fileID: 1563128425230990010, guid: 91c21a44a755b7a4c953e88595045ee5, type: 3}
+      propertyPath: shipCost
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1563128425230990010, guid: 91c21a44a755b7a4c953e88595045ee5, type: 3}
       propertyPath: shipType
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1563128425230990010, guid: 91c21a44a755b7a4c953e88595045ee5, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1563128425230990010, guid: 91c21a44a755b7a4c953e88595045ee5, type: 3}
+      propertyPath: maxShipHP
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 1563128425230990010, guid: 91c21a44a755b7a4c953e88595045ee5, type: 3}
+      propertyPath: bulletSpeed
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 1563128425230990010, guid: 91c21a44a755b7a4c953e88595045ee5, type: 3}
+      propertyPath: bulletDamage
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1563128425230990010, guid: 91c21a44a755b7a4c953e88595045ee5, type: 3}
+      propertyPath: shipMaxSpeed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1563128425230990010, guid: 91c21a44a755b7a4c953e88595045ee5, type: 3}
+      propertyPath: shipTurnRate
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 1563128425230990010, guid: 91c21a44a755b7a4c953e88595045ee5, type: 3}
+      propertyPath: bulletLifetime
+      value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 1563128425230990010, guid: 91c21a44a755b7a4c953e88595045ee5, type: 3}
+      propertyPath: bulletsPerSecond
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1563128425230990010, guid: 91c21a44a755b7a4c953e88595045ee5, type: 3}
+      propertyPath: shipAcceleration
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 1563128425230990010, guid: 91c21a44a755b7a4c953e88595045ee5, type: 3}
       propertyPath: spawnPointList.Array.size
@@ -360,7 +400,8 @@ PrefabInstance:
       propertyPath: m_Size.y
       value: 8
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1563128425230990010, guid: 91c21a44a755b7a4c953e88595045ee5, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 2211049490574980914, guid: 91c21a44a755b7a4c953e88595045ee5, type: 3}
@@ -375,10 +416,71 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2211049490574980914, guid: 91c21a44a755b7a4c953e88595045ee5, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6937797050427242368}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5167211490098671168, guid: 91c21a44a755b7a4c953e88595045ee5, type: 3}
+      insertIndex: 4
+      addedObject: {fileID: 4563456887520761884}
   m_SourcePrefab: {fileID: 100100000, guid: 91c21a44a755b7a4c953e88595045ee5, type: 3}
 --- !u!4 &1258299269989843958 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2211049490574980914, guid: 91c21a44a755b7a4c953e88595045ee5, type: 3}
+  m_PrefabInstance: {fileID: 1142042150488732868}
+  m_PrefabAsset: {fileID: 0}
+--- !u!212 &3003960820808018443 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 2767865747623681743, guid: 91c21a44a755b7a4c953e88595045ee5, type: 3}
+  m_PrefabInstance: {fileID: 1142042150488732868}
+  m_PrefabAsset: {fileID: 0}
+--- !u!212 &4838578662145465039 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 5548237794063707659, guid: 91c21a44a755b7a4c953e88595045ee5, type: 3}
+  m_PrefabInstance: {fileID: 1142042150488732868}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &5218763985607891588 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5167211490098671168, guid: 91c21a44a755b7a4c953e88595045ee5, type: 3}
+  m_PrefabInstance: {fileID: 1142042150488732868}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &4563456887520761884
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5218763985607891588}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34b2369bd25c5cb48ac2daab4a911f74, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shipType: 5
+  shipCost: 5
+  maxShipHP: 40
+  shipAcceleration: 0.2
+  shipMaxSpeed: 5
+  shipTurnRate: 1000
+  hpBar: {fileID: 7160844784986302614}
+  accentsSprite: {fileID: 4838578662145465039}
+  mapMarkerSprite: {fileID: 3003960820808018443}
+  outlineSprite: {fileID: 8549722549872188286}
+  distToStop: 0
+  bulletLifetime: 0.75
+  bulletSpeed: 12
+  bulletsPerSecond: 0.75
+  bulletDamage: 3
+  BulletPrefab: {fileID: 9135911124565628530, guid: a02ebc28117ec194c9dcdaecc201af8b, type: 3}
+  spawnPointList:
+  - {fileID: 5433765893953462145}
+  - {fileID: 8332989235957020891}
+  - {fileID: 1312645707112768008}
+  - {fileID: 3064457726134628259}
+--- !u!1 &7160844784986302614 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7834353691568528466, guid: 91c21a44a755b7a4c953e88595045ee5, type: 3}
+  m_PrefabInstance: {fileID: 1142042150488732868}
+  m_PrefabAsset: {fileID: 0}
+--- !u!212 &8549722549872188286 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 8754977973035085754, guid: 91c21a44a755b7a4c953e88595045ee5, type: 3}
   m_PrefabInstance: {fileID: 1142042150488732868}
   m_PrefabAsset: {fileID: 0}

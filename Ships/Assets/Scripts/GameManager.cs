@@ -28,6 +28,7 @@ public class GameManager : MonoBehaviour
     public void StartGame(int playerID)
     {
         playerIndex = playerID;
+        /*
         Debug.Log("WASD/Mouse - Move Camera\n" +
                   "Scroll Wheel - Zoom Camera\n" +
                   "E - Toggle Camera Lock\n" +
@@ -36,6 +37,7 @@ public class GameManager : MonoBehaviour
                   "Q - Stop Selected Ships\n" +
                   "Z - Move Selected Ships Backwards\n" +
                   "R - Open Shop\n");
+        */
 
         GameManager.Singleton.shop.SetupShop(players[playerIndex]);
 
