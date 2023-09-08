@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Ship_Drone : Ship
+public class Shooting_Drone : ShipShooting
 {
     int bulletsShotCounter_Drone = 0;
     protected override void ShootBullet()

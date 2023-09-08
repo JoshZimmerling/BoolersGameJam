@@ -247,9 +247,11 @@ GameObject:
   - component: {fileID: 5248488840569974850}
   - component: {fileID: 58428459759939203}
   - component: {fileID: 6956426341357070569}
-  - component: {fileID: 1563128425230990010}
   - component: {fileID: 3985505458702315912}
   - component: {fileID: 4275652453864163433}
+  - component: {fileID: 1563128425230990010}
+  - component: {fileID: 4637950062562444113}
+  - component: {fileID: 105496700895673721}
   m_Layer: 11
   m_Name: _ShipBase
   m_TagString: Untagged
@@ -380,35 +382,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 1
   m_SpriteSortPoint: 0
---- !u!114 &1563128425230990010
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5167211490098671168}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 86373f9a087ba2a4cad036a5e8b47a94, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shipType: 0
-  shipCost: 0
-  maxShipHP: 0
-  shipAcceleration: 0
-  shipMaxSpeed: 0
-  shipTurnRate: 0
-  hpBar: {fileID: 7834353691568528466}
-  accentsSprite: {fileID: 5548237794063707659}
-  mapMarkerSprite: {fileID: 2767865747623681743}
-  outlineSprite: {fileID: 8754977973035085754}
-  distToStop: 0
-  bulletLifetime: 0
-  bulletSpeed: 0
-  bulletsPerSecond: 0
-  bulletDamage: 0
-  BulletPrefab: {fileID: 9135911124565628530, guid: a02ebc28117ec194c9dcdaecc201af8b, type: 3}
-  spawnPointList: []
 --- !u!61 &3985505458702315912
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -481,6 +454,59 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &1563128425230990010
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5167211490098671168}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86373f9a087ba2a4cad036a5e8b47a94, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shipType: 0
+  shipCost: 0
+  maxShipHP: 0
+  hpBar: {fileID: 7834353691568528466}
+  accentsSprite: {fileID: 5548237794063707659}
+  mapMarkerSprite: {fileID: 2767865747623681743}
+  outlineSprite: {fileID: 8754977973035085754}
+  bulletLifetime: 0
+  bulletSpeed: 0
+  bulletsPerSecond: 0
+  bulletDamage: 0
+  BulletPrefab: {fileID: 9135911124565628530, guid: a02ebc28117ec194c9dcdaecc201af8b, type: 3}
+  spawnPointList: []
+--- !u!114 &4637950062562444113
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5167211490098671168}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dee43acf304a3e42a46f09411d6d394, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shipAcceleration: 0
+  shipMaxSpeed: 0
+  shipTurnRate: 0
+  distToStop: 2
+--- !u!114 &105496700895673721
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5167211490098671168}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33b656d80d1b19d4384e3e78ba4cb4d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6055569452642492732
 GameObject:
   m_ObjectHideFlags: 0

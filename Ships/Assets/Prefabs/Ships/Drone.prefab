@@ -188,6 +188,46 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 105496700895673721, guid: 91c21a44a755b7a4c953e88595045ee5, type: 3}
+      propertyPath: bulletSpeed
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 105496700895673721, guid: 91c21a44a755b7a4c953e88595045ee5, type: 3}
+      propertyPath: BulletPrefab
+      value: 
+      objectReference: {fileID: 9135911124565628530, guid: a02ebc28117ec194c9dcdaecc201af8b, type: 3}
+    - target: {fileID: 105496700895673721, guid: 91c21a44a755b7a4c953e88595045ee5, type: 3}
+      propertyPath: bulletDamage
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 105496700895673721, guid: 91c21a44a755b7a4c953e88595045ee5, type: 3}
+      propertyPath: bulletLifetime
+      value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 105496700895673721, guid: 91c21a44a755b7a4c953e88595045ee5, type: 3}
+      propertyPath: bulletsPerSecond
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 105496700895673721, guid: 91c21a44a755b7a4c953e88595045ee5, type: 3}
+      propertyPath: spawnPointList.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 105496700895673721, guid: 91c21a44a755b7a4c953e88595045ee5, type: 3}
+      propertyPath: spawnPointList.Array.data[0]
+      value: 
+      objectReference: {fileID: 5433765893953462145}
+    - target: {fileID: 105496700895673721, guid: 91c21a44a755b7a4c953e88595045ee5, type: 3}
+      propertyPath: spawnPointList.Array.data[1]
+      value: 
+      objectReference: {fileID: 8332989235957020891}
+    - target: {fileID: 105496700895673721, guid: 91c21a44a755b7a4c953e88595045ee5, type: 3}
+      propertyPath: spawnPointList.Array.data[2]
+      value: 
+      objectReference: {fileID: 1312645707112768008}
+    - target: {fileID: 105496700895673721, guid: 91c21a44a755b7a4c953e88595045ee5, type: 3}
+      propertyPath: spawnPointList.Array.data[3]
+      value: 
+      objectReference: {fileID: 3064457726134628259}
     - target: {fileID: 1363217247369419061, guid: 91c21a44a755b7a4c953e88595045ee5, type: 3}
       propertyPath: spawnPointList.Array.size
       value: 4
@@ -291,6 +331,18 @@ PrefabInstance:
     - target: {fileID: 3985505458702315912, guid: 91c21a44a755b7a4c953e88595045ee5, type: 3}
       propertyPath: m_Offset.x
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4637950062562444113, guid: 91c21a44a755b7a4c953e88595045ee5, type: 3}
+      propertyPath: shipMaxSpeed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4637950062562444113, guid: 91c21a44a755b7a4c953e88595045ee5, type: 3}
+      propertyPath: shipTurnRate
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 4637950062562444113, guid: 91c21a44a755b7a4c953e88595045ee5, type: 3}
+      propertyPath: shipAcceleration
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 5167211490098671168, guid: 91c21a44a755b7a4c953e88595045ee5, type: 3}
       propertyPath: m_Name
@@ -401,7 +453,7 @@ PrefabInstance:
       value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents:
-    - {fileID: 1563128425230990010, guid: 91c21a44a755b7a4c953e88595045ee5, type: 3}
+    - {fileID: 105496700895673721, guid: 91c21a44a755b7a4c953e88595045ee5, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 2211049490574980914, guid: 91c21a44a755b7a4c953e88595045ee5, type: 3}
@@ -418,22 +470,12 @@ PrefabInstance:
       addedObject: {fileID: 6937797050427242368}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 5167211490098671168, guid: 91c21a44a755b7a4c953e88595045ee5, type: 3}
-      insertIndex: 4
+      insertIndex: -1
       addedObject: {fileID: 4563456887520761884}
   m_SourcePrefab: {fileID: 100100000, guid: 91c21a44a755b7a4c953e88595045ee5, type: 3}
 --- !u!4 &1258299269989843958 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2211049490574980914, guid: 91c21a44a755b7a4c953e88595045ee5, type: 3}
-  m_PrefabInstance: {fileID: 1142042150488732868}
-  m_PrefabAsset: {fileID: 0}
---- !u!212 &3003960820808018443 stripped
-SpriteRenderer:
-  m_CorrespondingSourceObject: {fileID: 2767865747623681743, guid: 91c21a44a755b7a4c953e88595045ee5, type: 3}
-  m_PrefabInstance: {fileID: 1142042150488732868}
-  m_PrefabAsset: {fileID: 0}
---- !u!212 &4838578662145465039 stripped
-SpriteRenderer:
-  m_CorrespondingSourceObject: {fileID: 5548237794063707659, guid: 91c21a44a755b7a4c953e88595045ee5, type: 3}
   m_PrefabInstance: {fileID: 1142042150488732868}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &5218763985607891588 stripped
@@ -453,34 +495,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34b2369bd25c5cb48ac2daab4a911f74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shipType: 5
-  shipCost: 5
-  maxShipHP: 40
-  shipAcceleration: 0.2
-  shipMaxSpeed: 5
-  shipTurnRate: 1000
-  hpBar: {fileID: 7160844784986302614}
-  accentsSprite: {fileID: 4838578662145465039}
-  mapMarkerSprite: {fileID: 3003960820808018443}
-  outlineSprite: {fileID: 8549722549872188286}
-  distToStop: 0
   bulletLifetime: 0.75
   bulletSpeed: 12
-  bulletsPerSecond: 0.75
-  bulletDamage: 3
+  bulletsPerSecond: 2
+  bulletDamage: 1
   BulletPrefab: {fileID: 9135911124565628530, guid: a02ebc28117ec194c9dcdaecc201af8b, type: 3}
   spawnPointList:
   - {fileID: 5433765893953462145}
   - {fileID: 8332989235957020891}
   - {fileID: 1312645707112768008}
   - {fileID: 3064457726134628259}
---- !u!1 &7160844784986302614 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7834353691568528466, guid: 91c21a44a755b7a4c953e88595045ee5, type: 3}
-  m_PrefabInstance: {fileID: 1142042150488732868}
-  m_PrefabAsset: {fileID: 0}
---- !u!212 &8549722549872188286 stripped
-SpriteRenderer:
-  m_CorrespondingSourceObject: {fileID: 8754977973035085754, guid: 91c21a44a755b7a4c953e88595045ee5, type: 3}
-  m_PrefabInstance: {fileID: 1142042150488732868}
-  m_PrefabAsset: {fileID: 0}

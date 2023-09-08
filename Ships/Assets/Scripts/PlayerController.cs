@@ -37,7 +37,7 @@ public class PlayerController : NetworkBehaviour
 
             if (selectedShips.Count == 1)
             {
-                selectedShips[0].SetTargetDestinationServerRPC(worldPosition);
+                selectedShips[0].GetComponent<ShipMovement>().SetTargetDestinationServerRPC(worldPosition);
             }
             else
             {
@@ -49,7 +49,7 @@ public class PlayerController : NetworkBehaviour
         {
             foreach (Ship ship in selectedShips)
             {
-                ship.StopShipServerRPC(); 
+                ship.GetComponent<ShipMovement>().StopShipServerRPC(); 
             }
         }
 
@@ -57,7 +57,7 @@ public class PlayerController : NetworkBehaviour
         {
             foreach (Ship ship in selectedShips)
             {
-                ship.BackupServerRPC();
+                ship.GetComponent<ShipMovement>().BackupServerRPC();
             }
         }
 
@@ -124,7 +124,7 @@ public class PlayerController : NetworkBehaviour
 
         foreach (Ship ship in selectedShips)
         {
-            ship.SetTargetDestinationServerRPC((Vector2) worldPosition + ((Vector2) ship.transform.position - shipCenter));
+            ship.GetComponent<ShipMovement>().SetTargetDestinationServerRPC((Vector2) worldPosition + ((Vector2) ship.transform.position - shipCenter));
         }
 
     }
