@@ -276,8 +276,50 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 105496700895673721, guid: 91c21a44a755b7a4c953e88595045ee5, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5167211490098671168, guid: 91c21a44a755b7a4c953e88595045ee5, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 811123126791383947}
   m_SourcePrefab: {fileID: 100100000, guid: 91c21a44a755b7a4c953e88595045ee5, type: 3}
+--- !u!1 &5124407488928906885 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5167211490098671168, guid: 91c21a44a755b7a4c953e88595045ee5, type: 3}
+  m_PrefabInstance: {fileID: 47307642582896837}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &811123126791383947
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5124407488928906885}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8912fea4c41e04c4c96e35f4e24df0f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletLifetime: 0.75
+  bulletSpeed: 12
+  bulletsPerSecond: 0.75
+  bulletDamage: 3
+  BulletPrefab: {fileID: 9135911124565628530, guid: a02ebc28117ec194c9dcdaecc201af8b, type: 3}
+  bulletSpawnerList:
+  - pointName: Right_Top
+    spawnPoint: {x: 1, y: 1.5}
+    shootDirection: {x: 1, y: 0}
+  - pointName: Right_TopMid
+    spawnPoint: {x: 1, y: 0.75}
+    shootDirection: {x: 1, y: 0}
+  - pointName: Right_Mid
+    spawnPoint: {x: 1, y: 0}
+    shootDirection: {x: 1, y: 0}
+  - pointName: Right_BotMid
+    spawnPoint: {x: 1, y: -0.75}
+    shootDirection: {x: 1, y: 0}
+  - pointName: Right_Bot
+    spawnPoint: {x: 1, y: -1.5}
+    shootDirection: {x: 1, y: 0}

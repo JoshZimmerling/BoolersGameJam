@@ -6,7 +6,7 @@ using UnityEngine;
 public class ShipShooting : NetworkBehaviour
 {
     // Bullet variables
-    [SerializeField] private float bulletLifetime;
+    [SerializeField] protected float bulletLifetime;
     [SerializeField] private float bulletSpeed;
     [SerializeField] private float bulletsPerSecond;
     [SerializeField] private float bulletDamage;
