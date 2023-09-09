@@ -16,10 +16,7 @@ public class Bullet : NetworkBehaviour
 
     float bulletLifetime = 0;
     void FixedUpdate()
-    {
-        if (!IsHost)
-            return;
-
+    {   // I moved bullet trajectories to be dealt with on local machine
         transform.Translate(new Vector2(0, 1) * bulletSpeed * Time.deltaTime);
         bulletLifetime += Time.deltaTime;
 
@@ -46,6 +43,14 @@ public class Bullet : NetworkBehaviour
     }
 
     public void SetupBullet(float lifetime, float damage, float speed)
+    {
+        maxbulletLifetime = lifetime;
+        dmg = damage;
+        bulletSpeed = speed;
+    }
+
+    [ClientRpc]
+    public void SetupBulletClientRPC(float lifetime, float damage, float speed)
     {
         maxbulletLifetime = lifetime;
         dmg = damage;

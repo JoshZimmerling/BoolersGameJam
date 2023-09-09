@@ -41,5 +41,6 @@ public class ShipShooting : NetworkBehaviour
         GameObject bullet = Instantiate(BulletPrefab, transform.rotation * bulletSpawner.spawnPoint + transform.position, Quaternion.LookRotation(new Vector3(0, 0, 1), transform.rotation * bulletSpawner.shootDirection));
         bullet.GetComponent<NetworkObject>().SpawnWithOwnership(OwnerClientId);
         bullet.GetComponent<Bullet>().SetupBullet(bulletLifetime, bulletDamage, bulletSpeed);
+        bullet.GetComponent<Bullet>().SetupBulletClientRPC(bulletLifetime, bulletDamage, bulletSpeed);
     }
 }

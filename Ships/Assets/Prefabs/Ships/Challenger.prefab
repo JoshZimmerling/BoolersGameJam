@@ -305,7 +305,7 @@ MonoBehaviour:
   bulletLifetime: 0.75
   bulletSpeed: 12
   bulletsPerSecond: 0.75
-  bulletDamage: 3
+  bulletDamage: 1
   BulletPrefab: {fileID: 9135911124565628530, guid: a02ebc28117ec194c9dcdaecc201af8b, type: 3}
   bulletSpawnerList:
   - pointName: Right_Top
