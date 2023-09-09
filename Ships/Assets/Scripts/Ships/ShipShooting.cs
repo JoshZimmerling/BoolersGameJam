@@ -10,29 +10,10 @@ public class ShipShooting : NetworkBehaviour
     [SerializeField] private float bulletSpeed;
     [SerializeField] private float bulletsPerSecond;
     [SerializeField] private float bulletDamage;
+
     [SerializeField] private GameObject BulletPrefab;
 
-
-    [SerializeField] protected List<GameObject> spawnPointList; // TODO: Make this easier to work with
-    public List<BulletSpawner> bulletSpawners;
-
-    public enum ShotDirection
-    {
-        Right,
-        Up,
-        Left,
-        Down
-    }
-
-    public struct BulletSpawner{
-        public Vector2 shotSpawn;
-        public Vector2 shotDirection;
-        
-        //public float bulletLifetime;
-        //public float bulletSpeed;
-        //public float bulletsPerSecond;
-        //public float bulletDamage;
-    }
+    [SerializeField] protected List<BulletSpawner> bulletSpawnerList;
 
     float counter = 0;
     public void FixedUpdate()
@@ -49,17 +30,15 @@ public class ShipShooting : NetworkBehaviour
 
     protected virtual void ShootBullet()
     {
-        if (spawnPointList.Count == 0) return;
-
-        for (int i = 0; i < spawnPointList.Count; i++)
+        foreach (BulletSpawner bulletSpawner in bulletSpawnerList)
         {
-            CreateBullet(spawnPointList[i].GetComponent<Bullet_Spawn_Points>().GetDirection(), spawnPointList[i]);
+            CreateBullet(bulletSpawner);
         }
     }
 
-    protected void CreateBullet(ShotDirection dir, GameObject spawnPoint) // TODO: something better than shot direction
+    public void CreateBullet(BulletSpawner bulletSpawner)
     {
-        GameObject bullet = Instantiate(BulletPrefab, spawnPoint.transform.position + new Vector3(0, 0, -1), Quaternion.Euler(0, 0, 90 * (int)dir + transform.rotation.eulerAngles.z));
+        GameObject bullet = Instantiate(BulletPrefab, transform.rotation * bulletSpawner.spawnPoint + transform.position, Quaternion.LookRotation(new Vector3(0, 0, 1), transform.rotation * bulletSpawner.shootDirection));
         bullet.GetComponent<NetworkObject>().SpawnWithOwnership(OwnerClientId);
         bullet.GetComponent<Bullet>().SetupBullet(bulletLifetime, bulletDamage, bulletSpeed);
     }

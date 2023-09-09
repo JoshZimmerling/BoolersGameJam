@@ -20,7 +20,7 @@ public class Bullet : NetworkBehaviour
         if (!IsHost)
             return;
 
-        transform.Translate(new Vector3(1, 0) * bulletSpeed * Time.deltaTime);
+        transform.Translate(new Vector2(0, 1) * bulletSpeed * Time.deltaTime);
         bulletLifetime += Time.deltaTime;
 
         if (bulletLifetime > maxbulletLifetime)
