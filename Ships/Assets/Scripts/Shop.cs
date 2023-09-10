@@ -11,8 +11,7 @@ using UnityEngine.UI;
 public class Shop : MonoBehaviour
 {
     [SerializeField] GameObject buttonPrefab;
-    [SerializeField] Transform buttonContainer;
-
+    [SerializeField] RectTransform buttonContainer;
     private bool shopOpen = false;
 
     PlayerController playerScript;
