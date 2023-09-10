@@ -13,7 +13,7 @@ public class NetworkManagerUI : MonoBehaviour
     [SerializeField] private TMPro.TMP_InputField ipAddressInput;
 
     [SerializeField] private GameObject map;
-    [SerializeField] private GameObject minimap;
+    [SerializeField] private GameObject gameUI;
 
     [SerializeField] private Button kaidenButton;
     [SerializeField] private Button drewButton;
@@ -24,6 +24,7 @@ public class NetworkManagerUI : MonoBehaviour
         hostButton.onClick.AddListener(() => {
             this.gameObject.SetActive(false);
             map.gameObject.SetActive(true);
+            gameUI.gameObject.SetActive(true);
             NetworkManager.Singleton.StartHost();
         });
 
@@ -34,6 +35,7 @@ public class NetworkManagerUI : MonoBehaviour
                 NetworkManager.Singleton.GetComponent<Unity.Netcode.Transports.UTP.UnityTransport>().ConnectionData.Address = ipAddressInput.text;
                 this.gameObject.SetActive(false);
                 map.gameObject.SetActive(true);
+                gameUI.gameObject.SetActive(true);
                 NetworkManager.Singleton.StartClient();
             }
         });
@@ -42,6 +44,7 @@ public class NetworkManagerUI : MonoBehaviour
             NetworkManager.Singleton.GetComponent<Unity.Netcode.Transports.UTP.UnityTransport>().ConnectionData.Address = "131.93.247.207";
             this.gameObject.SetActive(false);
             map.gameObject.SetActive(true);
+            gameUI.gameObject.SetActive(true);
             NetworkManager.Singleton.StartClient();
         });
 
@@ -49,6 +52,7 @@ public class NetworkManagerUI : MonoBehaviour
             NetworkManager.Singleton.GetComponent<Unity.Netcode.Transports.UTP.UnityTransport>().ConnectionData.Address = "184.98.3.110";
             this.gameObject.SetActive(false);
             map.gameObject.SetActive(true);
+            gameUI.gameObject.SetActive(true);
             NetworkManager.Singleton.StartClient();
         });
 
@@ -56,6 +60,7 @@ public class NetworkManagerUI : MonoBehaviour
             NetworkManager.Singleton.GetComponent<Unity.Netcode.Transports.UTP.UnityTransport>().ConnectionData.Address = "127.0.0.1";
             this.gameObject.SetActive(false);
             map.gameObject.SetActive(true);
+            gameUI.gameObject.SetActive(true);
             NetworkManager.Singleton.StartClient();
         });
     }

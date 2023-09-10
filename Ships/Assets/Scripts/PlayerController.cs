@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.Netcode;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class PlayerController : NetworkBehaviour
 {
@@ -17,12 +18,17 @@ public class PlayerController : NetworkBehaviour
 
         if (IsOwner)
             GameManager.Singleton.StartGame((int)OwnerClientId);
+
+        hitColliders = new List<Collider2D>();
+        shipsFromHit = new List<Ship>();
+
+        selectionBox = transform.Find("Selection Box");
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!IsOwner) return;
+        if (!IsOwner || !IsSpawned) return;
 
         // Setting the target destination for the ships
         if (Input.GetButtonDown("Fire2"))
@@ -69,6 +75,26 @@ public class PlayerController : NetworkBehaviour
         {
             cameraScript.toggleLockState();
         }
+
+        if (EventSystem.current.IsPointerOverGameObject())
+        {
+            return;
+        }
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            startPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        }
+
+        if (Input.GetMouseButton(0))
+        {
+            UpdateBox(Input.mousePosition);
+        }
+
+        if (Input.GetMouseButtonUp(0))
+        {
+            ReleaseBox();
+        }
     }
 
     private void VerifySelection()
@@ -83,6 +109,17 @@ public class PlayerController : NetworkBehaviour
     }
 
     // Ship movement / selection
+    Transform selectionBox;
+
+    private Vector2 startPos;
+    private Vector2 curPos;
+
+    private float curWidth;
+    private float curHeight;
+
+    public List<Collider2D> hitColliders;
+    public List<Ship> shipsFromHit;
+
     float xMax;
     float yMax;
     float xMin;
@@ -134,12 +171,12 @@ public class PlayerController : NetworkBehaviour
 
         foreach (Ship ship in this.selectedShips)
         {
-            ship.Unselect();
+            ship.UnselectShip();
         }
 
         foreach (Ship ship in ships)
         {
-            ship.Select(); 
+            ship.SelectShip(); 
         }
 
         this.selectedShips.Clear(); 
@@ -147,6 +184,41 @@ public class PlayerController : NetworkBehaviour
         {
             this.selectedShips.Add(newShip);
         }
+    }
+
+    void UpdateBox(Vector2 mousePos)
+    {
+        selectionBox.gameObject.SetActive(true);
+
+        curPos = Camera.main.ScreenToWorldPoint(mousePos);
+
+        curWidth = startPos.x - curPos.x;
+        curHeight = startPos.y - curPos.y;
+
+        selectionBox.localScale = new Vector2(curWidth, curHeight);
+
+        selectionBox.transform.position = new Vector3(startPos.x - (curWidth / 2), startPos.y - (curHeight / 2), -1);
+    }
+
+    void ReleaseBox()
+    {
+        Transform box = selectionBox.transform;
+        ContactFilter2D contactFilter = new ContactFilter2D();
+
+        Physics2D.OverlapBox(box.position, new Vector2(Mathf.Abs(box.localScale.x), Mathf.Abs(box.localScale.y)), 0, contactFilter, hitColliders);
+
+        shipsFromHit.Clear();
+        foreach (Collider2D col in hitColliders)
+        {
+            Ship ship = col.GetComponent<Ship>();
+            if (ship != null)
+                if (OwnerClientId == ship.OwnerClientId)
+                    shipsFromHit.Add(ship);
+        }
+
+        SetShips(shipsFromHit);
+
+        selectionBox.gameObject.SetActive(false);
     }
 
     [ServerRpc]

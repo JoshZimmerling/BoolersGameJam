@@ -7,16 +7,9 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Singleton;
 
-
-    [SerializeField] GameObject gameUI;
-
-    [SerializeField]
     public PlayerController[] players = new PlayerController[8];
-    [SerializeField]
     public Color[] playerColors = new Color[8]; //TODO: Make it so you can pick colors
-    [SerializeField]
     public GameObject[] playerSpawns = new GameObject[8];
-    [SerializeField]
     public NetworkPrefabsList shipList;
 
     public Shop shop;
@@ -46,7 +39,6 @@ public class GameManager : MonoBehaviour
 
         // Set camera to spawn platform
         Camera.main.transform.position = new Vector3(playerSpawns[playerIndex].transform.position.x, playerSpawns[playerIndex].transform.position.y, Camera.main.transform.position.z);
-        gameUI.SetActive(true);
     }
 
     public GameObject GetShipPrefab(int shipNum)

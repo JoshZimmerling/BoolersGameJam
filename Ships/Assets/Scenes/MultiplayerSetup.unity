@@ -1321,7 +1321,7 @@ MonoBehaviour:
   m_Interactable: 1
   m_TargetGraphic: {fileID: 1317388501}
   m_HandleRect: {fileID: 1317388500}
-  m_Direction: 3
+  m_Direction: 2
   m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
@@ -2080,7 +2080,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc30aa59f6aa8134990d24e361cbcf4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameUI: {fileID: 1462939875}
   players:
   - {fileID: 0}
   - {fileID: 0}
@@ -2179,7 +2178,7 @@ RectTransform:
   m_Father: {fileID: 260094573}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -4145,7 +4144,7 @@ MonoBehaviour:
   serverButton: {fileID: 1374937895}
   ipAddressInput: {fileID: 1160073603}
   map: {fileID: 1377465177}
-  minimap: {fileID: 1321346508}
+  gameUI: {fileID: 1462939875}
   kaidenButton: {fileID: 2083753746}
   drewButton: {fileID: 115982538}
   testButton: {fileID: 1619911402}

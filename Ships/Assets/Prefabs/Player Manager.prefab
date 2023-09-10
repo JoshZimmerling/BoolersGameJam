@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 734268674304837292}
   - component: {fileID: 3449621767189596828}
   m_Layer: 5
-  m_Name: SelectionBox
+  m_Name: Selection Box
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -95,8 +95,6 @@ GameObject:
   - component: {fileID: 2345823542908491566}
   - component: {fileID: 7174871841299348844}
   - component: {fileID: -6646747023403735391}
-  - component: {fileID: 4994716780539004643}
-  - component: {fileID: 8178289881202222538}
   m_Layer: 0
   m_Name: Player Manager
   m_TagString: Untagged
@@ -153,32 +151,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectedShips: []
---- !u!114 &4994716780539004643
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7904982975839777911}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9c25216b9c890dc49838c4589c5c8dad, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  selectionBox: {fileID: 734268674304837292}
   hitColliders: []
   shipsFromHit: []
---- !u!114 &8178289881202222538
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7904982975839777911}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0c52e69d2cd866841924a17c3309ce22, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player1Controller: {fileID: 0}
-  player2Controller: {fileID: 0}

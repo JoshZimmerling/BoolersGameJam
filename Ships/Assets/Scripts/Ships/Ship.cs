@@ -71,16 +71,14 @@ public class Ship : NetworkBehaviour
         }
     }
 
-
-    // ======================= Outline Functions =========================
-    public void Select()
+    public void SelectShip()
     {
         Color newColor = outlineSprite.color;
         newColor.a = 1f;
         outlineSprite.color = newColor;
     }
 
-    public void Unselect()
+    public void UnselectShip()
     {
         Color newColor = outlineSprite.color;
         newColor.a = 0f;
