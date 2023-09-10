@@ -32,7 +32,7 @@ public class Shop : MonoBehaviour
             button.Find("Ship Color").GetComponent<Image>().sprite = shipPrefab.Find("Ship Accent").GetComponent<SpriteRenderer>().sprite;
             button.Find("Ship Color").GetComponent<Image>().color = playerColor;
             float shipCost = shipPrefab.GetComponent<Ship>().GetShipCost();
-            button.Find("Ship Cost").GetComponent<TMP_Text>().text = "$: " + shipCost;
+            button.Find("Ship Cost").GetComponent<TMP_Text>().text = "" + shipCost;
 
             button.GetComponent<Button>().onClick.AddListener(() => BuyShip(shipPrefab.GetComponent<Ship>().GetShipType(), shipCost));
         }
