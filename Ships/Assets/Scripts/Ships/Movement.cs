@@ -4,21 +4,18 @@ using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 
-public class ShipMovement : NetworkBehaviour
+public class Movement : NetworkBehaviour
 {
     [SerializeField] private float shipAcceleration;
     [SerializeField] private float shipMaxSpeed;
     [SerializeField] private float shipTurnRate;
     [SerializeField] float distToStop = 2;
 
-    // TODO pub for tests
-    // turn rate, stopping time, max speed, acceleration, 
-
     float angle;
     float totalVelocity;
     float distToTarget;
-    float timeToStop;
-    float brakeTimer;
+    //float timeToStop;
+    //float brakeTimer;
 
     Vector2 targetPos;
     Vector2 track;

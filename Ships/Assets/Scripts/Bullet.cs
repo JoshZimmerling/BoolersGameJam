@@ -48,7 +48,7 @@ public class Bullet : NetworkBehaviour
         dmg = damage;
         bulletSpeed = speed;
     }
-
+    /*
     [ClientRpc]
     public void SetupBulletClientRPC(float lifetime, float damage, float speed)
     {
@@ -56,4 +56,5 @@ public class Bullet : NetworkBehaviour
         dmg = damage;
         bulletSpeed = speed;
     }
+    */
 }

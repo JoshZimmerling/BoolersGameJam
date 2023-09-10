@@ -366,6 +366,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a03ec4b30943edd43aa6b4cf602ec8b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shipType: 3
   shipCost: 35
   maxShipHP: 170
   hps: 1

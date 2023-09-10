@@ -19,6 +19,7 @@ public class Ship : NetworkBehaviour
     }
 
     // Ship Variables
+    [SerializeField] private ShipTypes shipType;
     [SerializeField] private float shipCost;
     [SerializeField] protected float maxShipHP;
     protected NetworkVariable<float> currentShipHP = new NetworkVariable<float>();
@@ -30,10 +31,9 @@ public class Ship : NetworkBehaviour
     public override void OnNetworkSpawn()
     {
         // Finding ship components
-        hpBar = transform.Find("HealthBar/Health");
+        hpBar = transform.Find("Health Bar/Health");
         outlineSprite = transform.Find("Outline").GetComponent<SpriteRenderer>();
-        SpriteRenderer accentsSprite = transform.Find("ShipAccent").GetComponent<SpriteRenderer>();
-        SpriteRenderer mapMarkerSprite = transform.Find("MapMarker").GetComponent<SpriteRenderer>();
+        SpriteRenderer mapMarkerSprite = transform.Find("Scout Marker").GetComponent<SpriteRenderer>();
 
 
         // Setting up healthbar
@@ -53,7 +53,9 @@ public class Ship : NetworkBehaviour
 
         // Set the team color
         Color teamColor = GameManager.Singleton.playerColors[OwnerClientId];
-        accentsSprite.color = teamColor;
+        transform.Find("Ship Accent").GetComponent<SpriteRenderer>().color = teamColor;
+        transform.Find("Minimap Marker").GetComponent<SpriteRenderer>().color = teamColor;
+        transform.Find("Minimap Scout Marker").GetComponent<SpriteRenderer>().color = teamColor;
         mapMarkerSprite.color = teamColor;
         teamColor.a = 0f;
         outlineSprite.color = teamColor;
@@ -71,7 +73,6 @@ public class Ship : NetworkBehaviour
 
 
     // ======================= Outline Functions =========================
-    #region
     public void Select()
     {
         Color newColor = outlineSprite.color;
@@ -85,5 +86,14 @@ public class Ship : NetworkBehaviour
         newColor.a = 0f;
         outlineSprite.color = newColor;
     }
-    #endregion
+
+    public ShipTypes GetShipType()
+    {
+        return shipType;
+    }
+
+    public float GetShipCost()
+    {
+        return shipCost;
+    }
 }

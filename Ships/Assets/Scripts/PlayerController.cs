@@ -22,8 +22,7 @@ public class PlayerController : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!IsOwner)
-            return;
+        if (!IsOwner) return;
 
         // Setting the target destination for the ships
         if (Input.GetButtonDown("Fire2"))
@@ -37,7 +36,7 @@ public class PlayerController : NetworkBehaviour
 
             if (selectedShips.Count == 1)
             {
-                selectedShips[0].GetComponent<ShipMovement>().SetTargetDestinationServerRPC(worldPosition);
+                selectedShips[0].GetComponent<Movement>().SetTargetDestinationServerRPC(worldPosition);
             }
             else
             {
@@ -49,7 +48,7 @@ public class PlayerController : NetworkBehaviour
         {
             foreach (Ship ship in selectedShips)
             {
-                ship.GetComponent<ShipMovement>().StopShipServerRPC(); 
+                ship.GetComponent<Movement>().StopShipServerRPC(); 
             }
         }
 
@@ -57,13 +56,13 @@ public class PlayerController : NetworkBehaviour
         {
             foreach (Ship ship in selectedShips)
             {
-                ship.GetComponent<ShipMovement>().BackupServerRPC();
+                ship.GetComponent<Movement>().BackupServerRPC();
             }
         }
 
         if (Input.GetKeyDown(KeyCode.R))
         {
-            GameManager.Singleton.shop.OpenShop();
+            GameManager.Singleton.shop.ToggleShop();
         }
 
         if (Input.GetKeyDown(KeyCode.E))
@@ -124,7 +123,7 @@ public class PlayerController : NetworkBehaviour
 
         foreach (Ship ship in selectedShips)
         {
-            ship.GetComponent<ShipMovement>().SetTargetDestinationServerRPC((Vector2) worldPosition + ((Vector2) ship.transform.position - shipCenter));
+            ship.GetComponent<Movement>().SetTargetDestinationServerRPC((Vector2) worldPosition + ((Vector2) ship.transform.position - shipCenter));
         }
 
     }
@@ -154,7 +153,7 @@ public class PlayerController : NetworkBehaviour
     public void SpawnShipServerRPC(Ship.ShipTypes shipType, ulong playerID)
     {
         Vector3 spawnPos = GameManager.Singleton.playerSpawns[playerID].transform.position;
-        GameObject ship = Instantiate(GameManager.Singleton.shipPrefabs[(int)shipType], spawnPos, Quaternion.LookRotation(new Vector3(0, 0, 1), -spawnPos));
+        GameObject ship = Instantiate(GameManager.Singleton.GetShipPrefab((int)shipType), spawnPos, Quaternion.LookRotation(new Vector3(0, 0, 1), -spawnPos));
         ship.GetComponent<NetworkObject>().SpawnWithOwnership(playerID);
         ship.transform.parent = transform;
     }

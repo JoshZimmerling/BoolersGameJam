@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
+using TMPro;
 using Unity.Netcode;
 using Unity.VisualScripting;
 using UnityEditor;
@@ -9,58 +10,52 @@ using UnityEngine.UI;
 
 public class Shop : MonoBehaviour
 {
-    [SerializeField] Button destroyer_button;
-    [SerializeField] Button hawk_button;
-    [SerializeField] Button challenger_button;
-    [SerializeField] Button goliath_button;
-    [SerializeField] Button lightning_button;
-    [SerializeField] Button drone_button;
-    [SerializeField] Button scout_button;
+    [SerializeField] GameObject buttonPrefab;
+    [SerializeField] Transform buttonContainer;
 
-    [SerializeField] GameObject goldTextObject;
-    Text goldText;
-    float playerGold = 200f;
+    private bool shopOpen = false;
 
     PlayerController playerScript;
 
     public void SetupShop(PlayerController player)
     {
-
         playerScript = player;
 
-        this.gameObject.SetActive(false);
+        transform.Find("Toggle Shop Button").GetComponent<Button>().onClick.AddListener(() => ToggleShop()); ;
 
-        goldText = goldTextObject.GetComponent<Text>();
-        UpdateGoldText();
+        Color playerColor = GameManager.Singleton.playerColors[playerScript.OwnerClientId];
+        foreach (NetworkPrefab prefab in GameManager.Singleton.shipList.PrefabList)
+        {
+            Transform shipPrefab = prefab.Prefab.transform;
+            Transform button = Instantiate(buttonPrefab, buttonContainer).transform;
+            button.Find("Ship Name").GetComponent<TMP_Text>().text = shipPrefab.GetComponent<Ship>().GetShipType().ToString();
+            button.Find("Ship Sprite").GetComponent<Image>().sprite = shipPrefab.GetComponent<SpriteRenderer>().sprite;
+            button.Find("Ship Color").GetComponent<Image>().sprite = shipPrefab.Find("Ship Accent").GetComponent<SpriteRenderer>().sprite;
+            button.Find("Ship Color").GetComponent<Image>().color = playerColor;
+            float shipCost = shipPrefab.GetComponent<Ship>().GetShipCost();
+            button.Find("Ship Cost").GetComponent<TMP_Text>().text = "$: " + shipCost;
 
-        destroyer_button.onClick.AddListener(() => BuyShip(Ship.ShipTypes.Destroyer, 20));
-        hawk_button.onClick.AddListener(() => BuyShip(Ship.ShipTypes.Hawk, 20));
-        challenger_button.onClick.AddListener(() => BuyShip(Ship.ShipTypes.Challenger, 20));
-        goliath_button.onClick.AddListener(() => BuyShip(Ship.ShipTypes.Goliath, 35));
-        lightning_button.onClick.AddListener(() => BuyShip(Ship.ShipTypes.Lightning, 35));
-        drone_button.onClick.AddListener(() => BuyShip(Ship.ShipTypes.Drone, 5));
-        scout_button.onClick.AddListener(() => BuyShip(Ship.ShipTypes.Scout, 10));
+            button.GetComponent<Button>().onClick.AddListener(() => BuyShip(shipPrefab.GetComponent<Ship>().GetShipType(), shipCost));
+        }
     }
+
+    float playerGold = 200f;
 
     private void BuyShip(Ship.ShipTypes type, float cost)
     {
         if (playerGold >= cost)
         {
             playerGold -= cost;
-            UpdateGoldText();
             GameManager.Singleton.players[GameManager.Singleton.playerIndex].SpawnShipServerRPC(type, playerScript.OwnerClientId);
         }
     }
 
-    public void OpenShop()
+    public void ToggleShop()
     {
-        this.gameObject.SetActive(!this.gameObject.activeSelf);
+        shopOpen = !shopOpen;
+        if (shopOpen)
+            transform.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
+        else
+            transform.GetComponent<RectTransform>().anchoredPosition = new Vector2(150, 0);
     }
-
-    public void UpdateGoldText()
-    {
-        goldText.text = "Gold: $" + playerGold;
-    }
-
-    
 }

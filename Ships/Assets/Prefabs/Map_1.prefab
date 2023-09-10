@@ -368,7 +368,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9014547829047086484}
   - component: {fileID: 5259322419953796212}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Color
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -457,7 +457,7 @@ GameObject:
   - component: {fileID: 197186282711741860}
   - component: {fileID: 1258122111109092910}
   - component: {fileID: 737934872973434605}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: RightBorder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -567,7 +567,7 @@ GameObject:
   - component: {fileID: 325657565076125844}
   - component: {fileID: 5226556683311344879}
   - component: {fileID: 625459432707215059}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: TopBorder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1701,7 +1701,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2916074275768541457}
   - component: {fileID: 6840274327810857921}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Color
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1940,7 +1940,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5616625360726307967}
   - component: {fileID: 3034350440265643263}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Color
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2062,7 +2062,7 @@ GameObject:
   m_Component:
   - component: {fileID: 279780819666656907}
   - component: {fileID: 3387298063588812395}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Color
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2601,7 +2601,7 @@ GameObject:
   - component: {fileID: 6808549655417307345}
   - component: {fileID: 706077457181370372}
   - component: {fileID: 7777280975846367539}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: LeftBorder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2663,10 +2663,10 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
@@ -2965,7 +2965,7 @@ GameObject:
   - component: {fileID: 1320512908042693729}
   - component: {fileID: 4302966451566219181}
   - component: {fileID: 245130638275659245}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: BotBorder
   m_TagString: Untagged
   m_Icon: {fileID: 0}

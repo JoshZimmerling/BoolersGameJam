@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Shooting_Challenger : ShipShooting
+public class Shooting_Challenger : Shooting
 {
     private float maxBulletLifetime;
     protected override void ShootBullet()

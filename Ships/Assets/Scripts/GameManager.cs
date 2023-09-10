@@ -7,6 +7,9 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Singleton;
 
+
+    [SerializeField] GameObject gameUI;
+
     [SerializeField]
     public PlayerController[] players = new PlayerController[8];
     [SerializeField]
@@ -14,7 +17,7 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     public GameObject[] playerSpawns = new GameObject[8];
     [SerializeField]
-    public GameObject[] shipPrefabs = new GameObject[7];
+    public NetworkPrefabsList shipList;
 
     public Shop shop;
 
@@ -43,6 +46,12 @@ public class GameManager : MonoBehaviour
 
         // Set camera to spawn platform
         Camera.main.transform.position = new Vector3(playerSpawns[playerIndex].transform.position.x, playerSpawns[playerIndex].transform.position.y, Camera.main.transform.position.z);
+        gameUI.SetActive(true);
+    }
+
+    public GameObject GetShipPrefab(int shipNum)
+    {
+        return shipList.PrefabList[shipNum].Prefab;
     }
 
     public void AddPlayer(PlayerController player)
