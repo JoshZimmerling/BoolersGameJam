@@ -16,7 +16,9 @@ public class Bullet : NetworkBehaviour
 
     float bulletLifetime = 0;
     void FixedUpdate()
-    {   // I moved bullet trajectories to be dealt with on local machine
+    {
+        if (!IsHost) return;
+
         transform.Translate(new Vector2(0, 1) * bulletSpeed * Time.deltaTime);
         bulletLifetime += Time.deltaTime;
 
@@ -29,8 +31,7 @@ public class Bullet : NetworkBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (!IsHost)
-            return;
+        if (!IsHost) return;
 
         if (collision.gameObject.layer == LayerMask.NameToLayer("Ship"))
             if (collision.GetComponent<Ship>().OwnerClientId == this.OwnerClientId)

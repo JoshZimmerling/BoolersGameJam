@@ -8,25 +8,28 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Shop : MonoBehaviour
+public class Shop : Singleton<Shop>
 {
-    [SerializeField] GameObject buttonPrefab;
-    [SerializeField] RectTransform buttonContainer;
+    [SerializeField] 
+    private GameObject shopButtonPrefab;
     private bool shopOpen = false;
+    private ulong playerId;
 
-    PlayerController playerScript;
+    // TODO: build in autofind functionality
+    [SerializeField] RectTransform buttonContainer;
+    [SerializeField] TMP_Text goldDisplay;
 
-    public void SetupShop(PlayerController player)
+    public void SetupShop()
     {
-        playerScript = player;
+        playerId = NetworkManager.Singleton.LocalClientId;
+        Debug.Log(playerId);
+        transform.Find("Toggle Window Button").GetComponent<Button>().onClick.AddListener(() => ToggleShop()); ;
 
-        transform.Find("Toggle Shop Button").GetComponent<Button>().onClick.AddListener(() => ToggleShop()); ;
-
-        Color playerColor = GameManager.Singleton.playerColors[playerScript.OwnerClientId];
+        Color playerColor = GameManager.Singleton.playerColors[playerId];
         foreach (NetworkPrefab prefab in GameManager.Singleton.shipList.PrefabList)
         {
             Transform shipPrefab = prefab.Prefab.transform;
-            Transform button = Instantiate(buttonPrefab, buttonContainer).transform;
+            Transform button = Instantiate(shopButtonPrefab, buttonContainer).transform;
             button.Find("Ship Name").GetComponent<TMP_Text>().text = shipPrefab.GetComponent<Ship>().GetShipType().ToString();
             button.Find("Ship Sprite").GetComponent<Image>().sprite = shipPrefab.GetComponent<SpriteRenderer>().sprite;
             button.Find("Ship Color").GetComponent<Image>().sprite = shipPrefab.Find("Ship Accent").GetComponent<SpriteRenderer>().sprite;
@@ -36,18 +39,27 @@ public class Shop : MonoBehaviour
 
             button.GetComponent<Button>().onClick.AddListener(() => BuyShip(shipPrefab.GetComponent<Ship>().GetShipType(), shipCost));
         }
+
+        UpdateGold();
     }
 
     float playerGold = 200f;
+
+    private void UpdateGold()
+    {
+        goldDisplay.text = "$" + playerGold;
+    }
 
     private void BuyShip(Ship.ShipTypes type, float cost)
     {
         if (playerGold >= cost)
         {
             playerGold -= cost;
-            GameManager.Singleton.players[GameManager.Singleton.playerIndex].SpawnShipServerRPC(type, playerScript.OwnerClientId);
+            GameManager.Singleton.players[playerId].SpawnShipServerRPC(type);
         }
-    }
+
+        UpdateGold();
+    }    
 
     public void ToggleShop()
     {

@@ -2,34 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Netcode;
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class PlayerController : NetworkBehaviour
+public class GameplayInputManager : Singleton<GameplayInputManager>
 {
-    [SerializeField] List<Ship> selectedShips;
-    Camera_Control cameraScript;
+    private readonly List<Ship> selectedShips = new();
+    private Camera_Control cameraScript; // TODO: move to using singleton
 
-    public override void OnNetworkSpawn()
+    protected override void Awake()
     {
-        GameManager.Singleton.AddPlayer(this);
-        selectedShips = new List<Ship>();
+        base.Awake();
+
         cameraScript = Camera.main.GetComponent<Camera_Control>();
-
-        if (IsOwner)
-            GameManager.Singleton.StartGame((int)OwnerClientId);
-
-        hitColliders = new List<Collider2D>();
-        shipsFromHit = new List<Ship>();
-
         selectionBox = transform.Find("Selection Box");
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!IsOwner || !IsSpawned) return;
-
         // Setting the target destination for the ships
         if (Input.GetButtonDown("Fire2"))
         {
@@ -68,12 +60,12 @@ public class PlayerController : NetworkBehaviour
 
         if (Input.GetKeyDown(KeyCode.R))
         {
-            GameManager.Singleton.shop.ToggleShop();
+            Shop.Singleton.ToggleShop();
         }
 
         if (Input.GetKeyDown(KeyCode.E))
         {
-            cameraScript.toggleLockState();
+            cameraScript.ToggleLockState();
         }
 
         if (EventSystem.current.IsPointerOverGameObject())
@@ -117,8 +109,8 @@ public class PlayerController : NetworkBehaviour
     private float curWidth;
     private float curHeight;
 
-    public List<Collider2D> hitColliders;
-    public List<Ship> shipsFromHit;
+    public List<Collider2D> hitColliders = new List<Collider2D>();
+    public List<Ship> shipsFromHit = new List<Ship>();
 
     float xMax;
     float yMax;
@@ -212,7 +204,7 @@ public class PlayerController : NetworkBehaviour
         {
             Ship ship = col.GetComponent<Ship>();
             if (ship != null)
-                if (OwnerClientId == ship.OwnerClientId)
+                if (NetworkManager.Singleton.LocalClientId == ship.OwnerClientId)
                     shipsFromHit.Add(ship);
         }
 
@@ -221,12 +213,21 @@ public class PlayerController : NetworkBehaviour
         selectionBox.gameObject.SetActive(false);
     }
 
-    [ServerRpc]
-    public void SpawnShipServerRPC(Ship.ShipTypes shipType, ulong playerID)
+    public bool MouseScreenCheck()
     {
-        Vector3 spawnPos = GameManager.Singleton.playerSpawns[playerID].transform.position;
-        GameObject ship = Instantiate(GameManager.Singleton.GetShipPrefab((int)shipType), spawnPos, Quaternion.LookRotation(new Vector3(0, 0, 1), -spawnPos));
-        ship.GetComponent<NetworkObject>().SpawnWithOwnership(playerID);
-        ship.transform.parent = transform;
+        #if UNITY_EDITOR
+        if (Input.mousePosition.x == 0 || Input.mousePosition.y == 0 || Input.mousePosition.x >= Handles.GetMainGameViewSize().x - 1 || Input.mousePosition.y >= Handles.GetMainGameViewSize().y - 1)
+        {
+            return false;
+        }
+        #else
+        if (Input.mousePosition.x == 0 || Input.mousePosition.y == 0 || Input.mousePosition.x >= Screen.width - 1 || Input.mousePosition.y >= Screen.height - 1) {
+            return false;
+        }
+        #endif
+        else
+        {
+            return true;
+        }
     }
 }

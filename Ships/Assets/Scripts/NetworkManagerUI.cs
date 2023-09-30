@@ -12,9 +12,6 @@ public class NetworkManagerUI : MonoBehaviour
     [SerializeField] private Button serverButton;
     [SerializeField] private TMPro.TMP_InputField ipAddressInput;
 
-    [SerializeField] private GameObject map;
-    [SerializeField] private GameObject gameUI;
-
     [SerializeField] private Button kaidenButton;
     [SerializeField] private Button drewButton;
     [SerializeField] private Button testButton;
@@ -22,46 +19,41 @@ public class NetworkManagerUI : MonoBehaviour
     private void Awake()
     {
         hostButton.onClick.AddListener(() => {
-            this.gameObject.SetActive(false);
-            map.gameObject.SetActive(true);
-            gameUI.gameObject.SetActive(true);
+            gameObject.SetActive(false);
             NetworkManager.Singleton.StartHost();
+            GameManager.Singleton.ChangeState(GameState.Gameplay);
         });
 
         joinButton.onClick.AddListener(() => {
-            // TODO: Check for actual IP
+            // TODO: Check if actual IP
             if (ipAddressInput.text != "")
             {
                 NetworkManager.Singleton.GetComponent<Unity.Netcode.Transports.UTP.UnityTransport>().ConnectionData.Address = ipAddressInput.text;
-                this.gameObject.SetActive(false);
-                map.gameObject.SetActive(true);
-                gameUI.gameObject.SetActive(true);
+                gameObject.SetActive(false);
                 NetworkManager.Singleton.StartClient();
+                GameManager.Singleton.ChangeState(GameState.Gameplay);
             }
         });
 
         kaidenButton.onClick.AddListener(() => {
             NetworkManager.Singleton.GetComponent<Unity.Netcode.Transports.UTP.UnityTransport>().ConnectionData.Address = "131.93.247.207";
-            this.gameObject.SetActive(false);
-            map.gameObject.SetActive(true);
-            gameUI.gameObject.SetActive(true);
+            gameObject.SetActive(false);
             NetworkManager.Singleton.StartClient();
+            GameManager.Singleton.ChangeState(GameState.Gameplay);
         });
 
         drewButton.onClick.AddListener(() => {
             NetworkManager.Singleton.GetComponent<Unity.Netcode.Transports.UTP.UnityTransport>().ConnectionData.Address = "184.98.3.110";
-            this.gameObject.SetActive(false);
-            map.gameObject.SetActive(true);
-            gameUI.gameObject.SetActive(true);
+            gameObject.SetActive(false);
             NetworkManager.Singleton.StartClient();
+            GameManager.Singleton.ChangeState(GameState.Gameplay);
         });
 
         testButton.onClick.AddListener(() => {
             NetworkManager.Singleton.GetComponent<Unity.Netcode.Transports.UTP.UnityTransport>().ConnectionData.Address = "127.0.0.1";
-            this.gameObject.SetActive(false);
-            map.gameObject.SetActive(true);
-            gameUI.gameObject.SetActive(true);
+            gameObject.SetActive(false);
             NetworkManager.Singleton.StartClient();
+            GameManager.Singleton.ChangeState(GameState.Gameplay);
         });
     }
 }
